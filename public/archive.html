@@ -40,14 +40,12 @@
                         </h2>
                         <div :id="'flush-collapseOne'+document.Id" class="accordion-collapse collapse"
                             :aria-labelledby="'flush-headingOne'+document.Id" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body" ><a class="row" v-for="file in document.Files"> {{file.Name}}</a></div>
-                            
+                            <div class="accordion-body" ><a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"  target="_blank" class="row" v-for="file in document.Files" > {{file.Name}}</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <button @click="log">123</button>
     </div>
 
 </div>
@@ -92,9 +90,9 @@
                         alert(error.response.data)
                     })
             },
-            log(){
-                console.log(this.documents[0].Files[0].Name);
+            loadFile(id){
             }
+            
         }
     })
 
