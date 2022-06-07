@@ -46,23 +46,27 @@
                                         <a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"
                                             target="_blank"> {{file.Name}}
                                         </a>
-                                        <button @click="deleteFile(file.Id)" class="btn btn-danger btn-sm">Удалить</button>
+                                        <div>
+                                            <button @click="changeFile(file.Id)"
+                                                class="btn btn-info btn-sm text-white">Заменить</button>
+                                            <button @click="deleteFile(file.Id)"
+                                                class="btn btn-danger btn-sm">Удалить</button>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal" @click="Id=document.Id">Загрузить
                                 документы</button>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Loading Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,8 +106,11 @@
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
             },
-            deleteFile(Id){
-                axios.post('http://192.168.71.142/Document/DeleteFile/'+Id)
+            deleteFile(Id) {
+                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
+            },
+            changeFile(Id) {
+                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
             },
             submitFile() {
                 const formData = new FormData();
