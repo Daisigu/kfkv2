@@ -47,7 +47,8 @@
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
-                                            <button @click="changeFile(file.Id)"
+                                            <button data-bs-toggle="modal" data-bs-target="#changeModal"
+                                                @click="changeFile(file.Id)"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
                                             <button @click="deleteFile(file.Id)"
                                                 class="btn btn-danger btn-sm">Удалить</button>
@@ -57,7 +58,7 @@
                                 </div>
                             </div>
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
-                                data-bs-toggle="modal" data-bs-target="#loadingModal"  @click="Id=document.Id">Загрузить
+                                data-bs-toggle="modal" data-bs-target="#loadingModal" @click="Id=document.Id">Загрузить
                                 документы</button>
                         </div>
                     </div>
@@ -77,6 +78,24 @@
                 <div class="modal-body">
                     <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
                     <button data-bs-dismiss="modal" class="btn btn-primary" @click="submitFile">Загрузить</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Change Modal -->
+    <div class="modal fade" id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeModalLabel">Заменить документ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-3" type="file" @change="uploadFile" ref="file" name="newFile">
+                    <button data-bs-dismiss="modal" class="btn btn-primary" @click="changeFile">Загрузить</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -107,10 +126,11 @@
                 this.Images = this.$refs.file.files[0];
             },
             deleteFile(Id) {
+                console.log(Id);
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
             },
             changeFile(Id) {
-                console.log(Id);
+               axios.post('http://192.168.71.142/Document/ReplaceFile/'+Id+'?comment=(вставить сюда комент)')
             },
             submitFile() {
                 const formData = new FormData();
