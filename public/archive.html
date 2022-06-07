@@ -43,12 +43,13 @@
                             <div class="accordion-body"><a
                                     :href="'http://192.168.71.142/Document/FileDownload/'+file.Id" target="_blank"
                                     class="row" v-for="file in document.Files"> {{file.Name}}</a></div>
-                                    <button class="btn btn-primary mb-1"  v-if="documents.length>0" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">Загрузить документы</button>
+                            <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal" @click="Id=document.Id">Загрузить
+                                документы</button>
 
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -91,14 +92,19 @@
             }
         },
         methods: {
+            setId(Id) {
+                this.Id = Id
+                console.log(this.Id);
+            },
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
             },
             submitFile() {
                 const formData = new FormData();
+                console.log(this.Id);
                 formData.append('file', this.Images);
                 const headers = { 'Content-Type': 'multipart/form-data' };
-                axios.post('http://192.168.71.142/Document/UploadFile?documentId=1099', formData, { headers }).then((res) => {
+                axios.post('http://192.168.71.142/Document/UploadFile?documentId=+'+this.Id, formData, { headers }).then((res) => {
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
                 });
