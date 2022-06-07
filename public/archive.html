@@ -43,10 +43,12 @@
                             <div class="accordion-body"><a
                                     :href="'http://192.168.71.142/Document/FileDownload/'+file.Id" target="_blank"
                                     class="row" v-for="file in document.Files"> {{file.Name}}</a></div>
+                                    <button class="btn btn-primary mb-1"  v-if="documents.length>0" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Загрузить документы</button>
+
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-3" v-if="documents.length>0" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Загрузить документы</button>
+                   
                 </div>
             </div>
         </div>
@@ -61,8 +63,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="file" @change="uploadFile" ref="file">
-                    <button @click="submitFile">Upload!</button>
+                    <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
+                    <button class="btn btn-primary" @click="submitFile">Загрузить</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -78,7 +80,7 @@
 
     var app2 = new Vue({
         el: '#archive',
- 
+
         data() {
             return {
                 clientName: '',
@@ -86,22 +88,21 @@
                 documents: [],
                 loading: 'true',
                 Id: '',
-                showModal: false,
             }
         },
         methods: {
             uploadFile() {
-        this.Images = this.$refs.file.files[0];
-      },
-      submitFile() {
-        const formData = new FormData();
-        formData.append('file', this.Images);
-        const headers = { 'Content-Type': 'multipart/form-data' };
-        axios.post('http://192.168.71.142/Document/UploadFile?documentId=1098', formData, { headers }).then((res) => {
-          res.data.files; // binary representation of the file
-          res.status; // HTTP status
-        });
-      },
+                this.Images = this.$refs.file.files[0];
+            },
+            submitFile() {
+                const formData = new FormData();
+                formData.append('file', this.Images);
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post('http://192.168.71.142/Document/UploadFile?documentId=1099', formData, { headers }).then((res) => {
+                    res.data.files; // binary representation of the file
+                    res.status; // HTTP status
+                });
+            },
             async getClients() {
                 var thiz = this;
                 axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch=' + this.clientName)
