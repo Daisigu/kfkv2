@@ -10,21 +10,21 @@
         <div class="row">
             <div class="people__list col-sm-12 col-lg-4">
                 <div class="input-group mb-3">
-                    <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control" placeholder=""
-                        aria-label="Recipient's clientname" aria-describedby="button-addon2">
+                    <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
+                        placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
                     <button @click="getClients" class="btn btn-outline-secondary" type="button"
                         id="button-addon2">Поиск</button>
                 </div>
-                <div class="list-group" v-for="client in clients" :key="client.id">
-
-                    <a href="#" class="list-group-item list-group-item-action">
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
+                        v-bind:Id="client.Id" @click="getDocuments(client.Id)">
                         <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">{{client.FullName}}</h5>
-                          <small class="text-muted">{{client.Birthdate}}</small>
+                            <h5 class="mb-1">{{client.FullName}}</h5>
+                            <small class="text-muted">{{client.Birthdate}}</small>
                         </div>
-                        <p class="mb-1">Серия и номер паспорта: {{client.SeriesPassport}}  {{client.NumberPassport}}</p>
+                        <p class="mb-1">Серия и номер паспорта: {{client.SeriesPassport}} {{client.NumberPassport}}</p>
                         <small class="text-muted">Количество документов: {{client.CountDocument}}</small>
-                      </a>
+                    </a>
                 </div>
             </div>
             <div class="people__info col-sm-12 col-lg-8 pt-5">
@@ -59,23 +59,34 @@
                 clientName: '',
                 clients: [],
                 loading: 'true',
-                id: ''
+                Id: ''
             }
         },
         methods: {
+
             async getClients() {
                 var thiz = this;
-                axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch='+this.clientName)
-                .then(function (response) {
-                    console.log(response.data);
-                   thiz.clients=response.data
-                   thiz.loading=false
-                })
-                .catch(function(error){
-                    alert(error.response.data)
-                })
+                axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch=' + this.clientName)
+                    .then(function (response) {
+                        console.log(response.data);
+                        thiz.clients = response.data
+                        thiz.loading = false
+                    })
+                    .catch(function (error) {
+                        alert(error.response.data)
+                    })
             },
-        
+            async getDocuments(Id) {
+                var thiz = this;
+                axios.post('http://192.168.71.142/Document/DocumentsClient/395')
+                    .then(function (response) {
+                        console.log(response.data);
+                        thiz.loading = false
+                    })
+                    .catch(function (error) {
+                        alert(error.response.data)
+                    })
+            },
         }
     })
 
