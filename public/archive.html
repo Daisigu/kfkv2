@@ -43,6 +43,7 @@
                             <div class="accordion-body" ><a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"  target="_blank" class="row" v-for="file in document.Files" > {{file.Name}}</a></div>
                         </div>
                     </div>
+                    <button class="btn btn-primary mt-3" v-if="documents.length>0">Загрузить документы</button>
                 </div>
             </div>
         </div>
@@ -61,7 +62,8 @@
                 clients: [],
                 documents: [],
                 loading: 'true',
-                Id: ''
+                Id: '',
+                showModal: false,
             }
         },
         methods: {
