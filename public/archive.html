@@ -46,7 +46,7 @@
                                         <a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"
                                             target="_blank"> {{file.Name}}
                                         </a>
-                                        <button @click="deleteFile" class="btn btn-danger btn-sm">Удалить</button>
+                                        <button @click="deleteFile(file.Id)" class="btn btn-danger btn-sm">Удалить</button>
                                     </div>
                                 </div>
                             </div>
@@ -99,15 +99,11 @@
             }
         },
         methods: {
-            setId(Id) {
-                this.Id = Id
-                console.log(this.Id);
-            },
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
             },
-            deleteFile(){
-
+            deleteFile(Id){
+                axios.post('http://192.168.71.142/Document/DeleteFile/'+Id)
             },
             submitFile() {
                 const formData = new FormData();
@@ -143,8 +139,6 @@
                         alert(error.response.data)
                     })
             },
-            loadFile(id) {
-            }
 
         }
     })
