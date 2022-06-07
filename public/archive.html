@@ -29,21 +29,43 @@
             </div>
             <div class="people__info col-sm-12 col-lg-8 pt-5">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
-                   
+
                     <div class="accordion-item" v-for="document in documents" :key="document.Id">
                         <h2 class="accordion-header" :id="'flush-headingOne'+document.Id">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 :data-bs-target="'#flush-collapseOne'+document.Id" aria-expanded="false"
                                 :aria-controls="'flush-collapseOne'+document.Id">
-                               {{document.DocType}}
+                                {{document.DocType}}
                             </button>
                         </h2>
                         <div :id="'flush-collapseOne'+document.Id" class="accordion-collapse collapse"
                             :aria-labelledby="'flush-headingOne'+document.Id" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body" ><a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"  target="_blank" class="row" v-for="file in document.Files" > {{file.Name}}</a></div>
+                            <div class="accordion-body"><a
+                                    :href="'http://192.168.71.142/Document/FileDownload/'+file.Id" target="_blank"
+                                    class="row" v-for="file in document.Files"> {{file.Name}}</a></div>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-3" v-if="documents.length>0">Загрузить документы</button>
+                    <button class="btn btn-primary mt-3" v-if="documents.length>0" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Загрузить документы</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Загрузить документы</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" @change="uploadFile" ref="file">
+                    <button @click="submitFile">Upload!</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -56,6 +78,7 @@
 
     var app2 = new Vue({
         el: '#archive',
+ 
         data() {
             return {
                 clientName: '',
@@ -67,7 +90,18 @@
             }
         },
         methods: {
-
+            uploadFile() {
+        this.Images = this.$refs.file.files[0];
+      },
+      submitFile() {
+        const formData = new FormData();
+        formData.append('file', this.Images);
+        const headers = { 'Content-Type': 'multipart/form-data' };
+        axios.post('http://192.168.71.142/Document/UploadFile?documentId=1098', formData, { headers }).then((res) => {
+          res.data.files; // binary representation of the file
+          res.status; // HTTP status
+        });
+      },
             async getClients() {
                 var thiz = this;
                 axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch=' + this.clientName)
@@ -92,9 +126,9 @@
                         alert(error.response.data)
                     })
             },
-            loadFile(id){
+            loadFile(id) {
             }
-            
+
         }
     })
 
