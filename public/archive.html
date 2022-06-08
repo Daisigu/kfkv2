@@ -137,11 +137,38 @@
             setChangeValue(event) {
                 this.changeValue = event.target.value
             },
+
+            downloadFile() {
+                this.downloadFiles = this.$refs.downloadFile.files[0];
+                console.log(this.$refs.downloadFile.files[0] + 'downloadFile()');
+            },
+            changeFile() {
+                this.changedFiles = this.$refs.changeFile.files[0];
+                console.log(this.$refs.changeFile.files[0] + 'changeFile()');
+            },
+            deleteFile(Id) {
+                console.log('File' + Id + 'Deleted');
+                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
+            },
+            submitFile() {
+                const formData = new FormData();
+                formData.append('File', this.downloadFiles);
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post('http://192.168.71.142/Document/UploadFile?documentId=' + this.Id, formData, { headers }).then((res) => {
+                    res.data.files; // binary representation of the file
+                    res.status; // HTTP status
+
+                }).catch(
+                    function (error) {
+                        console.log(error)
+                    }
+                );
+            },
             changeFile(Id, changeValue) {
                 const formData = new FormData();
                 console.log(this.changeValue);
                 console.log(this.Id);
-                formData.append('newFile', this.Files);
+                formData.append('newFile', this.changedFiles);
                 formData.append('comment', this.changeValue)
                 const headers = { 'Content-Type': 'multipart/form-data' };
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((res) => {
@@ -154,32 +181,6 @@
                     }
                 );
 
-            },
-            downloadFile() {
-                this.Files = this.$refs.downloadFile.files[0];
-                console.log(this.$refs.downloadFile.files[0] + 'downloadFile()');
-            },
-            changeFile() {
-                this.Files = this.$refs.changeFile.files[0];
-                console.log(this.$refs.changeFile.files[0] + 'changeFile()');
-            },
-            deleteFile(Id) {
-                console.log('File' + Id + 'Deleted');
-                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
-            },
-            submitFile() {
-                const formData = new FormData();
-                formData.append('File', this.Files);
-                const headers = { 'Content-Type': 'multipart/form-data' };
-                axios.post('http://192.168.71.142/Document/UploadFile?documentId=' + this.Id, formData, { headers }).then((res) => {
-                    res.data.files; // binary representation of the file
-                    res.status; // HTTP status
-
-                }).catch(
-                    function (error) {
-                        console.log(error)
-                    }
-                );
             },
             async getClients() {
                 this.loading = true
