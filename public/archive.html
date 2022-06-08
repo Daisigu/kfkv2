@@ -47,8 +47,7 @@
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
-                                            <button data-bs-toggle="modal" data-bs-target="#changeModal"
-                                                @click="changeFile(file.Id)"
+                                            <button @click="Id=file.Id" data-bs-toggle="modal" data-bs-target="#changeModal"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
                                             <button @click="deleteFile(file.Id)"
                                                 class="btn btn-danger btn-sm">Удалить</button>
@@ -94,8 +93,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control mb-3" type="file" @change="uploadFile" ref="file" name="newFile">
-                    <button data-bs-dismiss="modal" class="btn btn-primary" @click="changeFile">Загрузить</button>
+                    <form enctype="multipart/form-data" method="post"
+                        :action="'http://192.168.71.142/Document/ReplaceFile/'+Id">
+                        <p><input type="file" name="newFile">
+                            <input type="submit" value="Отправить">
+                        </p>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -119,18 +122,17 @@
                 documents: [],
                 loading: 'true',
                 Id: '',
+                changeValue: '',
             }
         },
         methods: {
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
+                console.log('File upload');
             },
             deleteFile(Id) {
-                console.log(Id);
+                console.log('File' + Id + 'Deleted');
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
-            },
-            changeFile(Id) {
-               axios.post('http://192.168.71.142/Document/ReplaceFile/'+Id+'?comment=(вставить сюда комент)')
             },
             submitFile() {
                 const formData = new FormData();
