@@ -57,9 +57,11 @@
                                             <button @click="Id=file.Id" data-bs-toggle="modal"
                                                 data-bs-target="#changeModal"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
-                                            <button @click="deleteFile(file.Id)"
+                                            <button @click="deleteFileId=file.Id"  data-bs-toggle="modal"
+                                            data-bs-target="#deleteFileConfirmModal"
                                                 class="btn btn-danger btn-sm">Удалить</button>
-                                            <button @click="fileHistory(file.Id)" class="btn btn-sm btn-success"  data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
+                                            <button @click="fileHistory(file.Id)" class="btn btn-sm btn-success"
+                                                data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
 
                                         </div>
                                     </div>
@@ -68,7 +70,11 @@
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#loadingModal" @click="Id=document.Id">Загрузить
                                 документы</button>
-                                <button class="btn btn-danger mb-1" :id="document.Id" @click="deleteDocument(document.Id)">Удалить раздел</button>
+                            <button :id="document.Id" class="btn btn-success mb-1" v-if="documents.length>0"
+                                data-bs-toggle="modal" data-bs-target="#documentVersionModal"
+                                @click="documentHistory(document.Id)">Версии</button>
+                            <button class="btn btn-danger mb-1" :id="document.Id"
+                                @click="deleteDocument(document.Id)">Удалить раздел</button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +92,8 @@
                 </div>
                 <div class="modal-body">
                     <input class="form-control mb-3" type="file" @change="downloadFile" ref="downloadFile">
-                    <button data-bs-dismiss="modal" class="btn btn-primary" @click="submitFile($event)">Загрузить</button>
+                    <button data-bs-dismiss="modal" class="btn btn-primary"
+                        @click="submitFile($event)">Загрузить</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -94,8 +101,26 @@
             </div>
         </div>
     </div>
-       <!-- Version Modal -->
-       <div class="modal fade" id="versionModal" tabindex="-1" aria-labelledby="versionModalLabel" aria-hidden="true">
+       <!-- delete file confirm Modal -->
+       <div class="modal fade" id="deleteFileConfirmModal" tabindex="-1" aria-labelledby="deleteFileConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteFileConfirmModalLabel">Удалить документ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                    <button class="btn-danger btn col-4" @click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
+                    <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- File Version Modal -->
+    <div class="modal fade" id="versionModal" tabindex="-1" aria-labelledby="versionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -103,13 +128,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <h1 class="text-center" v-if="this.fileHistoryArray.length==0"> Изменений нет</h1>
-                <div class="modal-body"  v-for="history in fileHistoryArray"  >
-                   
+                <div class="modal-body" v-for="history in fileHistoryArray">
+
                     <div>Изменен: {{history.Created}}</div>
                     <div>Кем: {{history.UserName}}</div>
                     <div>Комментарий: {{history.Comment}}</div>
                     <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/'+history.Id">{{history.Name}}</a>
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Document Version Modal -->
+    <div class="modal fade" id="documentVersionModal" tabindex="-1" aria-labelledby="documentVersionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="documentVersionModalLabel">История изменений документа</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h1 class="text-center" v-if="this.documentHistoryArray.length==0"> Изменений нет</h1>
+                <div class="modal-body" v-for="docHistory in documentHistoryArray">
+
+                    <div>Изменен: {{docHistory.Created}}</div>
+                    <div>Кем: {{docHistory.UserName}}</div>
+                    <div>Комментарий: {{docHistory.Comment}}</div>
+                    <a
+                        :href="'http://192.168.71.142/Document/FileDownloadFromHistory/'+docHistory.Id">{{docHistory.Name}}</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -157,25 +206,29 @@
                 Id: '',
                 deleteDocumentId: '',
                 changeValue: '',
-                fileHistoryArray:[],
+                fileHistoryArray: [],
+                documentHistoryArray: [],
+                deleteFileId:'',
             }
         },
         methods: {
-            documentHistory(Id){
-                
+            documentHistory(Id) {
+                axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((res) => {
+                    this.documentHistoryArray = res.data.HistoryDoc;
+                })
             },
-            deleteDocument(Id){
-                console.log(Id+'Id');
-                axios.post('http://192.168.71.142/Document/DeleteDocument/'+Id)
+            deleteDocument(Id) {
+                console.log(Id + 'Id');
+                axios.post('http://192.168.71.142/Document/DeleteDocument/' + Id)
             },
-            fileHistory(Id){
-                axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/'+Id).then((res)=>{
-                  this.fileHistoryArray = res.data.HistoryFile
+            fileHistory(Id) {
+                axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/' + Id).then((res) => {
+                    this.fileHistoryArray = res.data.HistoryFile
                 })
             },
             setChangeValue(event) {
                 this.changeValue = event.target.value
-                event.target.value=''
+                event.target.value = ''
             },
 
             downloadFile() {
@@ -216,7 +269,7 @@
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
                     this.$refs.changeFile.value = null
-                    this.changeValue=null
+                    this.changeValue = null
                 }).catch(
                     function (error) {
                         alert('Файл не выбран')
