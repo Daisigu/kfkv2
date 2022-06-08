@@ -47,7 +47,8 @@
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
-                                            <button @click="Id=file.Id" data-bs-toggle="modal" data-bs-target="#changeModal"
+                                            <button @click="Id=file.Id" data-bs-toggle="modal"
+                                                data-bs-target="#changeModal"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
                                             <button @click="deleteFile(file.Id)"
                                                 class="btn btn-danger btn-sm">Удалить</button>
@@ -93,11 +94,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data" method="post"
-                        :action="'http://192.168.71.142/Document/ReplaceFile/'+Id">
-                        <p><input type="file" name="newFile">
-                            <input type="submit" value="Отправить">
-                        </p>
+                    <form @submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
+                        <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
+                        <button data-bs-dismiss="modal" class="btn btn-primary">Загрузить</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -126,6 +125,16 @@
             }
         },
         methods: {
+           changeFile(Id) {
+                const formData = new FormData();
+                console.log(this.Id);
+                formData.append('newFile', this.Images);
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((res) => {
+                    res.data.files; // binary representation of the file
+                    res.status; // HTTP status
+                });
+            },
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
                 console.log('File upload');
