@@ -59,7 +59,7 @@
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
                                             <button @click="deleteFile(file.Id)"
                                                 class="btn btn-danger btn-sm">Удалить</button>
-                                            <button class="btn btn-sm btn-success"  data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
+                                            <button @click="fileHistory(file.Id)" class="btn btn-sm btn-success"  data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
 
                                         </div>
                                     </div>
@@ -101,7 +101,11 @@
                     <h5 class="modal-title" id="versionModalLabel">История изменений</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body"  v-for="history in fileHistoryArray"  >
+                    <div>Изменен: {{history.Created}}</div>
+                    <div>Кем: {{history.UserName}}</div>
+                    <div>Комментарий: {{history.Coment}}</div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -148,9 +152,15 @@
                 loading: false,
                 Id: '',
                 changeValue: '',
+                fileHistoryArray:[],
             }
         },
         methods: {
+            fileHistory(Id){
+                axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/'+Id).then((res)=>{
+                  this.fileHistoryArray = res.data.HistoryFile
+                })
+            },
             setChangeValue(event) {
                 this.changeValue = event.target.value
                 event.target.value=''
