@@ -83,7 +83,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
+                    <input class="form-control mb-3" type="file" @change="downloadFile" ref="downloadFile">
                     <button data-bs-dismiss="modal" class="btn btn-primary" @click="submitFile">Загрузить</button>
                 </div>
                 <div class="modal-footer">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
-                        <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
+                        <input class="form-control mb-3" type="file" @change="changeFile" ref="changeFile">
                         <input type="text" class="form-control mb-3" :v-model="changeValue"
                             @change="setChangeValue($event)">
                         <button data-bs-dismiss="modal" class="btn btn-primary">Загрузить</button>
@@ -155,9 +155,13 @@
                 );
 
             },
-            uploadFile() {
-                this.Files = this.$refs.file.files[0];
-                console.log('File upload');
+            downloadFile() {
+                this.Files = this.$refs.downloadFile.files[0];
+                console.log(this.$refs.downloadFile.files[0] + 'downloadFile()');
+            },
+            changeFile() {
+                this.Files = this.$refs.changeFile.files[0];
+                console.log(this.$refs.changeFile.files[0] + 'changeFile()');
             },
             deleteFile(Id) {
                 console.log('File' + Id + 'Deleted');
