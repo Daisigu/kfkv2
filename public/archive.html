@@ -59,6 +59,7 @@
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
                                             <button @click="deleteFile(file.Id)"
                                                 class="btn btn-danger btn-sm">Удалить</button>
+                                            
 
                                         </div>
                                     </div>
@@ -136,6 +137,7 @@
         methods: {
             setChangeValue(event) {
                 this.changeValue = event.target.value
+                event.target.value=''
             },
 
             downloadFile() {
@@ -176,6 +178,7 @@
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
                     this.$refs.changeFile.value = null
+                    this.changeValue=null
                 }).catch(
                     function (error) {
                         alert('Файл не выбран')
