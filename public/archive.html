@@ -9,6 +9,7 @@
         <h1 class="text-center ">Архив</h1>
         <div class="row">
             <div class="people__list col-sm-12 col-lg-4">
+             
                 <div class="input-group mb-3">
                     <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
                         placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
@@ -96,6 +97,8 @@
                 <div class="modal-body">
                     <form @submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
                         <input class="form-control mb-3" type="file" @change="uploadFile" ref="file">
+                        <input type="text" class="form-control mb-3" :v-model="changeValue"
+                            @change="setChangeValue($event)">
                         <button data-bs-dismiss="modal" class="btn btn-primary">Загрузить</button>
                     </form>
                 </div>
@@ -125,15 +128,26 @@
             }
         },
         methods: {
-           changeFile(Id) {
+            setChangeValue(event) {
+                this.changeValue = event.target.value
+            },
+           changeFile(Id, changeValue) {
                 const formData = new FormData();
+                console.log(this.changeValue);
                 console.log(this.Id);
                 formData.append('newFile', this.Images);
+                formData.append('comment', this.changeValue)
                 const headers = { 'Content-Type': 'multipart/form-data' };
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((res) => {
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
-                });
+                
+                }).catch(
+                    function (error) {
+                        console.log(error)
+                    }
+                );
+
             },
             uploadFile() {
                 this.Images = this.$refs.file.files[0];
@@ -185,6 +199,9 @@
 </script>
 
 
+<style>
+  
+</style>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
