@@ -68,6 +68,7 @@
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#loadingModal" @click="Id=document.Id">Загрузить
                                 документы</button>
+                                <button class="btn btn-danger mb-1" :id="document.Id" @click="deleteDocument(document.Id)">Удалить раздел</button>
                         </div>
                     </div>
                 </div>
@@ -154,11 +155,19 @@
                 documents: [],
                 loading: false,
                 Id: '',
+                deleteDocumentId: '',
                 changeValue: '',
                 fileHistoryArray:[],
             }
         },
         methods: {
+            documentHistory(Id){
+                
+            },
+            deleteDocument(Id){
+                console.log(Id+'Id');
+                axios.post('http://192.168.71.142/Document/DeleteDocument/'+Id)
+            },
             fileHistory(Id){
                 axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/'+Id).then((res)=>{
                   this.fileHistoryArray = res.data.HistoryFile
