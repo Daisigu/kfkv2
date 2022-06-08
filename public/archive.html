@@ -8,15 +8,21 @@
     <div class="container">
         <h1 class="text-center ">Архив</h1>
         <div class="row">
+         
             <div class="people__list col-sm-12 col-lg-4">
-             
                 <div class="input-group mb-3">
                     <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
                         placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
                     <button @click="getClients" class="btn btn-outline-secondary" type="button"
                         id="button-addon2">Поиск</button>
+                        
+
                 </div>
-                <div class="list-group">
+
+                <div class="list-group d-flex justify-content-center align-items-center">
+                    <div v-if="loading" class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                     <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
                         v-bind:Id="client.Id" @click="getDocuments(client.Id)">
                         <div class="d-flex w-100 justify-content-between">
@@ -122,7 +128,7 @@
                 clientName: '',
                 clients: [],
                 documents: [],
-                loading: 'true',
+                loading: false,
                 Id: '',
                 changeValue: '',
             }
@@ -131,7 +137,7 @@
             setChangeValue(event) {
                 this.changeValue = event.target.value
             },
-           changeFile(Id, changeValue) {
+            changeFile(Id, changeValue) {
                 const formData = new FormData();
                 console.log(this.changeValue);
                 console.log(this.Id);
@@ -141,7 +147,7 @@
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((res) => {
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
-                
+
                 }).catch(
                     function (error) {
                         console.log(error)
@@ -168,6 +174,7 @@
                 });
             },
             async getClients() {
+                this.loading=true
                 var thiz = this;
                 axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
@@ -181,6 +188,7 @@
             },
             async getDocuments(Id) {
                 var thiz = this;
+                thiz.loading=true
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
                         console.log(response.data);
@@ -200,7 +208,7 @@
 
 
 <style>
-  
+
 </style>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
