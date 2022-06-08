@@ -84,7 +84,7 @@
                 </div>
                 <div class="modal-body">
                     <input class="form-control mb-3" type="file" @change="downloadFile" ref="downloadFile">
-                    <button data-bs-dismiss="modal" class="btn btn-primary" @click="submitFile">Загрузить</button>
+                    <button data-bs-dismiss="modal" class="btn btn-primary" @click="submitFile($event)">Загрузить</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -150,14 +150,15 @@
                 console.log('File' + Id + 'Deleted');
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id)
             },
-            submitFile() {
+            submitFile(event) {
                 const formData = new FormData();
                 formData.append('File', this.downloadFiles);
                 const headers = { 'Content-Type': 'multipart/form-data' };
                 axios.post('http://192.168.71.142/Document/UploadFile?documentId=' + this.Id, formData, { headers }).then((res) => {
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
-                    
+                    this.$refs.downloadFile.value = null
+
                 }).catch(
                     function (error) {
                         console.log(error)
@@ -174,7 +175,7 @@
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((res) => {
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
-
+                    this.$refs.changeFile.value = null
                 }).catch(
                     function (error) {
                         alert('Файл не выбран')
