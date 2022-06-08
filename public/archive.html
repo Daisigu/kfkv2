@@ -101,10 +101,13 @@
                     <h5 class="modal-title" id="versionModalLabel">История изменений</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <h1 class="text-center" v-if="this.fileHistoryArray.length==0"> Изменений нет</h1>
                 <div class="modal-body"  v-for="history in fileHistoryArray"  >
+                   
                     <div>Изменен: {{history.Created}}</div>
                     <div>Кем: {{history.UserName}}</div>
-                    <div>Комментарий: {{history.Coment}}</div>
+                    <div>Комментарий: {{history.Comment}}</div>
+                    <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/'+history.Id">{{history.Name}}</a>
 
                 </div>
                 <div class="modal-footer">
