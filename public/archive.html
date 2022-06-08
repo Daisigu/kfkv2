@@ -54,13 +54,13 @@
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
-                                            <button @click="Id=file.Id" data-bs-toggle="modal"
+                                            <button v-on:click="Id=file.Id" data-bs-toggle="modal"
                                                 data-bs-target="#changeModal"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
-                                            <button @click="deleteFileId=file.Id"  data-bs-toggle="modal"
+                                            <button v-on:click="deleteFileId=file.Id"  data-bs-toggle="modal"
                                             data-bs-target="#deleteFileConfirmModal"
                                                 class="btn btn-danger btn-sm">Удалить</button>
-                                            <button @click="fileHistory(file.Id)" class="btn btn-sm btn-success"
+                                            <button v-on:click="fileHistory(file.Id)" class="btn btn-sm btn-success"
                                                 data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
 
                                         </div>
@@ -68,13 +68,13 @@
                                 </div>
                             </div>
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
-                                data-bs-toggle="modal" data-bs-target="#loadingModal" @click="Id=document.Id">Загрузить
+                                data-bs-toggle="modal" data-bs-target="#loadingModal" v-on:click="Id=document.Id">Загрузить
                                 документы</button>
                             <button :id="document.Id" class="btn btn-success mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                @click="documentHistory(document.Id)">Версии</button>
+                                v-on:click="documentHistory(document.Id)">Версии</button>
                             <button class="btn btn-danger mb-1" :id="document.Id"
-                                @click="deleteDocument(document.Id)">Удалить раздел</button>
+                                v-on:click="deleteDocument(document.Id)">Удалить раздел</button>
                         </div>
                     </div>
                 </div>
@@ -91,9 +91,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control mb-3" type="file" @change="downloadFile" ref="downloadFile">
+                    <input class="form-control mb-3" type="file" v-on:change="downloadFile" ref="downloadFile">
                     <button data-bs-dismiss="modal" class="btn btn-primary"
-                        @click="submitFile($event)">Загрузить</button>
+                        v-on:click="submitFile($event)">Загрузить</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -110,7 +110,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-around">
-                    <button class="btn-danger btn col-4" @click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
+                    <button class="btn-danger btn col-4" v-on:click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
                     <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
                 </div>
                 <div class="modal-footer">
@@ -175,10 +175,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
-                        <input class="form-control mb-3" type="file" @change="changeUploadFile" ref="changeFile">
+                    <form v-on:submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
+                        <input class="form-control mb-3" type="file" v-on:change="changeUploadFile" ref="changeFile">
                         <input type="text" class="form-control mb-3" :v-model="changeValue"
-                            @change="setChangeValue($event)">
+                            v-on:change="setChangeValue($event)">
                         <button data-bs-dismiss="modal" class="btn btn-primary">Загрузить</button>
                     </form>
                 </div>
