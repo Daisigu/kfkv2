@@ -337,8 +337,7 @@
                 var thiz = this;
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
-                        console.log(response.data.data);
-                        thiz.documents = response.data.data.Documents
+                        thiz.documents = response.data.Documents
                         thiz.loading = false
                     })
                     .catch(function (error) {
