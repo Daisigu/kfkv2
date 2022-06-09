@@ -74,7 +74,7 @@
                             <button :id="document.Id" class="btn btn-success mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
                                 v-on:click="documentHistory(document.Id)">Версии</button>
-                            <button @click="deleteDocumentId=document.Id" data-bs-toggle="modal"
+                            <button v-on:click="deleteDocumentId=document.Id" data-bs-toggle="modal"
                                 data-bs-target="#deleteDocumentConfirmModal" class="btn btn-danger mb-1">Удалить
                                 документ</button>
                         </div>
@@ -113,7 +113,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-around">
-                    <button class="btn-danger btn col-4" @click="deleteDocument(deleteDocumentId)"
+                    <button class="btn-danger btn col-4" v-on:click="deleteDocument(deleteDocumentId)"
                         data-bs-dismiss="modal">Да</button>
                     <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
                 </div>
