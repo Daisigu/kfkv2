@@ -7,6 +7,7 @@
 <div class="arhcive__page pt-4 " id="archive">
     <div class="container">
         <h1 class="text-center ">Архив</h1>
+
         <div class="row">
 
             <div class="people__list col-sm-12 col-lg-4">
@@ -55,13 +56,17 @@
                                         </a>
                                         <div>
                                             <button v-on:click="Id=file.Id" data-bs-toggle="modal"
-                                                data-bs-target="#changeModal"
-                                                class="btn btn-info btn-sm text-white">Заменить</button>
+                                                data-bs-target="#changeModal" class="btn btn-info text-white"><i
+                                                    class="bi bi-arrow-left-right"></i>
+                                            </button>
                                             <button v-on:click="deleteFileId=file.Id" data-bs-toggle="modal"
-                                                data-bs-target="#deleteFileConfirmModal"
-                                                class="btn btn-danger btn-sm">Удалить</button>
-                                            <button v-on:click="fileHistory(file.Id)" class="btn btn-sm btn-success"
-                                                data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
+                                                data-bs-target="#deleteFileConfirmModal" class="btn btn-danger "><i
+                                                    class="bi bi-trash3"></i>
+                                            </button>
+                                            <button v-on:click="fileHistory(file.Id)" class="btn  btn-success"
+                                                data-bs-toggle="modal" data-bs-target="#versionModal"><i
+                                                    class="bi bi-card-checklist"></i>
+                                            </button>
 
                                         </div>
                                     </div>
@@ -69,14 +74,14 @@
                             </div>
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                v-on:click="Id=document.Id">Загрузить
-                                документы</button>
+                                v-on:click="Id=document.Id"><i class="bi bi-download"></i>
+                            </button>
                             <button :id="document.Id" class="btn btn-success mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                v-on:click="documentHistory(document.Id)">Версии</button>
+                                v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist"></i>
+                            </button>
                             <button v-on:click="deleteDocumentId=document.Id" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentConfirmModal" class="btn btn-danger mb-1">Удалить
-                                документ</button>
+                                data-bs-target="#deleteDocumentConfirmModal" class="btn btn-danger mb-1"><i class="bi bi-trash3"></i></button>
                         </div>
                     </div>
                 </div>
@@ -129,7 +134,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteFileConfirmModalLabel">Удалить документ?</h5>
+                    <h5 class="modal-title" id="deleteFileConfirmModalLabel"><i class="bi bi-trash3"></i></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pb-5 pt-5 d-flex justify-content-around">
