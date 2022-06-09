@@ -12,9 +12,9 @@
 
             <div class="people__list col-sm-12 col-lg-4">
                 <div class="input-group mb-3">
-                    <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
+                    <input v-on:keyup.enter="getClients(); loading=true" v-model="clientName" type="text" class="form-control"
                         placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
-                    <button v-on:click="getClients" v-on:click="loading=true" class="btn btn-outline-secondary"
+                    <button v-on:click=" loading=true ; getClients()" class="btn btn-outline-secondary"
                         type="button" id="button-addon2">Поиск</button>
 
 
