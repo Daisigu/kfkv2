@@ -17,7 +17,7 @@
                         aria-describedby="button-addon2">
                     <button v-on:click=" loading=true ; getClients()" class="btn btn-outline-secondary" type="button"
                         id="button-addon2">Поиск</button>
-                      
+
                 </div>
                 <h2 class="text-center" v-if="loading==false && clients.length==0">Нет совпадений</h2>
 
@@ -27,9 +27,9 @@
                         <span class="visually-hidden">Загрузка</span>
                     </div>
                 </div>
-                
+
                 <div v-if="loading==false" class="list-group d-flex justify-content-center align-items-center">
-                    
+
                     <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
                         v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id">
                         <div class="d-flex w-100 justify-content-between">
@@ -106,11 +106,11 @@
                 </div>
                 <div class="modal-body">
                     <input class="form-control mb-3" type="file" v-on:change="downloadFile" ref="downloadFile">
-                   
+
                 </div>
                 <div class="modal-footer">
                     <button data-bs-dismiss="modal" class="btn btn-primary" v-bind:class="{disabled: !fileUpload}"
-                    v-on:click="submitFile($event)">Загрузить</button>
+                        v-on:click="submitFile($event)">Загрузить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -145,10 +145,10 @@
                     <h5 class="modal-title" id="deleteFileConfirmModalLabel">Удалить файл?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body pb-5 pt-5 d-flex justify-content-around">
-                    <button class="btn-danger btn col-3" v-on:click="deleteFile(deleteFileId)"
+                <div class="modal-body d-flex justify-content-around">
+                    <button class="btn-danger btn col-4" v-on:click="deleteFile(deleteFileId)"
                         data-bs-dismiss="modal">Да</button>
-                    <button class="btn-primary btn col-3" data-bs-dismiss="modal">Нет</button>
+                    <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -216,11 +216,12 @@
                         <input class="form-control mb-3" type="file" v-on:change="changeUploadFile" ref="changeFile">
                         <input type="text" class="form-control mb-3" :v-model="changeValue"
                             v-on:change="setChangeValue($event)">
-                       
+
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button  v-bind:class="{disabled: !fileUpload}" data-bs-dismiss="modal" class="btn btn-primary" v-on:click="fileUpload=false">Загрузить</button>
+                    <button v-bind:class="{disabled: !fileUpload}" data-bs-dismiss="modal" class="btn btn-primary"
+                        v-on:click="fileUpload=false; changeFile()">Загрузить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -273,11 +274,11 @@
             },
 
             downloadFile() {
-                this.fileUpload=true;
+                this.fileUpload = true;
                 this.downloadFiles = this.$refs.downloadFile.files[0];
             },
             changeUploadFile() {
-                this.fileUpload=true;
+                this.fileUpload = true;
                 this.changedFiles = this.$refs.changeFile.files[0];
             },
             async deleteFile(Id) {
@@ -293,7 +294,7 @@
                     res.data.files;
                     res.status;
                     this.$refs.downloadFile.value = null
-                    this.fileUpload=false;
+                    this.fileUpload = false;
                     this.getDocuments(this.clientId)
 
                 }).catch(
@@ -301,7 +302,7 @@
                         alert('Файл не выбран')
                     }
                 );
-                
+
             },
             changeFile(Id, changeValue) {
                 const formData = new FormData();
@@ -313,7 +314,7 @@
                     res.status;
                     this.$refs.changeFile.value = null
                     this.changeValue = null
-                    this.fileUpload=false;
+                    this.fileUpload = false;
                     this.getDocuments(this.clientId)
                 }).catch(
                     function (error) {
@@ -328,7 +329,7 @@
                     .then(function (response) {
                         if (response.data.success == false) {
                             alert(response.data.message)
-                            thiz.loading=false
+                            thiz.loading = false
                         }
                         else {
                             console.log(response);
@@ -364,11 +365,10 @@
     .list-group-item {
         cursor: pointer;
     }
-    .spinner-border{
+
+    .spinner-border {
         margin: auto;
     }
-  
-
 </style>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
