@@ -23,8 +23,8 @@
                     <div v-if="loading==true" class="spinner-border" role="status">
                         <span class="visually-hidden">Загрузка</span>
                     </div>
-                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
-                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id)">
+                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" 
+                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id" >
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FullName}}</h5>
                             <small class="text-muted">{{client.Birthdate}}</small>
@@ -209,6 +209,7 @@
                 fileHistoryArray: [],
                 documentHistoryArray: [],
                 deleteFileId:'',
+                clientId: '',
             }
         },
         methods: {
@@ -251,6 +252,7 @@
                     res.data.files; // binary representation of the file
                     res.status; // HTTP status
                     this.$refs.downloadFile.value = null
+                    this.getDocuments(this.clientId)
 
                 }).catch(
                     function (error) {
