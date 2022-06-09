@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <!-- Loading Modal -->
+    <!-- uploading Modal -->
     <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -109,7 +109,7 @@
                    
                 </div>
                 <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-primary disabled"
+                    <button data-bs-dismiss="modal" class="btn btn-primary" v-bind:class="{disabled: !fileUpload}"
                     v-on:click="submitFile($event)">Загрузить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
     </div>
-    <!-- Change Modal -->
+    <!-- Change File Modal -->
     <div class="modal fade" id="changeModal" tabindex="-1" aria-labelledby="changeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -216,10 +216,11 @@
                         <input class="form-control mb-3" type="file" v-on:change="changeUploadFile" ref="changeFile">
                         <input type="text" class="form-control mb-3" :v-model="changeValue"
                             v-on:change="setChangeValue($event)">
-                        <button data-bs-dismiss="modal" class="btn btn-primary">Загрузить</button>
+                       
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button  v-bind:class="{disabled: !fileUpload}" data-bs-dismiss="modal" class="btn btn-primary" v-on:click="fileUpload=false">Загрузить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -247,6 +248,7 @@
                 documentHistoryArray: [],
                 deleteFileId: '',
                 clientId: '',
+                fileUpload: false,
             }
         },
         methods: {
@@ -271,9 +273,11 @@
             },
 
             downloadFile() {
+                this.fileUpload=true;
                 this.downloadFiles = this.$refs.downloadFile.files[0];
             },
             changeUploadFile() {
+                this.fileUpload=true;
                 this.changedFiles = this.$refs.changeFile.files[0];
             },
             async deleteFile(Id) {
@@ -289,6 +293,7 @@
                     res.data.files;
                     res.status;
                     this.$refs.downloadFile.value = null
+                    this.fileUpload=false;
                     this.getDocuments(this.clientId)
 
                 }).catch(
@@ -308,6 +313,7 @@
                     res.status;
                     this.$refs.changeFile.value = null
                     this.changeValue = null
+                    this.fileUpload=false;
                     this.getDocuments(this.clientId)
                 }).catch(
                     function (error) {
@@ -339,7 +345,7 @@
                 var thiz = this;
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
-                        thiz.documents = response.data.Documents
+                        thiz.documents = response.data.data.Documents
                         thiz.loading = false
                     })
                     .catch(function (error) {
