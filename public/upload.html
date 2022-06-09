@@ -37,7 +37,7 @@
          getNewDocument(){
              axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
                  console.log(res.data);
-                 this.newDocument = res.data.NewDocument;
+                 this.newDocument = res.data.data.NewDocument;
              })  
          },
          getDocSetupCheckedTrue(){

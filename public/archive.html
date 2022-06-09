@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <div class="arhcive__page pt-4 " id="archive">
     <div class="container">
-        <h1 class="text-center ">Архив</h1>
+        <h1 class="text-center ">Поиск</h1>
 
         <div class="row">
 
@@ -17,12 +17,17 @@
                         aria-describedby="button-addon2">
                     <button v-on:click=" loading=true ; getClients()" class="btn btn-outline-secondary" type="button"
                         id="button-addon2">Поиск</button>
+                      
+                </div>
+                <h2 class="text-center" v-if="loading==false && clients.length==0">Нет совпадений</h2>
 
 
+                <div class="row">
+                    <div v-if="loading==true" class="spinner-border" role="status">
+                        <span class="visually-hidden">Загрузка</span>
+                    </div>
                 </div>
-                <div v-if="loading==true" class="spinner-border" role="status">
-                    <span class="visually-hidden">Загрузка</span>
-                </div>
+                
                 <div v-if="loading==false" class="list-group d-flex justify-content-center align-items-center">
                     
                     <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
@@ -75,7 +80,7 @@
                             </div>
                             <button title="Загрузиить файл в документ" :id="document.Id" class="btn btn-primary mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                v-on:click="Id=document.Id"><i class="bi bi-download"></i>
+                                v-on:click="Id=document.Id"><i class="bi bi-upload"></i>
                             </button>
                             <button title="История изменений документа" :id="document.Id" class="btn btn-success mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#documentVersionModal"
@@ -231,7 +236,7 @@
         data() {
             return {
                 clientName: 'Гаврик',
-                clients: null,
+                clients: [],
                 documents: [],
                 loading: false,
                 Id: '',
@@ -246,7 +251,7 @@
         methods: {
             documentHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((res) => {
-                    this.documentHistoryArray = res.data.HistoryDoc;
+                    this.documentHistoryArray = res.data.data.HistoryDoc;
                 })
             },
             deleteDocument(Id) {
@@ -256,7 +261,7 @@
             },
             fileHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/' + Id).then((res) => {
-                    this.fileHistoryArray = res.data.HistoryFile
+                    this.fileHistoryArray = res.data.data.HistoryFile
                 })
             },
             setChangeValue(event) {
@@ -332,7 +337,8 @@
                 var thiz = this;
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
-                        thiz.documents = response.data.Documents
+                        console.log(response.data.data);
+                        thiz.documents = response.data.data.Documents
                         thiz.loading = false
                     })
                     .catch(function (error) {
@@ -351,7 +357,10 @@
     .list-group-item {
         cursor: pointer;
     }
- 
+    .spinner-border{
+        margin: auto;
+    }
+  
 
 </style>
 
