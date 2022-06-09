@@ -106,10 +106,11 @@
                 </div>
                 <div class="modal-body">
                     <input class="form-control mb-3" type="file" v-on:change="downloadFile" ref="downloadFile">
-                    <button data-bs-dismiss="modal" class="btn btn-primary"
-                        v-on:click="submitFile($event)">Загрузить</button>
+                   
                 </div>
                 <div class="modal-footer">
+                    <button data-bs-dismiss="modal" class="btn btn-primary disabled"
+                    v-on:click="submitFile($event)">Загрузить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -295,6 +296,7 @@
                         alert('Файл не выбран')
                     }
                 );
+                
             },
             changeFile(Id, changeValue) {
                 const formData = new FormData();
