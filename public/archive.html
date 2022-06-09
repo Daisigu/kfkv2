@@ -13,18 +13,18 @@
                 <div class="input-group mb-3">
                     <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
                         placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
-                    <button @click="getClients" class="btn btn-outline-secondary" type="button"
+                    <button v-on:click="getClients" v-on:click="loading=true" class="btn btn-outline-secondary" type="button"
                         id="button-addon2">Поиск</button>
 
 
                 </div>
 
                 <div class="list-group d-flex justify-content-center align-items-center">
-                    <div v-if="loading" class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div v-if="loading==true" class="spinner-border" role="status">
+                        <span class="visually-hidden">Загрузка</span>
                     </div>
                     <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
-                        v-bind:Id="client.Id" @click="getDocuments(client.Id)">
+                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id)">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FullName}}</h5>
                             <small class="text-muted">{{client.Birthdate}}</small>
@@ -109,9 +109,9 @@
                     <h5 class="modal-title" id="deleteFileConfirmModalLabel">Удалить документ?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body d-flex justify-content-around">
-                    <button class="btn-danger btn col-4" v-on:click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
-                    <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
+                <div class="modal-body pb-5 pt-5 d-flex justify-content-around">
+                    <button class="btn-danger btn col-3" v-on:click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
+                    <button class="btn-primary btn col-3" data-bs-dismiss="modal">Нет</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -272,13 +272,12 @@
                     this.changeValue = null
                 }).catch(
                     function (error) {
-                        alert('Файл не выбран')
+                        alert(error.response.data)
                     }
                 );
 
             },
             async getClients() {
-                this.loading = true
                 var thiz = this;
                 axios.post('http://192.168.71.142/Home/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
@@ -287,12 +286,12 @@
                         thiz.loading = false
                     })
                     .catch(function (error) {
-                        alert(error.response.data)
+                        alert(error.response.statusText)
+                        console.log(error)
                     })
             },
             async getDocuments(Id) {
                 var thiz = this;
-                thiz.loading = true
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
                         console.log(response.data);
