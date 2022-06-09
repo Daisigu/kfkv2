@@ -13,8 +13,8 @@
                 <div class="input-group mb-3">
                     <input v-on:keyup.enter="getClients" v-model="clientName" type="text" class="form-control"
                         placeholder="" aria-label="Recipient's clientname" aria-describedby="button-addon2">
-                    <button v-on:click="getClients" v-on:click="loading=true" class="btn btn-outline-secondary" type="button"
-                        id="button-addon2">Поиск</button>
+                    <button v-on:click="getClients" v-on:click="loading=true" class="btn btn-outline-secondary"
+                        type="button" id="button-addon2">Поиск</button>
 
 
                 </div>
@@ -23,8 +23,8 @@
                     <div v-if="loading==true" class="spinner-border" role="status">
                         <span class="visually-hidden">Загрузка</span>
                     </div>
-                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" 
-                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id" >
+                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
+                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FullName}}</h5>
                             <small class="text-muted">{{client.Birthdate}}</small>
@@ -57,8 +57,8 @@
                                             <button v-on:click="Id=file.Id" data-bs-toggle="modal"
                                                 data-bs-target="#changeModal"
                                                 class="btn btn-info btn-sm text-white">Заменить</button>
-                                            <button v-on:click="deleteFileId=file.Id"  data-bs-toggle="modal"
-                                            data-bs-target="#deleteFileConfirmModal"
+                                            <button v-on:click="deleteFileId=file.Id" data-bs-toggle="modal"
+                                                data-bs-target="#deleteFileConfirmModal"
                                                 class="btn btn-danger btn-sm">Удалить</button>
                                             <button v-on:click="fileHistory(file.Id)" class="btn btn-sm btn-success"
                                                 data-bs-toggle="modal" data-bs-target="#versionModal">Версии</button>
@@ -68,13 +68,15 @@
                                 </div>
                             </div>
                             <button :id="document.Id" class="btn btn-primary mb-1" v-if="documents.length>0"
-                                data-bs-toggle="modal" data-bs-target="#loadingModal" v-on:click="Id=document.Id">Загрузить
+                                data-bs-toggle="modal" data-bs-target="#loadingModal"
+                                v-on:click="Id=document.Id">Загрузить
                                 документы</button>
                             <button :id="document.Id" class="btn btn-success mb-1" v-if="documents.length>0"
                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
                                 v-on:click="documentHistory(document.Id)">Версии</button>
-                            <button class="btn btn-danger mb-1" :id="document.Id"
-                                v-on:click="deleteDocument(document.Id)">Удалить раздел</button>
+                            <button @click="deleteDocumentId=document.Id" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentConfirmModal" class="btn btn-danger mb-1">Удалить
+                                документ</button>
                         </div>
                     </div>
                 </div>
@@ -101,8 +103,29 @@
             </div>
         </div>
     </div>
-       <!-- delete file confirm Modal -->
-       <div class="modal fade" id="deleteFileConfirmModal" tabindex="-1" aria-labelledby="deleteFileConfirmModalLabel" aria-hidden="true">
+    <!-- delete document confirm Modal -->
+    <div class="modal fade" id="deleteDocumentConfirmModal" tabindex="-1"
+        aria-labelledby="deleteDocumentConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteDocumentConfirmModalLabel">Удалить документ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-around">
+                    <button class="btn-danger btn col-4" @click="deleteDocument(deleteDocumentId)"
+                        data-bs-dismiss="modal">Да</button>
+                    <button class="btn-primary btn col-4" data-bs-dismiss="modal">Нет</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- delete file confirm Modal -->
+    <div class="modal fade" id="deleteFileConfirmModal" tabindex="-1" aria-labelledby="deleteFileConfirmModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -110,7 +133,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pb-5 pt-5 d-flex justify-content-around">
-                    <button class="btn-danger btn col-3" v-on:click="deleteFile(deleteFileId)" data-bs-dismiss="modal">Да</button>
+                    <button class="btn-danger btn col-3" v-on:click="deleteFile(deleteFileId)"
+                        data-bs-dismiss="modal">Да</button>
                     <button class="btn-primary btn col-3" data-bs-dismiss="modal">Нет</button>
                 </div>
                 <div class="modal-footer">
@@ -208,7 +232,7 @@
                 changeValue: '',
                 fileHistoryArray: [],
                 documentHistoryArray: [],
-                deleteFileId:'',
+                deleteFileId: '',
                 clientId: '',
             }
         },
@@ -220,7 +244,9 @@
             },
             deleteDocument(Id) {
                 console.log(Id + 'Id');
-                axios.post('http://192.168.71.142/Document/DeleteDocument/' + Id)
+                axios.post('http://192.168.71.142/Document/DeleteDocument/' + Id).then((res) => {
+                    this.getDocuments(this.clientId)
+                })
             },
             fileHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/' + Id).then((res) => {
@@ -242,8 +268,8 @@
             },
             async deleteFile(Id) {
                 console.log('File' + Id + 'Deleted');
-                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id).then((res)=>{
-                this.getDocuments(this.clientId)
+                axios.post('http://192.168.71.142/Document/DeleteFile/' + Id).then((res) => {
+                    this.getDocuments(this.clientId)
                 })
             },
             submitFile(event) {
