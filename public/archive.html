@@ -60,7 +60,7 @@
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
-                                            <button title="Заменить файл в документе" v-on:click="Id=file.Id"
+                                            <button title="Заменить файл в документе" v-on:click="Id=file.Id;$refs.changeFile.value = null;fileUpload=false"
                                                 data-bs-toggle="modal" data-bs-target="#changeModal"
                                                 class="btn btn-info text-white"><i class="bi bi-arrow-left-right"></i>
                                             </button>
@@ -79,7 +79,7 @@
                             </div>
                             <button title="Загрузиить файл в документ" :id="document.Id" class="btn btn-primary mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                v-on:click="Id=document.Id"><i class="bi bi-upload"></i>
+                                v-on:click="Id=document.Id;$refs.downloadFile.value = null; fileUpload=false"><i class="bi bi-upload"></i>
                             </button>
                             <button title="История изменений документа" :id="document.Id" class="btn btn-success mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#documentVersionModal"
