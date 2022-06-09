@@ -57,7 +57,7 @@
                             <div class="accordion-body">
                                 <div class="list-group" v-for="file in document.Files">
                                     <div class="list-group-item mb-1 d-flex justify-content-between">
-                                        <a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"
+                                        <a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id" class="cut-text" :title="file.Name"
                                             target="_blank"> {{file.Name}}
                                         </a>
                                         <div>
@@ -369,6 +369,19 @@
     .spinner-border {
         margin: auto;
     }
+
+@media (max-width: 800px){
+    .cut-text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  width: 140px; 
+  white-space: nowrap;
+}
+
+}
+
+
+
 </style>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
