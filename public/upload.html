@@ -5,27 +5,31 @@
     <div class="verification__page pt-5" id="upload">
         <div class="row">
             <div class="col-sm-12 col-lg-5">
-                <div v-on:click="uploadClientId=document.ClientId" class="list-group" v-for="document in newDocument">
+                <div v-on:click="uploadClientId=client.ClientId" class="list-group"
+                    v-for="client in newDocument">
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{document.FIO}}</h5>
-                            <small>{{document.DocType}}</small>
+                            <h5 class="mb-1">{{client.FIO}}</h5>
+                            <small>{{client.DocType}}</small>
                         </div>
-                        <small>{{document.Created}}</small>
+                        <small>{{client.Created}}</small>
                     </a>
                 </div>
             </div>
-            <div class="list-group col-sm-12 col-lg-7">
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">List group item heading</h5>
-                        <small>3 days ago</small>
-                    </div>
-                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
-                        varius blandit.</p>
-                    <small>Donec id elit non mi porta.</small>
-                </a>
+            <div class="col-sm-12 col-lg-7">
+                <div class="list-group " v-for="document in uploadClientDocuments">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
+                            varius blandit.</p>
+                        <small>Donec id elit non mi porta.</small>
+                    </a>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -53,6 +57,7 @@
             return {
                 newDocument: [],
                 uploadClientId: '',
+                uploadClientDocuments: [],
             }
         },
         methods: {
@@ -60,6 +65,15 @@
                 axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
                     console.log(res.data.data.NewDocument);
                     this.newDocument = res.data.data.NewDocument;
+                })
+            },
+            async getClientDocument(Id) {
+                var thiz = this
+                axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id).then((response) => {
+
+                    console.log(response.data.data.Documents);
+                    thiz.uploadClientDocuments = response.data.data.Documents
+                    this.loading = false
                 })
             },
             getDocSetupCheckedTrue() {
