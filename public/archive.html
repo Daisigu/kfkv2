@@ -375,7 +375,7 @@
                 var thiz = this;
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
-
+                        console.log();
 
                         if (response.data.success == false) {
                             alert(response.data.message)
