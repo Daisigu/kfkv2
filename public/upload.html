@@ -4,8 +4,8 @@
 <div class="container">
     <div class="verification__page pt-5" id="upload">
         <div class="row">
-            <div class="col-sm-12 col-lg-5">
-                <div v-on:click="uploadClientId=client.ClientId" class="list-group"
+            <div class="col-sm-12 col-lg-4">
+                <div v-on:click="uploadClientId=client.ClientId; clientDocType=client.DocTypeInt" class="list-group"
                     v-for="client in newDocument">
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
                         <div class="d-flex w-100 justify-content-between">
@@ -16,18 +16,161 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-7">
-                <div class="list-group " v-for="document in uploadClientDocuments">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small>3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus
-                            varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                    </a>
+            <div class="col-sm-12 col-lg-8">
+                <!--          <div class="list-group" v-if="clientDocType==1">
+                    <div class="list-group-item">Анкета заемщика</div>
+                    <div class="list-group-item">Согласе на обработку персональных данных</div>
+                    <div class="list-group-item">Согласие на раскрытие информации, содержащейся в основной части кредитной истории, пользователю кредитной историии(Срок 6 месяцев)</div>
+                    <div class="list-group-item">Паспорт</div>
+                    <div class="list-group-item">СТС (копия)</div>
+                    <div class="list-group-item">ПТС(копия)</div>
+               
                 </div>
+                <div class="list-group" v-if="clientDocType==2">
+                    <div class="list-group-item">Анкета заемщика</div>
+                    <div class="list-group-item">Согласе на обработку персональных данных</div>
+                    <div class="list-group-item">Согласие на раскрытие информации, содержащейся в основной части кредитной истории, пользователю кредитной историии(Срок 6 месяцев)</div>
+                    <div class="list-group-item">Паспорт</div>
+                    <div class="list-group-item">СТС (копия)</div>
+                    <div class="list-group-item">ПТС(копия)</div>
+                    <div class="list-group-item">Договор займа №2314-1/2021 от 13.04.2021 г.</div>
+                    <div class="list-group-item">Договор залога</div>
+                    <div class="list-group-item">График платежей</div>
+                    <div class="list-group-item">Соглашение о частоте взаимодействия при осуществлении действий, направленных на взыскание задолженности </div>
+                    <div class="list-group-item">Соглашение об ииных способах взаимодействийц при осуществлении действий, направленных на взыскание</div>
+                    <div class="list-group-item">РКО (копия)</div>
+                    <div class="list-group-item">Акт ПП ДС</div>
+                    <div class="list-group-item">Акт ПП ПТС</div>
+                    <div class="list-group-item">Акт ПП ТС</div>
+                    <div class="list-group-item">Акт осмотра ТС</div>
+                    <div class="list-group-item">Справка о рыночной стоимости</div>
+               
+                </div> -->
+                <table class="table table-hover" v-if="clientDocType==1">
+                    <tr class="table-light">
+                        <td>№1</td>
+                        <td>Анкета заемщика</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№2</td>
+                        <td>Согласе на обработку персональных данных</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№3</td>
+                        <td>Согласие на раскрытие информации, содержащейся в основной части кредитной истории,
+                            пользователю кредитной историии(Срок 6 месяцев)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№4</td>
+                        <td>Паспорт(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№5</td>
+                        <td>СТС(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№6</td>
+                        <td>ПТС(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+
+
+                <!-- Отказ -->
+                <table class="table table-hover" v-if="clientDocType==2">
+                    <tr class="table-light">
+                        <td>№1</td>
+                        <td>Анкета заемщика</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№2</td>
+                        <td>Согласе на обработку персональных данных</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№3</td>
+                        <td>Согласие на раскрытие информации, содержащейся в основной части кредитной истории,
+                            пользователю кредитной историии(Срок 6 месяцев)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№4</td>
+                        <td>Паспорт(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№5</td>
+                        <td>СТС(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№6</td>
+                        <td>ПТС(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№7</td>
+                        <td>Договор займа №2314-1/2021 от 13.04.2021 г.</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№8</td>
+                        <td>Договор займа №2314-1/2021 от 13.04.2021 г.</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№9</td>
+                        <td>График платежей</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№10</td>
+                        <td>Соглашение о частоте взаимодействия при осуществлении действий, направленных на взыскание
+                            задолженности </td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№11</td>
+                        <td>Соглашение об ииных способах взаимодействийц при осуществлении действий, направленных на взыскание</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№12</td>
+                        <td>РКО(копия)</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№13</td>
+                        <td>Акт ПП ДС</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№14</td>
+                        <td>Акт ПП ПТС</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№15</td>
+                        <td>Акт ПП ТС</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№16</td>
+                        <td>Акт осмотра ТС</td>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>№17</td>
+                        <td>Справка о рыночной стоимости</td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
             </div>
 
         </div>
@@ -59,6 +202,7 @@
                 newDocument: [],
                 uploadClientId: '',
                 uploadClientDocuments: [],
+                clientDocType: '',
             }
         },
         methods: {
