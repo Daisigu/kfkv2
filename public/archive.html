@@ -47,8 +47,8 @@
                         <h2 class="accordion-header" :id="'flush-headingOne'+document.Id">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 :data-bs-target="'#flush-collapseOne'+document.Id" aria-expanded="false"
-                                :aria-controls="'flush-collapseOne'+document.Id">
-                                {{document.DocType}}
+                                :aria-controls="'flush-collapseOne'+document.Id" v-bind="{disabled : !document.Uploaded}">
+                                {{document.DocType}} 
                             </button>
                         </h2>
                         <div :id="'flush-collapseOne'+document.Id" class="accordion-collapse collapse"
@@ -254,6 +254,7 @@
                 match: false,
             }
         },
+     
         methods: {
             documentHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((response) => {
