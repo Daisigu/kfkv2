@@ -5,7 +5,7 @@
     <div class="verification__page pt-5" id="upload">
         <div class="row">
             <div class="col-sm-12 col-lg-4">
-                <div v-on:click="uploadClientId=client.ClientId; clientDocType=client.DocTypeInt" class="list-group"
+                <div v-on:click="uploadClientId=client.DocumentId; clientDocType=client.DocTypeInt" class="list-group"
                     v-for="client in newDocument">
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
                         <div class="d-flex w-100 justify-content-between">
@@ -16,39 +16,42 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-12 col-lg-8" v-if="clientDocType==1">
-                <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                    <span>Акт ППДС</span>
-                    <div>
-                        <input type="file" />
+
+            <form method="post" enctype="multipart/form-data" :action="'http://192.168.71.142/Document/UploadFile?documentId='+uploadClientId" class="col-sm-12 col-lg-8" v-if="clientDocType==1">
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ППДС</span>
+                        <div>
+                            <input type="file" name="1file"/>
+                        </div>
                     </div>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                    <span>Акт ПП ПТС</span>
-                    <div>
-                        <input type="file" />
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ПП ПТС</span>
+                        <div>
+                            <input type="file" name="2file"/>
+                        </div>
                     </div>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                    <span>Акт ПП ТС</span>
-                    <div>
-                        <input type="file" />
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ПП ТС</span>
+                        <div>
+                            <input type="file" name="3file"/>
+                        </div>
                     </div>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                    <span>Акт осмотра ТС</span>
-                    <div>
-                        <input type="file" />
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт осмотра ТС</span>
+                        <div>
+                            <input type="file" name="4file"/>
+                        </div>
                     </div>
-                </div>
-                <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                    <span>Акт Справка о рыночной стоимости</span>
-                    <div>
-                        <input type="file" />
+                    <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт Справка о рыночной стоимости</span>
+                        <div>
+                            <input type="file" name="5file"/>
+                        </div>
                     </div>
-                </div>
-                <button class="btn btn-primary mt-2" >Отправить</button>
-            </div>
+                    <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+            </form>
+
+            
             <div class="col-sm-12 col-lg-8" v-if="clientDocType==2">
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ППДС</span>
@@ -80,7 +83,7 @@
                         <input type="file" />
                     </div>
                 </div>
-                <button class="btn btn-primary mt-2" >Отправить</button>
+                <button class="btn btn-primary mt-2">Отправить</button>
             </div>
             <!--              <table class="table table-hover">
                     <tr class="table-light">
@@ -240,6 +243,8 @@
             }
         },
         methods: {
+            
+          
             getNewDocument() {
                 axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
                     console.log(res.data.data.NewDocument);

@@ -39,7 +39,6 @@
                  this.listDocCheckedFalse = res.data.Documents;
              })  
          },
-         
          getDocSetupCheckedTrue(){
              axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
                  console.log(res.data);
