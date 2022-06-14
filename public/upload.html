@@ -9,9 +9,9 @@
     <div class="verification__page pt-5" id="upload">
         <div class="row">
             <div class="col-sm-12 col-lg-4">
-                <div v-on:click="uploadClientId=client.DocumentId; clientDocType=client.DocTypeInt" class="list-group"
+                <div v-on:click="uploadClientId=client.DocumentId; clientDocType=client.DocTypeInt; uploadFileClientUp=false; $refs.downloadFile.value = null" class="list-group"
                     v-for="client in newDocument">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-1" >
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FIO}}</h5>
                             <small><span class="badge bg-primary" v-bind:class="{ 'bg-danger': client.DocTypeInt==2 }">
@@ -28,31 +28,31 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ППДС</span>
                     <div>
-                        <input type="file" name="1file" />
+                        <input type="file" name="1file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ПП ПТС</span>
                     <div>
-                        <input type="file" name="2file" />
+                        <input type="file" name="2file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ПП ТС</span>
                     <div>
-                        <input type="file" name="3file" />
+                        <input type="file" name="3file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт осмотра ТС</span>
                     <div>
-                        <input type="file" name="4file" />
+                        <input type="file" name="4file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт Справка о рыночной стоимости</span>
                     <div>
-                        <input type="file" name="5file" />
+                        <input type="file" name="5file" v-on:change="downloadFile" />
                     </div>
                 </div>
 
@@ -67,36 +67,37 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ПДС</span>
                     <div>
-                        <input type="file" name="7file" />
+                        <input type="file" name="7file" v-on:change="downloadFile" ref="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ПП ПТС</span>
                     <div>
-                        <input type="file" name="8file" />
+                        <input type="file" name="8file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт ПП ТС</span>
                     <div>
-                        <input type="file" name="9file" />
+                        <input type="file" name="9file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Акт осмотра ТС</span>
                     <div>
-                        <input type="file" name="10file" />
+                        <input type="file" name="10file" v-on:change="downloadFile" />
                     </div>
                 </div>
                 <div class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                     <span>Справка о рыночной стоимости</span>
                     <div>
-                        <input type="file" name="11file" />
+                        <input type="file" name="11file" v-on:change="downloadFile" />
                     </div>
                 </div>
 
 
-                <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+                <button type="submit" class="btn btn-primary mt-2"
+                    v-bind="{disabled : !uploadFileClientUp}">Отправить</button>
             </form>
         </div>
 
@@ -106,7 +107,7 @@
 </div>
 
 <style>
-    .badge{
+    .badge {
         min-width: 53px;
     }
 </style>
@@ -131,10 +132,16 @@
                 uploadClientId: '',
                 uploadClientDocuments: [],
                 clientDocType: '',
+                uploadFileClientUp: false,
+                refsValue: '',
             }
         },
         methods: {
-
+            downloadFile() {
+                console.log('file upload');
+                this.uploadFileClientUp = true;
+                this.downloadFiles = this.$refs.downloadFile.files[0];
+            },
             getNewDocument() {
                 axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
                     console.log(res.data.data.NewDocument);
