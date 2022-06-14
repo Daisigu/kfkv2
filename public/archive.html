@@ -45,7 +45,7 @@
 
                     <div class="accordion-item" v-for="document in documents" :key="document.Id">
                         <h2 class="accordion-header" :id="'flush-headingOne'+document.Id">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed" v-bind:class="{unactive:!document.Uploaded}" type="button" data-bs-toggle="collapse"
                                 :data-bs-target="'#flush-collapseOne'+document.Id" aria-expanded="false"
                                 :aria-controls="'flush-collapseOne'+document.Id" v-bind="{disabled : !document.Uploaded}">
                                 {{document.Title}} 
@@ -413,6 +413,9 @@
             white-space: nowrap;
         }
 
+    }
+    .accordion-button.unactive{
+        color: rgb(168, 168, 168);
     }
 </style>
 
