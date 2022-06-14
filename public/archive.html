@@ -59,7 +59,7 @@
                                         <a :href="'http://192.168.71.142/Document/FileDownload/'+file.Id"
                                             class="cut-text" :title="file.Name" target="_blank"> {{file.Name}}
                                         </a>
-                                        <div>
+                                        <div class="file__buttons opacity-0">
                                             <button title="Заменить файл в документе"
                                                 v-on:click="Id=file.Id;$refs.changeFile.value = null;fileUpload=false"
                                                 data-bs-toggle="modal" data-bs-target="#changeModal"
@@ -416,6 +416,9 @@
     }
     .accordion-button.unactive{
         color: rgb(168, 168, 168);
+    }
+    .list-group-item:hover .file__buttons{
+        opacity: 1 !important;
     }
 </style>
 
