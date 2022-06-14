@@ -12,11 +12,11 @@
 
             <div class="people__list col-sm-12 col-lg-4">
                 <div class="input-group mb-3">
-                    <input v-on:keyup.enter="getClients(); loading=true; match=true; clientId='' ; documents=[]" v-model="clientName" type="text"
-                        class="form-control" placeholder="" aria-label="Recipient's clientname"
-                        aria-describedby="button-addon2">
-                    <button v-on:click=" loading=true ; getClients(); match=true; clientId='' ; documents=[]" class="btn btn-primary" type="button"
-                        id="button-addon2">Поиск</button>
+                    <input v-on:keyup.enter="getClients(); loading=true; match=true; clientId='' ; documents=[]"
+                        v-model="clientName" type="text" class="form-control" placeholder=""
+                        aria-label="Recipient's clientname" aria-describedby="button-addon2">
+                    <button v-on:click=" loading=true ; getClients(); match=true; clientId='' ; documents=[]"
+                        class="btn btn-primary" type="button" id="button-addon2">Поиск</button>
 
                 </div>
                 <h2 class="text-center" v-if="loading==false && clients.length==0 && match==true">Нет совпадений</h2>
@@ -30,14 +30,15 @@
 
                 <div v-if="loading==false" class="list-group d-flex justify-content-center align-items-center">
 
-                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" v-bind:class="{active: client.Id==clientId}"
-                        v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id">
+                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
+                        v-bind:class="{active: client.Id==clientId}" v-bind:Id="client.Id"
+                        v-on:click="getDocuments(client.Id); clientId=client.Id">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FullName}}</h5>
-                            <small >{{client.Birthdate}}</small>
+                            <small>{{client.Birthdate}}</small>
                         </div>
                         <p class="mb-1">Серия и номер паспорта: {{client.SeriesPassport}} {{client.NumberPassport}}</p>
-                        <small >Количество документов: {{client.CountDocument}}</small>
+                        <small>Количество документов: {{client.CountDocument}}</small>
                     </a>
                 </div>
             </div>
@@ -287,10 +288,7 @@
                     if (response.data.success == false) {
                         alert(response.data.message)
                     }
-                    else {
-                        this.fileHistoryArray = response.data.data.HistoryFile
-                    }
-
+                    else this.fileHistoryArray = response.data.data.HistoryFile
                 })
             },
             setChangeValue(event) {
@@ -306,15 +304,12 @@
                 this.fileUpload = true;
                 this.changedFiles = this.$refs.changeFile.files[0];
             },
-            async deleteFile(Id) {
+            deleteFile(Id) {
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id).then((response) => {
                     if (response.data.success == false) {
                         alert(response.data.message)
                     }
-                    else {
-                        this.getDocuments(this.clientId)
-
-                    }
+                    else this.getDocuments(this.clientId)
                 })
             },
             submitFile(event) {
@@ -430,10 +425,10 @@
         transition: opacity 0.5s ease;
         opacity: 1 !important;
     }
-    .active{
+
+    .active {
         transition: all 0.5s ease;
     }
-
 </style>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
