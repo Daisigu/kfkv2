@@ -12,10 +12,10 @@
 
             <div class="people__list col-sm-12 col-lg-4">
                 <div class="input-group mb-3">
-                    <input v-on:keyup.enter="getClients(); loading=true; match=true" v-model="clientName" type="text"
+                    <input v-on:keyup.enter="getClients(); loading=true; match=true; clientId='' ; documents=[]" v-model="clientName" type="text"
                         class="form-control" placeholder="" aria-label="Recipient's clientname"
                         aria-describedby="button-addon2">
-                    <button v-on:click=" loading=true ; getClients(); match=true" class="btn btn-primary" type="button"
+                    <button v-on:click=" loading=true ; getClients(); match=true; clientId='' ; documents=[]" class="btn btn-primary" type="button"
                         id="button-addon2">Поиск</button>
 
                 </div>
@@ -30,14 +30,14 @@
 
                 <div v-if="loading==false" class="list-group d-flex justify-content-center align-items-center">
 
-                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
+                    <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" v-bind:class="{active: client.Id==clientId}"
                         v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId=client.Id">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{client.FullName}}</h5>
-                            <small class="text-muted">{{client.Birthdate}}</small>
+                            <small >{{client.Birthdate}}</small>
                         </div>
                         <p class="mb-1">Серия и номер паспорта: {{client.SeriesPassport}} {{client.NumberPassport}}</p>
-                        <small class="text-muted">Количество документов: {{client.CountDocument}}</small>
+                        <small >Количество документов: {{client.CountDocument}}</small>
                     </a>
                 </div>
             </div>

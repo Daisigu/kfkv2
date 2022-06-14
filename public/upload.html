@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+                <button v-bind="{disabled : !uploadFileClientUp}" type="submit" class="btn btn-primary mt-2">Отправить</button>
             </form>
 
 
@@ -113,6 +113,9 @@
 <style>
     .badge {
         min-width: 53px;
+    }
+    * {
+        font-family: 'Cuprum', sans-serif !important;
     }
 </style>
 
