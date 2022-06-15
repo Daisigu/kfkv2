@@ -9,12 +9,13 @@
     <div class="container">
         <div class="verification__page pt-5" id="upload">
             <div class="row">
+                
                 <div class="col-sm-12 col-lg-4 upload-client-list list-group">
+                    <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2" v-model="uploadSearchValue">
                     <!-- //$refs.downloadFile.value = null// -->
-                    <input type="text" class="form-control mb-1" placeholder="Поиск" aria-describedby="button-addon2" v-model="uploadSearchValue">
                     <div   v-bind:class="{ active: uploadClientId == client.DocumentId }" v-on:click="uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
                     class="list-group-item list-group-item-action"
-                      v-for="client in newDocument">
+                      v-for="client in filteredUploadClientList">
                         <div>
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">{{ client.FIO }}</h5>
