@@ -27,7 +27,8 @@
                 </div>
 
                 <div class="col-sm-12 col-lg-8">
-                    <h1 v-if="clientFIO.length<=0" class="text-center">Выберите клиента</h1>
+                    <h1 v-if="newDocument.length==0" >Нет документов на подгрузку</h1>
+                    <h1 v-if="uploadClientId==0 && newDocument.length !==0" class="text-center">Выберите клиента </h1>
                     <form method="post" enctype="multipart/form-data" class="form-border"
                         :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
                         v-if="clientDocType == 1">
@@ -180,12 +181,9 @@ var app4 = new Vue({
             })
         },
         async getClientDocument(Id) {
-            var thiz = this
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id).then((response) => {
-
                     console.log(response.data.data.Documents);
-                    thiz.uploadClientDocuments = response.data.data.Documents
-                    this.loading = false
+                    this.uploadClientDocuments = response.data.data.Documents
                 })
             },
 
