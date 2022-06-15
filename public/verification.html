@@ -31,9 +31,7 @@
                     <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0">
                         <h3>{{listDocCheckedFalseClientName}}</h3>
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
-                            <div>
-                                {{ file.Name }}
-                            </div>
+                               <a>{{ file.Name }}</a> 
                         </div>
                         <div class="buttons-group mt-2">
                             <button class="btn btn-danger" data-bs-toggle="modal"
