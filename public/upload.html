@@ -9,12 +9,12 @@
     <div class="container">
         <div class="verification__page pt-5" id="upload">
             <div class="row">
-                <div class="col-sm-12 col-lg-4">
+                <div class="col-sm-12 col-lg-4 upload-client-list list-group">
                     <!-- //$refs.downloadFile.value = null// -->
-                    <div v-on:click="uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
-                        class="list-group" v-for="client in newDocument">
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
-                            v-bind:class="{ active: uploadClientId == client.DocumentId }">
+                    <div   v-bind:class="{ active: uploadClientId == client.DocumentId }" v-on:click="uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                    class="list-group-item list-group-item-action"
+                      v-for="client in newDocument">
+                        <div>
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1">{{ client.FIO }}</h5>
                                 <small><span class="badge bg-primary"
@@ -22,7 +22,7 @@
                                         {{ client.DocType }} </span></small>
                             </div>
                             <small>{{ client.Title }}</small>
-                        </a>
+                        </div>
                     </div>
                 </div>
 
@@ -140,7 +140,10 @@
             border: 1px solid rgb(221, 220, 220);
             border-radius: 10px;
         }
-
+        .upload-client-list > .list-group-item{
+            cursor: pointer;
+        }
+    
   
     </style>
 
