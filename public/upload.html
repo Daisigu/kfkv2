@@ -33,7 +33,8 @@
                         :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
                         v-if="clientDocType == 1">
                         <h3 class="upload-client-title">{{ clientFIO }}</h3>
-                        <div
+                        <div class="list-group">
+                            <div
                             class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                             <span>Акт ППДС</span>
                             <div>
@@ -69,6 +70,7 @@
                             </div>
                         </div>
 
+                        </div>
                         <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
                             class="btn btn-primary mt-2">Отправить</button>
                     </form>
@@ -79,41 +81,43 @@
                         :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
                         v-if="clientDocType == 2">
                         <h3 class="upload-client-title">{{ clientFIO }}</h3>
+                       <div class="list-group">
                         <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ПДС</span>
-                            <div>
-                                <input type="file" name="7file" v-on:change="downloadFile" ref="downloadFile" class="form-control"/>
-                            </div>
+                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ПДС</span>
+                        <div>
+                            <input type="file" name="7file" v-on:change="downloadFile" ref="downloadFile" class="form-control"/>
                         </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ПП ПТС</span>
-                            <div>
-                                <input type="file" name="8file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
+                    </div>
+                    <div
+                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ПП ПТС</span>
+                        <div>
+                            <input type="file" name="8file" v-on:change="downloadFile" class="form-control"/>
                         </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ПП ТС</span>
-                            <div>
-                                <input type="file" name="9file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
+                    </div>
+                    <div
+                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт ПП ТС</span>
+                        <div>
+                            <input type="file" name="9file" v-on:change="downloadFile" class="form-control"/>
                         </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт осмотра ТС</span>
-                            <div>
-                                <input type="file" name="10file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
+                    </div>
+                    <div
+                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Акт осмотра ТС</span>
+                        <div>
+                            <input type="file" name="10file" v-on:change="downloadFile" class="form-control"/>
                         </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Справка о рыночной стоимости</span>
-                            <div>
-                                <input type="file" name="11file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
+                    </div>
+                    <div
+                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
+                        <span>Справка о рыночной стоимости</span>
+                        <div>
+                            <input type="file" name="11file" v-on:change="downloadFile" class="form-control"/>
                         </div>
+                    </div>
+                       </div>
                         <button type="submit" class="btn btn-primary mt-2"
                             v-bind="{ disabled: !uploadFileClientUp }">Отправить</button>
                     </form>
