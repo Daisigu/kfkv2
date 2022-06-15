@@ -14,10 +14,10 @@
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
                         <div v-for="document in listDocCheckedFalse"
-                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files "
+                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName=document.FIO"
                             class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
                             <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">Гавриков Гаврик Гаврикович</h5>
+                                <h5 class="mb-1">{{document.FIO}}</h5>
                                 <small><span class="badge bg-primary"
                                         v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
                                         {{ document.DocType }} </span></small>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-12 col-lg-8 list-group">
                     <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0">
-                        <h3>Гавриков Гаврик Гаврикович</h3>
+                        <h3>{{listDocCheckedFalseClientName}}</h3>
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
                             <div>
                                 {{ file.Name }}
@@ -125,7 +125,7 @@ var app3 = new Vue({
             listDocCheckedFalseId: '',
             listDocCheckedFalseSearchValue: '',
             listDocCheckedFalseFiles: [],
-        }
+            listDocCheckedFalseClientName:'',        }
     },
     methods: {
         getListDocCheckedFalse() {
