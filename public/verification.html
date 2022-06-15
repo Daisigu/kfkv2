@@ -11,8 +11,12 @@
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="list-group listDocCheckedFalseClient-list">
-                        <div v-for="document in listDocCheckedFalse"  v-on:click="listDocCheckedFalseId = document.Id;" class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
-                            <div class="d-flex justify-content-between" >
+                        <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                            aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
+                        <div v-for="document in listDocCheckedFalse"
+                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files "
+                            class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
+                            <div class="d-flex justify-content-between">
                                 <h5 class="mb-1">Гавриков Гаврик Гаврикович</h5>
                                 <small><span class="badge bg-primary"
                                         v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
@@ -23,8 +27,20 @@
                     </div>
 
                 </div>
-                <div class="col-12 col-lg-8">
-                    <h1 class="text-center">Гавриков Гаврик Гаврикович</h1>
+                <div class="col-12 col-lg-8 list-group">
+                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length>0">
+                        <h3>Гавриков Гаврик Гаврикович</h3>
+                        <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
+                            <div>
+                                {{ file.Name }}
+                            </div>
+                        </div>
+                        <div class="buttons-group mt-2">
+                            <button class="btn btn-primary">На доработку</button>
+                            <button class="btn btn-success">Проверено</button>
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -32,20 +48,27 @@
 
 
 
-<style>
-      * {
+    <style>
+        * {
             font-family: 'Cuprum', sans-serif !important;
         }
+
         .badge {
             min-width: 53px;
             font-weight: 400;
             font-size: 13px !important;
         }
-        .listDocCheckedFalseClient-list > .list-group-item{
+
+        .listDocCheckedFalseClient-list>.list-group-item {
             cursor: pointer;
         }
 
-</style>
+        .listDocCheckedFalseFile-list {
+            padding: 10px;
+            border: 1px solid rgb(231, 231, 231);
+            border-radius: 5px;
+        }
+    </style>
 
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
@@ -62,6 +85,8 @@
             return {
                 listDocCheckedFalse: [],
                 listDocCheckedFalseId: '',
+                listDocCheckedFalseSearchValue: '',
+                listDocCheckedFalseFiles: [],
             }
         },
         methods: {
@@ -90,6 +115,16 @@
         },
         mounted() {
             this.getListDocCheckedFalse()
-        }
+        },
+        computed: {
+            filteredListDocCheckedFalseClientList() {
+                if (this.listDocCheckedFalseSearchValue) {
+                    return this.listDocCheckedFalse.filter(item => {
+                        return item.DocType.includes(this.listDocCheckedFalseSearchValue);
+                    });
+                }
+                return this.newDocument
+            }
+        },
     })
     </script>
