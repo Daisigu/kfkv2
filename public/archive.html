@@ -76,16 +76,17 @@
                             </div>
                             <button title="Загрузиить файл в документ" :id="document.Id" class="btn btn-primary mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                v-on:click="Id=document.Id;$refs.downloadFile.value = null; fileUpload=false"><i
-                                    class="bi bi-upload"></i>
+                                v-on:click="Id=document.Id;$refs.downloadFile.value = null; fileUpload=false"><!-- <i
+                                    class="bi bi-upload"></i> -->Загрузка
                             </button>
                             <button title="История изменений документа" :id="document.Id" class="btn btn-success mb-1"
                                 v-if="documents.length>0" data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist"></i>
+                                v-on:click="documentHistory(document.Id)"><!-- <i class="bi bi-card-checklist"></i> -->
+                                Версии
                             </button>
                             <button title="Удалить документ" v-on:click="deleteDocumentId=document.Id"
                                 data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
-                                class="btn btn-danger mb-1"><i class="bi bi-trash3"></i></button>
+                                class="btn btn-danger mb-1"><!-- <i class="bi bi-trash3"></i> -->Удалить</button>
                         </div>
                     </div>
                 </div>
