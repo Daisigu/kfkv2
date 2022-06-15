@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-4">
-                    <div class="list-group listDocCheckedFalseClient-list">
+                    <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
                         <div v-for="document in listDocCheckedFalse"
@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length>0">
+                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0">
                         <h3>Гавриков Гаврик Гаврикович</h3>
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
                             <div>
@@ -36,17 +36,55 @@
                             </div>
                         </div>
                         <div class="buttons-group mt-2">
-                            <button class="btn btn-primary">На доработку</button>
-                            <button class="btn btn-success">Проверено</button>
+                            <button class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#OnWorkDocumentModal">На доработку</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#CheckedDocumentModal">Проверено</button>
                         </div>
                     </div>
-                   
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- Check Document Modal -->
+    <div class="modal fade" id="CheckedDocumentModal" tabindex="-1" aria-labelledby="CheckedDocumentModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CheckedDocumentModal">Загрузить документы</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Вы уверены что хотите отправить документ?
+                </div>
+                <div class="modal-footer">
+                    <button data-bs-dismiss="modal" class="btn btn-primary">Отправить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- on work document modal -->
+    <div class="modal fade" id="OnWorkDocumentModal" tabindex="-1" aria-labelledby="#OnWorkDocumentModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#OnWorkDocumentModal">Возврат на доработку</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" type="text" placeholder="Введите ваш комментарий">
+                </div>
+                <div class="modal-footer">
+                    <button data-bs-dismiss="modal" class="btn btn-primary">Отправить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <style>
         * {
@@ -78,53 +116,53 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
     <script>
-    var app3 = new Vue({
-        el: '#verification',
-    
-        data() {
-            return {
-                listDocCheckedFalse: [],
-                listDocCheckedFalseId: '',
-                listDocCheckedFalseSearchValue: '',
-                listDocCheckedFalseFiles: [],
+var app3 = new Vue({
+    el: '#verification',
+
+    data() {
+        return {
+            listDocCheckedFalse: [],
+            listDocCheckedFalseId: '',
+            listDocCheckedFalseSearchValue: '',
+            listDocCheckedFalseFiles: [],
+        }
+    },
+    methods: {
+        getListDocCheckedFalse() {
+            axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
+                console.log(res.data);
+                this.listDocCheckedFalse = res.data.data.Documents;
+            })
+        },
+        getDocSetupCheckedTrue() {
+            axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
+                console.log(res.data);
+            })
+        },
+        cancelRework() {
+            axios.post('/Document/CancelRework/@doc.Id').then((res) => {
+                console.log(res.data);
+            })
+        },
+        reworkDocument() {
+            axios.post('/Document/ReworkDocument/@doc.Id').then((res) => {
+                console.log(res.data);
+            })
+        },
+
+    },
+    mounted() {
+        this.getListDocCheckedFalse()
+    },
+    computed: {
+        filteredListDocCheckedFalseClientList() {
+            if (this.listDocCheckedFalseSearchValue) {
+                return this.listDocCheckedFalse.filter(item => {
+                    return item.DocType.includes(this.listDocCheckedFalseSearchValue);
+                });
             }
-        },
-        methods: {
-            getListDocCheckedFalse() {
-                axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
-                    console.log(res.data);
-                    this.listDocCheckedFalse = res.data.data.Documents;
-                })
-            },
-            getDocSetupCheckedTrue() {
-                axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
-                    console.log(res.data);
-                })
-            },
-            cancelRework() {
-                axios.post('/Document/CancelRework/@doc.Id').then((res) => {
-                    console.log(res.data);
-                })
-            },
-            reworkDocument() {
-                axios.post('/Document/ReworkDocument/@doc.Id').then((res) => {
-                    console.log(res.data);
-                })
-            },
-    
-        },
-        mounted() {
-            this.getListDocCheckedFalse()
-        },
-        computed: {
-            filteredListDocCheckedFalseClientList() {
-                if (this.listDocCheckedFalseSearchValue) {
-                    return this.listDocCheckedFalse.filter(item => {
-                        return item.DocType.includes(this.listDocCheckedFalseSearchValue);
-                    });
-                }
-                return this.newDocument
-            }
+            return this.newDocument
+        }
         },
     })
     </script>
