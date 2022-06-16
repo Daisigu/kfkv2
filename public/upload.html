@@ -14,7 +14,7 @@
                 <div class="col-sm-12 col-lg-4 upload-client-list list-group" v-if="newDocument.length!==0">
                     <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2" v-model="uploadSearchValue">
                     <!-- //$refs.downloadFile.value = null// -->
-                    <div   v-bind:class="{ active: uploadClientId == client.DocumentId }" v-on:click="uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                    <div   v-bind:class="{ active: uploadClientId == client.DocumentId }" v-on:click=" requiredDocuments=client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
                     class="list-group-item list-group-item-action"
                       v-for="client in filteredUploadClientList">
                         <div>
@@ -25,104 +25,33 @@
                                         {{ client.DocType }} </span></small>
                             </div>
                             <small>{{ client.Title }}</small>
+                            <br/>
+                            <small v-if="client.Reworking==true" class="text-danger">На доработку</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-sm-12 col-lg-8">
                     <h1 v-if="uploadClientId==0 && newDocument.length !==0" class="text-center">Выберите клиента </h1>
-                    <form method="post" enctype="multipart/form-data" class="form-border"
+                    <form v-if="requiredDocuments.length!==0" method="post" enctype="multipart/form-data" class="form-border"
                         :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
-                        v-if="clientDocType == 1">
+                        >
                         <h3 class="upload-client-title">{{ clientFIO }}</h3>
-                        <div class="list-group">
+                        <div class="list-group" v-for="uploadDoc in requiredDocuments">
                             <div
                             class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ППДС</span>
+                            <span>
+                                {{uploadDoc.Name}}
+                            </span>
                             <div>
                                 <input type="file" name="1file" v-on:change="downloadFile" class="form-control" />
-                            </div>
-                        </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ПП ПТС</span>
-                            <div>
-                                <input type="file" name="2file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
-                        </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт ПП ТС</span>
-                            <div>
-                                <input type="file" name="3file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
-                        </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт осмотра ТС</span>
-                            <div>
-                                <input type="file" name="4file" v-on:change="downloadFile" class="form-control"/>
-                            </div>
-                        </div>
-                        <div
-                            class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                            <span>Акт Справка о рыночной стоимости</span>
-                            <div>
-                                <input type="file" name="5file" v-on:change="downloadFile" class="form-control"/>
                             </div>
                         </div>
 
                         </div>
                         <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
                             class="btn btn-primary mt-2">Отправить</button>
-                    </form>
-
-
-
-                    <form method="post" enctype="multipart/form-data" class="form-border"
-                        :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
-                        v-if="clientDocType == 2">
-                        <h3 class="upload-client-title">{{ clientFIO }}</h3>
-                       <div class="list-group">
-                        <div
-                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                        <span>Акт ПДС</span>
-                        <div>
-                            <input type="file" name="7file" v-on:change="downloadFile" ref="downloadFile" class="form-control"/>
-                        </div>
-                    </div>
-                    <div
-                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                        <span>Акт ПП ПТС</span>
-                        <div>
-                            <input type="file" name="8file" v-on:change="downloadFile" class="form-control"/>
-                        </div>
-                    </div>
-                    <div
-                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                        <span>Акт ПП ТС</span>
-                        <div>
-                            <input type="file" name="9file" v-on:change="downloadFile" class="form-control"/>
-                        </div>
-                    </div>
-                    <div
-                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                        <span>Акт осмотра ТС</span>
-                        <div>
-                            <input type="file" name="10file" v-on:change="downloadFile" class="form-control"/>
-                        </div>
-                    </div>
-                    <div
-                        class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                        <span>Справка о рыночной стоимости</span>
-                        <div>
-                            <input type="file" name="11file" v-on:change="downloadFile" class="form-control"/>
-                        </div>
-                    </div>
-                       </div>
-                        <button type="submit" class="btn btn-primary mt-2"
-                            v-bind="{ disabled: !uploadFileClientUp }">Отправить</button>
-                    </form>
+                    </form>          
                 </div>
             </div>
 
@@ -177,6 +106,7 @@ var app4 = new Vue({
             refsValue: '',
             clientFIO: '',
             uploadSearchValue:'',
+            requiredDocuments: [],
         }
     },
     computed: {
