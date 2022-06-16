@@ -297,7 +297,7 @@
         }, 
         methods: {
             getLinqDocuments(){
-                axios.post('http://192.168.71.142/Document/LinqDocuments/?orderId=2117').then((res)=>{
+                axios.post('http://192.168.71.142/Document/LinqDocuments/?orderId='+this.orderId).then((res)=>{
                     console.log(res.data.data.LinqDocuments);
                     this.linqDocuments=res.data.data.LinqDocuments
                                 })
