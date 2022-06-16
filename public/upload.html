@@ -16,7 +16,7 @@
                         v-model="uploadSearchValue">
                     <!-- //$refs.downloadFile.value = null// -->
                     <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
-                        v-on:click="uploadNewDocumentClientFiles = client.Files; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                        v-on:click="uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
                         class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
                         <div>
                             <div class="d-flex w-100 justify-content-between">
@@ -77,6 +77,31 @@
                                 </div>
                             </div>
 
+                        </div>
+                        <button class="btn btn-primary mt-2" data-bs-toggle="modal"
+                            data-bs-target="#OnWorkDocumentCommentModal">Отправить</button>
+
+                    </div>
+                </div>
+            </div>
+            <!-- on work document modal -->
+            <div class="modal fade" id="OnWorkDocumentCommentModal" tabindex="-1"
+                aria-labelledby="#OnWorkDocumentCommentModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="#OnWorkDocumentCommentModal">Title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" type="text" placeholder="Введите ваш комментарий"
+                                v-model="submitInputValue">
+                        </div>
+                        <div class="modal-footer">
+                            <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                                v-on:click="submitOnWorkDocumentComment()">Отправить</button>
+                            <button type="button" class="btn btn-secondary col-3"
+                                data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
                 </div>
@@ -148,82 +173,92 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
     <script>
-var app4 = new Vue({
-    el: '#upload',
-
-    data() {
-        return {
-            newDocument: [],
-            fileUpload: false,
-            uploadClientId: '',
-            uploadClientDocuments: [],
-            clientDocType: '',
-            uploadFileClientUp: false,
-            onWorkFileId: '',
-            changeInputValue: '',
-            refsValue: '',
-            clientFIO: '',
-            uploadSearchValue: '',
-            requiredDocuments: [],
-            workType: '',
-            uploadNewDocumentClientFiles: [],
-        }
-    },
-    computed: {
-        filteredUploadClientList() {
-            if (this.uploadSearchValue) {
-                return this.newDocument.filter(item => {
-                    return item.FIO.includes(this.uploadSearchValue);
-                });
+    var app4 = new Vue({
+        el: '#upload',
+    
+        data() {
+            return {
+                newDocument: [],
+                fileUpload: false,
+                uploadClientId: '',
+                uploadClientDocuments: [],
+                clientDocType: '',
+                uploadFileClientUp: false,
+                onWorkFileId: '',
+                changeInputValue: '',
+                submitInputValue: '',
+                refsValue: '',
+                clientFIO: '',
+                uploadSearchValue: '',
+                requiredDocuments: [],
+                docCorId: '',
+                workType: '',
+                uploadNewDocumentClientFiles: [],
             }
-            return this.newDocument
+        },
+        computed: {
+            filteredUploadClientList() {
+                if (this.uploadSearchValue) {
+                    return this.newDocument.filter(item => {
+                        return item.FIO.includes(this.uploadSearchValue);
+                    });
+                }
+                return this.newDocument
+            }
+        },
+        methods: {
+            submitOnWorkDocumentComment() {
+                axios.post('http://192.168.71.142/Document/SendForReview/', {
+                    docCorId: this.docCorId,
+                    comment: this.submitInputValue,
+                })
+    
+    
+            },
+            changeUploadInputFile() {
+                console.log('File Uploaded');
+                this.fileUpload = true;
+                this.changedFiles = this.$refs.changeFile.files[0];
+            },
+            changeUploadDocumentFile() {
+                const formData = new FormData();
+                formData.append('newFile', this.changedFiles);
+                formData.append('comment', this.changeInputValue)
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.onWorkFileId, formData, { headers }).then((response) => {
+                    if (response.data.success == false) {
+                        alert(response.data.message)
+                    }
+                    else {
+                        alert('Файл заменен')
+                        response.data.files;
+                        response.status;
+                        this.$refs.changeFile.value = null
+                        this.changeInputValue = null
+                        this.fileUpload = false;
+                    }
+                })
+            },
+            downloadFile() {
+                console.log('file upload');
+                this.uploadFileClientUp = true;
+            },
+            getNewDocument() {
+                axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
+                    console.log(res.data.data.NewDocument);
+                    this.newDocument = res.data.data.NewDocument;
+                })
+            },
+            async getClientDocument(Id) {
+                axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id).then((response) => {
+                    console.log(response.data.data.Documents);
+                    this.uploadClientDocuments = response.data.data.Documents
+                })
+            },
+    
+        },
+        mounted() {
+            this.getNewDocument()
         }
-    },
-    methods: {
-        changeUploadInputFile() {
-            console.log('File Uploaded');
-            this.fileUpload = true;
-            this.changedFiles = this.$refs.changeFile.files[0];
-        },
-        changeUploadDocumentFile() {
-            const formData = new FormData();
-            formData.append('newFile', this.changedFiles);
-            formData.append('comment', this.changeInputValue)
-            const headers = { 'Content-Type': 'multipart/form-data' };
-            axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.onWorkFileId, formData, { headers }).then((response) => {
-                if (response.data.success == false) {
-                    alert(response.data.message)
-                }
-                else {
-                    alert('Файл заменен')
-                    response.data.files;
-                    response.status;
-                    this.$refs.changeFile.value = null
-                    this.changeInputValue = null
-                    this.fileUpload = false;
-                }
-            })
-        },
-        downloadFile() {
-            console.log('file upload');
-            this.uploadFileClientUp = true;
-        },
-        getNewDocument() {
-            axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
-                console.log(res.data.data.NewDocument);
-                this.newDocument = res.data.data.NewDocument;
-            })
-        },
-        async getClientDocument(Id) {
-            axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id).then((response) => {
-                console.log(response.data.data.Documents);
-                this.uploadClientDocuments = response.data.data.Documents
-            })
-        },
-
-    },
-    mounted() {
-        this.getNewDocument()
-    }
-})
+    })
     </script>
