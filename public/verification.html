@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0">
+                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
                         <h3>{{listDocCheckedFalseClientName}}</h3>
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
                                <a>{{ file.Name }}</a> 
@@ -139,11 +139,15 @@ var app3 = new Vue({
         docSetupCheckedTrue() {
             axios.post('http://192.168.71.142/Document/DocSetupCheckedTrue/'+this.listDocCheckedFalseId).then((res)=>{
                 alert(res.data.data.message)
+                this.getListDocCheckedFalse()
+                this.listDocCheckedFalseId=''
             })
         },
         reworkDocument(){
             axios.post('http://192.168.71.142/Document/ReworkDocument/'+this.listDocCheckedFalseId+'?comment='+this.onWorkDocumentInputValue).then((res)=>{
                 console.log(res);
+                this.getListDocCheckedFalse()
+                this.listDocCheckedFalseId=''
             })
         },
         getDocSetupCheckedTrue() {
@@ -151,16 +155,7 @@ var app3 = new Vue({
                 console.log(res.data);
             })
         },
-        cancelRework() {
-            axios.post('/Document/CancelRework/@doc.Id').then((res) => {
-                console.log(res.data);
-            })
-        },
-        reworkDocument() {
-            axios.post('/Document/ReworkDocument/@doc.Id').then((res) => {
-                console.log(res.data);
-            })
-        },
+
 
     },
     mounted() {
