@@ -193,16 +193,30 @@
              <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">
-                         <h5 class="modal-title" id="otherDocumentsModalLabel">История изменений документа</h5>
+                         <h5 class="modal-title" id="otherDocumentsModalLabel">Другие документы</h5>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
-                     <h1 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h1>
-                     <div class="modal-body" v-for="docHistory in documentHistoryArray">
-                         <div>Изменен: {{ docHistory.Created }}</div>
-                         <div>Кем: {{ docHistory.UserName }}</div>
-                         <div>Комментарий: {{ docHistory.Comment }}</div>
-                         <a
-                             :href="'http://192.168.71.142/Document/FileDownloadFromHistory/' + docHistory.Id">{{ docHistory.Name }}</a>
+                     <h1 class="text-center" v-if="this.linqDocuments.length == 0"> Нет других документов</h1>
+                     <div class="modal-body p-2" v-if="linqDocuments.length>0" v-for="otherDocument in linqDocuments">
+                        <div class="accordion" id="otherDocumentsAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse'+otherDocument.Id" aria-expanded="false" :aria-controls="'collapse'+otherDocument.Id">
+                                    {{otherDocument.Title}}
+                                  </button>
+                                </h2>
+                                <div :id="'collapse'+otherDocument.Id" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#otherDocumentsAccordion">
+                                  <div class="accordion-body">
+                                    <div class="list-group" v-for="file in otherDocument.Files">
+                                        <div class="list-group-item mb-1 list-group-item-action">
+                                            <a href="">{{file.Name}}</a>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        
                      </div>
                      <div class="modal-footer">
                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -273,6 +287,7 @@
                 fileHistoryArray: [],
                 documentHistoryArray: [],
                 linqDocuments: [],
+                linqDocumentsFiles:[],
                 orderId: '',
                 deleteFileId: '',
                 clientId: '',
@@ -285,7 +300,7 @@
                 axios.post('http://192.168.71.142/Document/LinqDocuments/?orderId=2117').then((res)=>{
                     console.log(res.data.data.LinqDocuments);
                     this.linqDocuments=res.data.data.LinqDocuments
-                })
+                                })
             },
             documentHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((response) => {
