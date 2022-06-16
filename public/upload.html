@@ -44,7 +44,7 @@
                                 {{uploadDoc.Name}}
                             </span>
                             <div>
-                                <input type="file" name="1file" v-on:change="downloadFile" class="form-control" />
+                                <input type="file" :name="'file'+uploadDoc.Id" v-on:change="downloadFile" class="form-control" />
                             </div>
                         </div>
 
