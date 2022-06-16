@@ -11,8 +11,8 @@
             <div class="row">
                 <div class="people__list col-sm-12 col-lg-4">
                     <div class="input-group mb-3">
-                        <input v-on:keyup.enter="getClients(); loading = true; match = true; clientId = ''; documents = []"
-                            v-model="clientName" type="text" class="form-control" placeholder=""
+                        <input  v-on:keyup.enter="getClients(); loading = true; match = true; clientId = ''; documents = []"
+                            v-model="clientName" type="text" class="form-control" placeholder="Введите ФИО клиента или № договора"
                             aria-label="Recipient's clientname" aria-describedby="button-addon2">
                         <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []"
                             class="btn btn-primary" type="button" id="button-addon2">Поиск</button>
