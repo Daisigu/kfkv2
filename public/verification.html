@@ -43,46 +43,47 @@
                 </div>
             </div>
         </div>
+            <!-- Check Document Modal -->
+    <div class="modal fade" id="CheckedDocumentModal" tabindex="-1" aria-labelledby="CheckedDocumentModal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CheckedDocumentModal">Загрузить документы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center">Вы уверены что хотите отправить документ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-on:click="docSetupCheckedTrue()">Отправить</button>
+                <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- on work document modal -->
+<div class="modal fade" id="OnWorkDocumentModal" tabindex="-1" aria-labelledby="#OnWorkDocumentModal"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="#OnWorkDocumentModal">Возврат на доработку</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" type="text" placeholder="Введите ваш комментарий" v-model="onWorkDocumentInputValue">
+            </div>
+            <div class="modal-footer">
+                <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-on:click="reworkDocument()" >Отправить</button>
+                <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     </div>
 
-    <!-- Check Document Modal -->
-    <div class="modal fade" id="CheckedDocumentModal" tabindex="-1" aria-labelledby="CheckedDocumentModal"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="CheckedDocumentModal">Загрузить документы</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h4 class="text-center">Вы уверены что хотите отправить документ?</h4>
-                </div>
-                <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-primary col-3">Отправить</button>
-                    <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- on work document modal -->
-    <div class="modal fade" id="OnWorkDocumentModal" tabindex="-1" aria-labelledby="#OnWorkDocumentModal"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="#OnWorkDocumentModal">Возврат на доработку</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input class="form-control" type="text" placeholder="Введите ваш комментарий">
-                </div>
-                <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-primary col-3">Отправить</button>
-                    <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <style>
         * {
@@ -123,13 +124,26 @@ var app3 = new Vue({
             listDocCheckedFalseId: '',
             listDocCheckedFalseSearchValue: '',
             listDocCheckedFalseFiles: [],
-            listDocCheckedFalseClientName:'',        }
+            listDocCheckedFalseClientName:'',
+            onWorkDocumentInputValue:'',
+
+         }
     },
     methods: {
         getListDocCheckedFalse() {
             axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
                 console.log(res.data);
                 this.listDocCheckedFalse = res.data.data.Documents;
+            })
+        },
+        docSetupCheckedTrue() {
+            axios.post('http://192.168.71.142/Document/DocSetupCheckedTrue/'+this.listDocCheckedFalseId).then((res)=>{
+                alert(res.data.data.message)
+            })
+        },
+        reworkDocument(){
+            axios.post('http://192.168.71.142/Document/ReworkDocument/'+this.listDocCheckedFalseId+'?comment='+this.onWorkDocumentInputValue).then((res)=>{
+                console.log(res);
             })
         },
         getDocSetupCheckedTrue() {
