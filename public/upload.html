@@ -62,8 +62,8 @@
                                 <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id+'?preview=true'"  target="_blank"> {{ onWorkDoc.Name}}
                             </a>
                                 <div>
-                                    <button v-on:click="onWorkFileId=onWorkDoc.Id" title="Заменить файл в документе" data-bs-toggle="modal"
-                                        data-bs-target="#changeUploadFileModal" class="btn btn-info text-white">
+                                    <button v-on:click="onWorkFileId=onWorkDoc.Id" title="Заменить файл в документе" data-bs-toggle="modal" 
+                                        data-bs-target="#changeUploadFileModal" class="btn btn-info text-white opacity-0">
                                         <i class="bi bi-arrow-left-right"></i>
                                     </button>
                                 </div>
@@ -119,6 +119,10 @@
 
         .upload-client-list>.list-group-item {
             cursor: pointer;
+        }
+        .list-group-item:hover .opacity-0{
+            transition: opacity 0.5s ease;
+            opacity: 1 !important;
         }
     </style>
 
