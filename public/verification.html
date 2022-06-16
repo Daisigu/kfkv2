@@ -14,10 +14,10 @@
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
                         <div v-for="document in listDocCheckedFalse"
-                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName=document.FIO"
+                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
                             class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
                             <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">{{document.FIO}}</h5>
+                                <h5 class="mb-1">{{ document.FIO }}</h5>
                                 <small><span class="badge bg-primary"
                                         v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
                                         {{ document.DocType }} </span></small>
@@ -28,10 +28,11 @@
 
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-                    <div class="listDocCheckedFalseFile-list" v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
-                        <h3>{{listDocCheckedFalseClientName}}</h3>
+                    <div class="listDocCheckedFalseFile-list"
+                        v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
+                        <h3>{{ listDocCheckedFalseClientName }}</h3>
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
-                               <a>{{ file.Name }}</a> 
+                            <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal" v-on:click="listDocCheckedFalseFileId=file.Id">{{ file.Name }}</a>
                         </div>
                         <div class="buttons-group mt-2">
                             <button class="btn btn-danger" data-bs-toggle="modal"
@@ -43,45 +44,92 @@
                 </div>
             </div>
         </div>
-            <!-- Check Document Modal -->
-    <div class="modal fade" id="CheckedDocumentModal" tabindex="-1" aria-labelledby="CheckedDocumentModal"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="CheckedDocumentModal">Загрузить документы</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h4 class="text-center">Вы уверены что хотите отправить документ?</h4>
-            </div>
-            <div class="modal-footer">
-                <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-on:click="docSetupCheckedTrue()">Отправить</button>
-                <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- on work document modal -->
-<div class="modal fade" id="OnWorkDocumentModal" tabindex="-1" aria-labelledby="#OnWorkDocumentModal"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="#OnWorkDocumentModal">Возврат на доработку</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input class="form-control" type="text" placeholder="Введите ваш комментарий" v-model="onWorkDocumentInputValue">
-            </div>
-            <div class="modal-footer">
-                <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-on:click="reworkDocument()" >Отправить</button>
-                <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
+        <!-- Check Document Modal -->
+        <div class="modal fade" id="CheckedDocumentModal" tabindex="-1" aria-labelledby="CheckedDocumentModal"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="CheckedDocumentModal">Загрузить документы</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="text-center">Вы уверены что хотите отправить документ?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                            v-on:click="docSetupCheckedTrue()">Отправить</button>
+                        <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <!-- on work document modal -->
+        <div class="modal fade" id="OnWorkDocumentModal" tabindex="-1" aria-labelledby="#OnWorkDocumentModal"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="#OnWorkDocumentModal">Возврат на доработку</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" type="text" placeholder="Введите ваш комментарий"
+                            v-model="onWorkDocumentInputValue">
+                    </div>
+                    <div class="modal-footer">
+                        <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                            v-on:click="reworkDocument()">Отправить</button>
+                        <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Button trigger modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="VerificationModal" tabindex="-1" aria-labelledby="VerificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-fullscreen">
+      <div class="modal-content container ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="VerificationModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           <div class="row h-100">
+            <div class="col-8"><div class="div" style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);"><h1 class="text-center mt-2">Я кароче документ </h1></div></div>
+            <div class="col-4">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      First checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Second checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Third checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Fourth checkbox
+                    </li>
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                      Fifth checkbox
+                    </li>
+                  </ul>
+            </div>
+           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
     </div>
 
 
@@ -105,6 +153,9 @@
             border: 1px solid rgb(231, 231, 231);
             border-radius: 5px;
         }
+        .cursor-pointer{
+            cursor: pointer;
+        }
     </style>
 
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
@@ -124,10 +175,11 @@ var app3 = new Vue({
             listDocCheckedFalseId: '',
             listDocCheckedFalseSearchValue: '',
             listDocCheckedFalseFiles: [],
-            listDocCheckedFalseClientName:'',
-            onWorkDocumentInputValue:'',
+            listDocCheckedFalseClientName: '',
+            onWorkDocumentInputValue: '',
+            listDocCheckedFalseFileId: '',
 
-         }
+        }
     },
     methods: {
         getListDocCheckedFalse() {
@@ -137,17 +189,17 @@ var app3 = new Vue({
             })
         },
         docSetupCheckedTrue() {
-            axios.post('http://192.168.71.142/Document/DocSetupCheckedTrue/'+this.listDocCheckedFalseId).then((res)=>{
+            axios.post('http://192.168.71.142/Document/DocSetupCheckedTrue/' + this.listDocCheckedFalseId).then((res) => {
                 alert(res.data.data.message)
                 this.getListDocCheckedFalse()
-                this.listDocCheckedFalseId=''
+                this.listDocCheckedFalseId = ''
             })
         },
-        reworkDocument(){
-            axios.post('http://192.168.71.142/Document/ReworkDocument/'+this.listDocCheckedFalseId+'?comment='+this.onWorkDocumentInputValue).then((res)=>{
+        reworkDocument() {
+            axios.post('http://192.168.71.142/Document/ReworkDocument/' + this.listDocCheckedFalseId + '?comment=' + this.onWorkDocumentInputValue).then((res) => {
                 console.log(res);
                 this.getListDocCheckedFalse()
-                this.listDocCheckedFalseId=''
+                this.listDocCheckedFalseId = ''
             })
         },
         getDocSetupCheckedTrue() {
@@ -170,6 +222,6 @@ var app3 = new Vue({
             }
             return this.newDocument
         }
-        },
-    })
+    },
+})
     </script>

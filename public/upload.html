@@ -9,8 +9,9 @@
     <div class="container">
         <div class="verification__page pt-5" id="upload">
             <div class="row">
-                
-                <div class="col-sm-12 col-lg-4 upload-client-list list-group">
+                <h1 v-if="newDocument.length==0" class="text-center">Нет документов на подгрузку</h1>
+
+                <div class="col-sm-12 col-lg-4 upload-client-list list-group" v-if="newDocument.length!==0">
                     <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2" v-model="uploadSearchValue">
                     <!-- //$refs.downloadFile.value = null// -->
                     <div   v-bind:class="{ active: uploadClientId == client.DocumentId }" v-on:click="uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
@@ -29,7 +30,6 @@
                 </div>
 
                 <div class="col-sm-12 col-lg-8">
-                    <h1 v-if="newDocument.length==0" >Нет документов на подгрузку</h1>
                     <h1 v-if="uploadClientId==0 && newDocument.length !==0" class="text-center">Выберите клиента </h1>
                     <form method="post" enctype="multipart/form-data" class="form-border"
                         :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId"
