@@ -59,13 +59,11 @@
                         <div class="list-group" v-for="onWorkDoc in uploadNewDocumentClientFiles">
                             <div
                                 class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                                <span>
-                                    {{ onWorkDoc.Name }}
-                                </span>
+                                <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id+'?preview=true'"  target="_blank"> {{ onWorkDoc.Name}}
+                            </a>
                                 <div>
-                                    <button title="Заменить файл в документе" data-bs-toggle="modal"
+                                    <button v-on:click="onWorkFileId=onWorkDoc.Id" title="Заменить файл в документе" data-bs-toggle="modal"
                                         data-bs-target="#changeUploadFileModal" class="btn btn-info text-white">
-                                        Заменить файл
                                         <i class="bi bi-arrow-left-right"></i>
                                     </button>
                                 </div>
@@ -84,15 +82,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form  enctype="multipart/form-data" method="post">
-                    <input class="form-control mb-3" type="file"
+                <form v-on:submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
+                    <input class="form-control mb-3" type="file" v-on:change="changeUploadInputFile"
                         ref="changeFile">
-                    
+                    <input type="text" class="form-control mb-3" v-model="changeInputValue">
                 </form>
             </div>
             <div class="modal-footer">
                 <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal" class="btn btn-primary"
-                    v-on:click="fileUpload = false; changeFile()">Загрузить</button>
+                    v-on:click="fileUpload = false; changeUploadDocumentFile()">Загрузить</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
             </div>
         </div>
@@ -141,11 +139,13 @@ var app4 = new Vue({
     data() {
         return {
             newDocument: [],
-            fileUpload: '',
+            fileUpload: false,
             uploadClientId: '',
             uploadClientDocuments: [],
             clientDocType: '',
             uploadFileClientUp: false,
+            onWorkFileId:'',
+            changeInputValue: '',
             refsValue: '',
             clientFIO: '',
             uploadSearchValue: '',
@@ -165,6 +165,29 @@ var app4 = new Vue({
         }
     },
     methods: {
+        changeUploadInputFile() {
+                console.log('File Uploaded');
+                this.fileUpload = true;
+                this.changedFiles = this.$refs.changeFile.files[0];
+            },
+            changeUploadDocumentFile() {
+                const formData = new FormData();
+                formData.append('newFile', this.changedFiles);
+                formData.append('comment', this.changeInputValue)
+                const headers = { 'Content-Type': 'multipart/form-data' };
+                axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.onWorkFileId, formData, { headers }).then((response) => {
+                    if (response.data.success == false) {
+                        alert(response.data.message)
+                    }
+                    else {
+                        response.data.files;
+                        response.status;
+                        this.$refs.changeFile.value = null
+                        this.changeInputValue = null
+                        this.fileUpload = false;
+                    }
+                })
+            },
         downloadFile() {
             console.log('file upload');
             this.uploadFileClientUp = true;
