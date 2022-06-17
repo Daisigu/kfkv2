@@ -11,27 +11,35 @@
             <h1 class="text-center" v-if="listDocCheckedFalse.length==0">Нет документов на проверку</h1>
             <div class="row">
                 <div class="col-12 col-lg-4">
-                    <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
-                        <input type="text" class="form-control mb-3 " placeholder="Поиск"
-                            aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
-                        <div v-for="document in listDocCheckedFalse"
-                            v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
-                            class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">{{ document.FIO }}</h5>
-                                <small><span class="badge bg-primary"
-                                        v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
-                                        {{ document.DocType }} </span></small>
+
+                    <transition name="slide-fade">
+                        <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
+                            <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                                aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
+                                <div v-for="document in listDocCheckedFalse"
+                                v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
+                                class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-1">{{ document.FIO }}</h5>
+                                    <small><span class="badge bg-primary"
+                                            v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
+                                            {{ document.DocType }} </span></small>
+                                </div>
+                                <small>{{ document.Title }}</small>
+                                <br/>
+                                <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с доработки</small>
                             </div>
-                            <small>{{ document.Title }}</small>
-                            <br/>
-                            <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с доработки</small>
+                            
                         </div>
-                    </div>
+                    </transition>
+
+                   
 
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-                    <div class="listDocCheckedFalseFile-list"
+
+                    <transition name="slide-fade">
+                        <div class="listDocCheckedFalseFile-list"
                         v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
                         <h3>{{ listDocCheckedFalseClientName }}</h3>
                         <div class="list-group-item d-flex justify-content-between align-items-center " v-for="file in listDocCheckedFalseFiles">
@@ -65,6 +73,10 @@
                                 data-bs-target="#CheckedDocumentModal">Проверено</button>
                         </div>
                     </div>
+                    </transition>
+
+
+                    
                 
                 </div>
             </div>
@@ -162,6 +174,23 @@
         * {
             font-family: 'Cuprum', sans-serif !important;
         }
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .slide-fade-enter,
+        .slide-fade-leave-to
+
+        /* .slide-fade-leave-active below version 2.1.8 */
+            {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
 
         .badge {
             min-width: 53px;
