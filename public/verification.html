@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <div class="verification__page pt-5" id="verification">
         <div class="container">
+            <h1 class="text-center" v-if="listDocCheckedFalse.length==0">Нет документов на проверку</h1>
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
@@ -78,7 +79,7 @@
                             v-model="onWorkDocumentInputValue">
                     </div>
                     <div class="modal-footer">
-                        <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                        <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-bind="{ disabled: onWorkDocumentInputValue=='' }"
                             v-on:click="reworkDocument()">Отправить</button>
                         <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -196,6 +197,9 @@ var app3 = new Vue({
         },
         reworkDocument() {
             axios.post('http://192.168.71.142/Document/ReworkDocument/' + this.listDocCheckedFalseId + '?comment=' + this.onWorkDocumentInputValue).then((res) => {
+                if (res.data.success==false){
+                    alert(res.data.message)
+                }
                 console.log(res);
                 this.getListDocCheckedFalse()
                 this.listDocCheckedFalseId = ''
