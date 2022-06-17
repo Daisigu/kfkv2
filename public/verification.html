@@ -24,6 +24,8 @@
                                         {{ document.DocType }} </span></small>
                             </div>
                             <small>{{ document.Title }}</small>
+                            <br/>
+                            <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с доработки</small>
                         </div>
                     </div>
 
@@ -80,7 +82,7 @@
                     </div>
                     <div class="modal-footer">
                         <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-bind="{ disabled: onWorkDocumentInputValue=='' }"
-                            v-on:click="reworkDocument()">Отправить</button>
+                            v-on:click="reworkDocument(); onWorkDocumentInputValue=''">Отправить</button>
                         <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>

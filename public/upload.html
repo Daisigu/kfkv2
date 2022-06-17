@@ -56,7 +56,7 @@
                             <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
                                 class="btn btn-primary mt-2">Отправить</button>
                         </form>
-                        <div class="onWork form-border" v-if="workType == true">
+                        <div class="onWork form-border" v-if="workType == true && requiredDocuments.length!==0">
                             <h3 class="upload-client-title">{{ clientFIO }}</h3>
                             <div class="list-group" v-for="onWorkDoc in uploadNewDocumentClientFiles">
                                 <div
@@ -77,31 +77,32 @@
                                         </a>
                                     </div>
                                 </div>
-
+                               
+                            </div>
+                            <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
+                                <h5 class="text-center">Комментарии</h5>
+                                <div class="comments-wrapper  border p-5 d-flex flex-column justify-content-start">
+                                    <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
+                                        :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
+                                            <div class=" d-flex flex-nowrap justify-content-between align-items-center">
+                                                <small class="m-0">{{comment.Name}}</small>
+                                              <small class="card-title m-0">{{comment.DateComment}}</small>
+        
+                                            </div>
+                                            <div class="p-1">
+                                              <p class="card-text">{{comment.Comment}}</p>
+                                            </div>
+                                    </div>
+        
+        
+                                </div>
+        
                             </div>
                             <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                                 data-bs-target="#OnWorkDocumentCommentModal">Отправить</button>
                         </div>
                     </div>
-                    <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
-                        <h5 class="text-center">Комментарии</h5>
-                        <div class="comments-wrapper w-100 h-100 border p-5 d-flex flex-column justify-content-start">
-                            <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
-                                :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
-                                    <div class=" d-flex flex-nowrap justify-content-between align-items-center">
-                                        <small class="m-0">{{comment.Name}}</small>
-                                      <small class="card-title m-0">{{comment.DateComment}}</small>
-
-                                    </div>
-                                    <div class="p-1">
-                                      <p class="card-text">{{comment.Comment}}</p>
-                                    </div>
-                            </div>
-
-
-                        </div>
-
-                    </div>
+          
                 </div>
             </div>
             <!-- on work document modal -->
@@ -110,16 +111,17 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="#OnWorkDocumentCommentModal">Title</h5>
+                            <h5 class="modal-title" id="#OnWorkDocumentCommentModal">Отправить на проверку</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <h5>Вы уверены что хотите отправить на проверку?</h5>
                             <input class="form-control" type="text" placeholder="Введите ваш комментарий"
                                 v-model="submitInputValue">
                         </div>
                         <div class="modal-footer">
                             <button data-bs-dismiss="modal" class="btn btn-primary col-3"
-                                v-on:click="submitOnWorkDocumentComment()">Отправить</button>
+                                v-on:click="submitOnWorkDocumentComment(); commentsCorrection=[]; requiredDocuments=[]">Отправить</button>
                             <button type="button" class="btn btn-secondary col-3"
                                 data-bs-dismiss="modal">Закрыть</button>
                         </div>
