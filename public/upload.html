@@ -64,9 +64,9 @@
                                     <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
                                         target="_blank"> {{ onWorkDoc.Name }}
                                     </a>
-                                    <p   class="changeFileFlag p-0 m-0">Заменен</p>
+                                    <p   v-if="onWorkDoc.FlagForReplacement==true" class="changeFileFlag p-0 m-0">Заменен</p>
                                     <div class="buttons-group opacity-0">
-                                        <button v-on:click="onWorkFileId = onWorkDoc.Id"
+                                        <button v-on:click="onWorkFileId=onWorkDoc.Id; onWorkFile = onWorkDoc"
                                             title="Заменить файл в документе" data-bs-toggle="modal"
                                             data-bs-target="#changeUploadFileModal" class="btn btn-info text-white">
                                             <i class="bi bi-arrow-left-right"></i>
@@ -148,7 +148,7 @@
                         <div class="modal-footer">
                             <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal"
                                 class="btn btn-primary"
-                                v-on:click="fileUpload = false; changeUploadDocumentFile(); " >Загрузить</button>
+                                v-on:click="fileUpload = false; changeUploadDocumentFile(); onWorkFile.FlagForReplacement=true" >Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
@@ -235,6 +235,7 @@ var app4 = new Vue({
             workType: '',
             uploadNewDocumentClientFiles: [],
             commentsCorrection: '',
+            onWorkFile:{},
         }
     },
     computed: {
