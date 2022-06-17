@@ -64,6 +64,7 @@
                                     <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
                                         target="_blank"> {{ onWorkDoc.Name }}
                                     </a>
+                                    <p  :id="'Name'+onWorkDoc.Id" class="changeFileFlag p-0 m-0">Заменен</p>
                                     <div class="buttons-group opacity-0">
                                         <button v-on:click="onWorkFileId = onWorkDoc.Id"
                                             title="Заменить файл в документе" data-bs-toggle="modal"
@@ -147,7 +148,7 @@
                         <div class="modal-footer">
                             <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal"
                                 class="btn btn-primary"
-                                v-on:click="fileUpload = false; changeUploadDocumentFile()">Загрузить</button>
+                                v-on:click="fileUpload = false; changeUploadDocumentFile(); changeFileFlag() " >Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
@@ -195,6 +196,10 @@
         .list-group-item:hover .buttons-group {
             transition: opacity 0.5s ease;
             opacity: 1 !important;
+        }
+        .changeFileFlag{
+            opacity: 0;
+            color: rgb(15, 182, 15);
         }
     </style>
 
@@ -244,6 +249,9 @@ var app4 = new Vue({
         }
     },
     methods: {
+        changeFileFlag(){
+            document.getElementById('Name'+this.onWorkFileId).style.opacity ='1'      
+        },
         submitOnWorkDocumentComment() {
             axios.post('http://192.168.71.142/Document/SendForReview/', {
                 docCorId: this.docCorId,
