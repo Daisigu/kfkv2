@@ -16,7 +16,7 @@
                             aria-describedby="button-addon2" v-model="uploadSearchValue">
                         <!-- //$refs.downloadFile.value = null// -->
                         <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
-                            v-on:click=" ; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                            v-on:click=" clientFIO=client.FIO; clientTitle = client.Title; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false;"
                             class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
                             <div>
                                 <div class="d-flex w-100 justify-content-between">
@@ -43,7 +43,8 @@
                             <form v-if="requiredDocuments.length !== 0 && workType == false" method="post"
                                 enctype="multipart/form-data" class="form-border"
                                 :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId">
-                                <h3 class="upload-client-title">{{ clientFIO }}</h3>
+                                <h3 class="upload-client-title">{{ clientTitle }}</h3>
+                                <small>{{clientFIO}}</small>
                                 <div class="list-group" v-for="uploadDoc in requiredDocuments">
                                     <div
                                         class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
@@ -63,7 +64,10 @@
                         </transition>
                         <transition name="slide-fade">
                             <div class="onWork form-border" v-if="workType == true && requiredDocuments.length !== 0">
-                                <h3 class="upload-client-title">{{ clientFIO }}</h3>
+                                <div class="row">
+                                    <h3 class="upload-client-title">{{ clientTitle}}</h3>
+                                <small>{{clientFIO}}</small>
+                                </div>
                                 <div class="list-group" v-for="onWorkDoc in uploadNewDocumentClientFiles">
                                     <div
                                         class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
@@ -261,6 +265,7 @@
                 uploadNewDocumentClientFiles: [],
                 commentsCorrection: '',
                 onWorkFile: {},
+                clientTitle: {},
             }
         },
         computed: {
