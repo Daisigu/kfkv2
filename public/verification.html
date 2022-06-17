@@ -15,7 +15,7 @@
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
                         <div v-for="document in listDocCheckedFalse"
-                            v-on:click="listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
+                            v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
                             class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
                             <div class="d-flex justify-content-between">
                                 <h5 class="mb-1">{{ document.FIO }}</h5>
@@ -37,6 +37,22 @@
                         <div class="list-group-item " v-for="file in listDocCheckedFalseFiles">
                             <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal" v-on:click="listDocCheckedFalseFileId=file.Id">{{ file.Name }}</a>
                         </div>
+                        <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
+                            <h5 class="text-center">Комментарии</h5>
+                            <div class="comments-wrapper  border p-5 d-flex flex-column justify-content-start">
+                                <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
+                                    :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
+                                        <div class=" d-flex flex-nowrap justify-content-between align-items-center">
+                                            <small class="m-0">{{comment.Name}}</small>
+                                          <small class="card-title m-0">{{comment.DateComment}}</small>
+    
+                                        </div>
+                                        <div class="p-1">
+                                          <p class="card-text">{{comment.Comment}}</p>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="buttons-group mt-2">
                             <button class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#OnWorkDocumentModal">На доработку</button>
@@ -44,6 +60,7 @@
                                 data-bs-target="#CheckedDocumentModal">Проверено</button>
                         </div>
                     </div>
+                
                 </div>
             </div>
         </div>
@@ -158,6 +175,15 @@
         .cursor-pointer{
             cursor: pointer;
         }
+        .comment-card {
+            border-radius: 15px;
+            color: rgb(0, 0, 0);
+            background-color: rgb(248, 245, 245);
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     </style>
 
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
@@ -180,6 +206,7 @@ var app3 = new Vue({
             listDocCheckedFalseClientName: '',
             onWorkDocumentInputValue: '',
             listDocCheckedFalseFileId: '',
+            commentsCorrection: [],
 
         }
     },
