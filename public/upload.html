@@ -8,15 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <div class="container">
         <div class="verification__page pt-5" id="upload">
-            <div class="row">
+            <div class="row">            
                 <h1 v-if="newDocument.length == 0" class="text-center">Нет документов на подгрузку</h1>
-
+                
                 <div class="col-sm-12 col-lg-4 upload-client-list list-group" v-if="newDocument.length !== 0">
                     <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2"
                         v-model="uploadSearchValue">
                     <!-- //$refs.downloadFile.value = null// -->
                     <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
-                        v-on:click=" ;commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                        v-on:click=" ; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
                         class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
                         <div>
                             <div class="d-flex w-100 justify-content-between">
@@ -56,7 +56,7 @@
                             <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
                                 class="btn btn-primary mt-2">Отправить</button>
                         </form>
-                        <div class="onWork form-border" v-if="workType == true && requiredDocuments.length!==0">
+                        <div class="onWork form-border" v-if="workType == true && requiredDocuments.length !== 0">
                             <h3 class="upload-client-title">{{ clientFIO }}</h3>
                             <div class="list-group" v-for="onWorkDoc in uploadNewDocumentClientFiles">
                                 <div
@@ -64,9 +64,11 @@
                                     <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
                                         target="_blank"> {{ onWorkDoc.Name }}
                                     </a>
-                                    <p   v-if="onWorkDoc.FlagForReplacement==true" class="changeFileFlag p-0 m-0">Заменен</p>
+                                    <p v-if="onWorkDoc.FlagForReplacement == true" class="changeFileFlag p-0 m-0">
+                                        Заменен
+                                    </p>
                                     <div class="buttons-group opacity-0">
-                                        <button v-on:click="onWorkFileId=onWorkDoc.Id; onWorkFile = onWorkDoc"
+                                        <button v-on:click="onWorkFileId = onWorkDoc.Id; onWorkFile = onWorkDoc"
                                             title="Заменить файл в документе" data-bs-toggle="modal"
                                             data-bs-target="#changeUploadFileModal" class="btn btn-info text-white">
                                             <i class="bi bi-arrow-left-right"></i>
@@ -78,32 +80,33 @@
                                         </a>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
                                 <h5 class="text-center">Комментарии</h5>
-                                <div class="comments-wrapper  border p-5 d-flex flex-column justify-content-start">
-                                    <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
+                                <div class="comments-wrapper  border p-2 d-flex flex-column justify-content-start">
+                                    <div class="comment-card col-10 card text-dark bg-light mb-3"
+                                        v-for="comment in commentsCorrection"
                                         :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
-                                            <div class=" d-flex flex-nowrap justify-content-between align-items-center">
-                                                <small class="m-0">{{comment.Name}}</small>
-                                              <small class="card-title m-0">{{comment.DateComment}}</small>
-        
-                                            </div>
-                                            <div class="p-1">
-                                              <p class="card-text">{{comment.Comment}}</p>
-                                            </div>
+                                        <div class=" d-flex flex-nowrap justify-content-between align-items-center">
+                                            <small class="m-0">{{ comment.Name }}</small>
+                                            <small class="card-title m-0">{{ comment.DateComment }}</small>
+
+                                        </div>
+                                        <div class="p-1">
+                                            <p class="card-text">{{ comment.Comment }}</p>
+                                        </div>
                                     </div>
-        
-        
+
+
                                 </div>
-        
+
                             </div>
                             <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                                 data-bs-target="#OnWorkDocumentCommentModal">Отправить</button>
                         </div>
                     </div>
-          
+
                 </div>
             </div>
             <!-- on work document modal -->
@@ -122,7 +125,7 @@
                         </div>
                         <div class="modal-footer">
                             <button data-bs-dismiss="modal" class="btn btn-primary col-3"
-                                v-on:click="submitOnWorkDocumentComment(); commentsCorrection=[]; requiredDocuments=[]">Отправить</button>
+                                v-on:click="submitOnWorkDocumentComment(); commentsCorrection = []; requiredDocuments = []">Отправить</button>
                             <button type="button" class="btn btn-secondary col-3"
                                 data-bs-dismiss="modal">Закрыть</button>
                         </div>
@@ -148,7 +151,7 @@
                         <div class="modal-footer">
                             <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal"
                                 class="btn btn-primary"
-                                v-on:click="fileUpload = false; changeUploadDocumentFile(); onWorkFile.FlagForReplacement=true" >Загрузить</button>
+                                v-on:click="fileUpload = false; changeUploadDocumentFile(); onWorkFile.FlagForReplacement = true">Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
@@ -159,6 +162,23 @@
 
 
     <style>
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .slide-fade-enter,
+        .slide-fade-leave-to
+
+        /* .slide-fade-leave-active below version 2.1.8 */
+            {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
         .badge {
             min-width: 53px;
             font-weight: 400;
@@ -197,7 +217,8 @@
             transition: opacity 0.5s ease;
             opacity: 1 !important;
         }
-        .changeFileFlag{
+
+        .changeFileFlag {
             color: rgb(15, 182, 15);
         }
     </style>
@@ -218,6 +239,7 @@ var app4 = new Vue({
 
     data() {
         return {
+            show: false,
             newDocument: [],
             fileUpload: false,
             uploadClientId: '',
@@ -235,7 +257,7 @@ var app4 = new Vue({
             workType: '',
             uploadNewDocumentClientFiles: [],
             commentsCorrection: '',
-            onWorkFile:{},
+            onWorkFile: {},
         }
     },
     computed: {
@@ -249,7 +271,7 @@ var app4 = new Vue({
         }
     },
     methods: {
-     
+
         submitOnWorkDocumentComment() {
             axios.post('http://192.168.71.142/Document/SendForReview/', {
                 docCorId: this.docCorId,
@@ -294,7 +316,7 @@ var app4 = new Vue({
             axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
                 console.log(res.data.data.NewDocument);
                 this.newDocument = res.data.data.NewDocument;
-                
+
             })
         },
         async getClientDocument(Id) {
@@ -306,8 +328,8 @@ var app4 = new Vue({
         },
 
     },
-        mounted() {
-            this.getNewDocument()
+    mounted() {
+        this.getNewDocument()
         }
     })
     </script>

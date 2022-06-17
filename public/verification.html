@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
                             <h5 class="text-center">Комментарии</h5>
-                            <div class="comments-wrapper  border p-5 d-flex flex-column justify-content-start">
+                            <div class="comments-wrapper  border p-2 d-flex flex-column justify-content-start">
                                 <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
                                     :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
                                         <div class=" d-flex flex-nowrap justify-content-between align-items-center">
