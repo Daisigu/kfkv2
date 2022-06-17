@@ -211,6 +211,9 @@
                 axios.post('http://192.168.71.142/Document/SendForReview/', {
                     docCorId: this.docCorId,
                     comment: this.submitInputValue,
+                    
+                }).then((res)=>{
+                    this.getNewDocument();
                 })
     
     
