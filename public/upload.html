@@ -10,33 +10,37 @@
         <div class="verification__page pt-5" id="upload">
             <div class="row">            
                 <h1 v-if="newDocument.length == 0" class="text-center">Нет документов на подгрузку</h1>
-                
-                <div class="col-sm-12 col-lg-4 upload-client-list list-group" v-if="newDocument.length !== 0">
-                    <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2"
-                        v-model="uploadSearchValue">
-                    <!-- //$refs.downloadFile.value = null// -->
-                    <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
-                        v-on:click=" ; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
-                        class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
-                        <div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ client.FIO }}</h5>
-                                <small><span class="badge bg-primary"
-                                        v-bind:class="{ 'bg-danger': client.DocTypeInt == 2 }">
-                                        {{ client.DocType }} </span></small>
+                <transition name="slide-fade">
+                    <div class="col-sm-12 col-lg-4 upload-client-list list-group" v-if="newDocument.length !== 0">
+                        <input type="text" class="form-control mb-3 " placeholder="Поиск" aria-describedby="button-addon2"
+                            v-model="uploadSearchValue">
+                        <!-- //$refs.downloadFile.value = null// -->
+                        <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
+                            v-on:click=" ; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Reworking; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false; clientFIO = client.FIO"
+                            class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
+                            <div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ client.FIO }}</h5>
+                                    <small><span class="badge bg-primary"
+                                            v-bind:class="{ 'bg-danger': client.DocTypeInt == 2 }">
+                                            {{ client.DocType }} </span></small>
+                                </div>
+                                <small>{{ client.Title }}</small>
+                                <br />
+                                <small v-if="client.Reworking == true" class="text-danger">На доработку</small>
                             </div>
-                            <small>{{ client.Title }}</small>
-                            <br />
-                            <small v-if="client.Reworking == true" class="text-danger">На доработку</small>
                         </div>
                     </div>
-                </div>
-
+                </transition>
+              
+         
                 <div class="col-sm-12 col-lg-8">
                     <h1 v-if="uploadClientId == 0 && newDocument.length !== 0" class="text-center">Выберите клиента
                     </h1>
+                  
                     <div class="col-12">
-                        <form v-if="requiredDocuments.length !== 0 && workType == false" method="post"
+                        <transition name="slide-fade">
+                            <form v-if="requiredDocuments.length !== 0 && workType == false" method="post"
                             enctype="multipart/form-data" class="form-border"
                             :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId">
                             <h3 class="upload-client-title">{{ clientFIO }}</h3>
@@ -56,6 +60,8 @@
                             <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
                                 class="btn btn-primary mt-2">Отправить</button>
                         </form>
+                        </transition>
+                      <transition name="slide-fade">
                         <div class="onWork form-border" v-if="workType == true && requiredDocuments.length !== 0">
                             <h3 class="upload-client-title">{{ clientFIO }}</h3>
                             <div class="list-group" v-for="onWorkDoc in uploadNewDocumentClientFiles">
@@ -105,6 +111,8 @@
                             <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                                 data-bs-target="#OnWorkDocumentCommentModal">Отправить</button>
                         </div>
+                      </transition>
+                      
                     </div>
 
                 </div>
@@ -125,7 +133,7 @@
                         </div>
                         <div class="modal-footer">
                             <button data-bs-dismiss="modal" class="btn btn-primary col-3"
-                                v-on:click="submitOnWorkDocumentComment(); commentsCorrection = []; requiredDocuments = []">Отправить</button>
+                                v-on:click="submitOnWorkDocumentComment(); commentsCorrection = []; requiredDocuments = []; submitInputValue=''">Отправить</button>
                             <button type="button" class="btn btn-secondary col-3"
                                 data-bs-dismiss="modal">Закрыть</button>
                         </div>
