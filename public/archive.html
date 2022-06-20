@@ -70,10 +70,9 @@
                                     <div :id="'flush-collapseOne' + document.Id" class="accordion-collapse collapse"
                                         :aria-labelledby="'flush-headingOne' + document.Id"
                                         data-bs-parent="#accordionFlush">
-                                        <div class="accordion-body">
-                                            <div class="list-group" v-for="file in document.Files">
-                                                <div
-                                                    class="list-group-item mb-1 d-flex justify-content-between align-items-center">
+                                        <div class="accordion-body list-group">
+                                            <div class="list-group-item" v-for="file in document.Files">
+                                                <div class="  d-flex justify-content-between align-items-center">
                                                     <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id + '?preview=true'"
                                                         class="cut-text" :title="file.Name" target="_blank"> {{
                                                                 file.Name
