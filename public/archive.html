@@ -49,7 +49,7 @@
                     </transition>
 
                 </div>
-                <div v-if="clients.length > 0" class="people__info col-sm-12 col-lg-8 pt-5">
+                <div v-if="documents.length > 0" class="people__info col-sm-12 col-lg-8">
                     <!-- List with Clients documents -->
                     <div class="accordion accordion-flush" id="accordionFlush">
                         <transition-group name="slide-fade">
@@ -457,7 +457,11 @@
         .list-group-item {
             cursor: pointer;
         }
-
+        .people__info{
+            border: 1px solid rgb(233, 233, 233);
+            border-radius: 10px;
+        }
+        
         .slide-fade-enter-active {
             transition: all .3s ease;
         }

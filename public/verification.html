@@ -12,9 +12,10 @@
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <transition name="slide-fade">
-                        <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
+                        <div class="listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
                             <input type="text" class="form-control mb-3 " placeholder="Поиск"
                                 aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
+                            <div class="list-group">
                                 <div v-for="document in filteredListDocCheckedFalseClientList"
                                 v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
                                 class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
@@ -28,6 +29,7 @@
                                 <br/>
                                 <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с доработки</small>
                             </div>
+                            </div>
                             
                         </div>
                     </transition>
@@ -38,17 +40,19 @@
                         <div class="listDocCheckedFalseFile-list"
                         v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
                         <h3>{{ listDocCheckedFalseClientName }}</h3>
-                        <div class="list-group-item d-flex justify-content-between align-items-center " v-for="file in listDocCheckedFalseFiles">
-                            <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"  v-on:click="listDocCheckedFalseFileId=file.Id;removePdfFile(); getPdfFile();">{{ file.Name }}</a>
-                            <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
-                                <button class="btn btn-success opacity-0">
-                                    <i class="bi bi-download"></i>
-                                </button>
-                            </a>
+                        <div class="list-group">
+                            <div class="list-group-item d-flex justify-content-between align-items-center " v-for="file in listDocCheckedFalseFiles">
+                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"  v-on:click="listDocCheckedFalseFileId=file.Id;removePdfFile(); getPdfFile();">{{ file.Name }}</a>
+                                <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
+                                    <button class="btn btn-success opacity-0">
+                                        <i class="bi bi-download"></i>
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                         <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
                             <h5 class="text-center">Комментарии</h5>
-                            <div class="comments-wrapper  border p-2 d-flex flex-column justify-content-start">
+                            <div class="comments-wrapper p-2 d-flex flex-column justify-content-start">
                                 <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
                                     :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
                                         <div class=" d-flex flex-nowrap justify-content-between align-items-center">
@@ -189,7 +193,10 @@
             transform: translateX(10px);
             opacity: 0;
         }
-
+        .comments-wrapper{
+            border: 1px solid rgb(231, 231, 231);
+            border-radius: 10px;
+        }
 
         .badge {
             min-width: 53px;
