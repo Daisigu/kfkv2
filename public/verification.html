@@ -15,7 +15,7 @@
                         <div class="list-group listDocCheckedFalseClient-list" v-if="listDocCheckedFalse.length > 0">
                             <input type="text" class="form-control mb-3 " placeholder="Поиск"
                                 aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
-                                <div v-for="document in listDocCheckedFalse"
+                                <div v-for="document in filteredListDocCheckedFalseClientList"
                                 v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
                                 class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
                                 <div class="d-flex justify-content-between">
@@ -294,7 +294,7 @@ var app3 = new Vue({
         filteredListDocCheckedFalseClientList() {
             if (this.listDocCheckedFalseSearchValue) {
                 return this.listDocCheckedFalse.filter(item => {
-                    return item.FIO.includes(this.listDocCheckedFalseSearchValue);
+                    return item.FIO.toLowerCase().includes(this.listDocCheckedFalseSearchValue.toLowerCase());
                 });
             }
             return this.listDocCheckedFalse
