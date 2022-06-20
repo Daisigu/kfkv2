@@ -107,26 +107,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                      <div class="btns-group">
                                         <button title="Загрузиить файл в документ" :id="document.Id"
-                                            class="btn btn-primary mb-1" v-if="documents.length > 0"
-                                            data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                            v-on:click="Id = document.Id; $refs.downloadFile.value = null; fileUpload = false"><i
-                                                class="bi bi-upload"> Загрузка</i>
-                                        </button>
-                                        <button title="История изменений документа" :id="document.Id"
-                                            class="btn btn-success mb-1" v-if="documents.length > 0"
-                                            data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                            v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist">
-                                                Версии</i>
+                                        class="btn btn-primary mb-1" v-if="documents.length > 0"
+                                        data-bs-toggle="modal" data-bs-target="#loadingModal"
+                                        v-on:click="Id = document.Id; $refs.downloadFile.value = null; fileUpload = false"><i
+                                            class="bi bi-upload"> Загрузка</i>
+                                    </button>
+                                    <button title="История изменений документа" :id="document.Id"
+                                        class="btn btn-success mb-1" v-if="documents.length > 0"
+                                        data-bs-toggle="modal" data-bs-target="#documentVersionModal"
+                                        v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist">
+                                            Версии</i>
 
-                                        </button>
-                                        <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
-                                            data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
-                                            class="btn btn-danger mb-1"><i class="bi bi-trash3"> Удалить</i></button>
-                                        <button title="Удалить документ" v-on:click="getLinqDocuments()"
-                                            data-bs-toggle="modal" data-bs-target="#otherDocumentsModal"
-                                            class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
-                                                документы</i></button>
+                                    </button>
+                                    <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
+                                        data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
+                                        class="btn btn-danger mb-1"><i class="bi bi-trash3"> Удалить</i></button>
+                                    <button title="Удалить документ" v-on:click="getLinqDocuments()"
+                                        data-bs-toggle="modal" data-bs-target="#otherDocumentsModal"
+                                        class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
+                                            документы</i></button>
+                                      </div>
                                     </div>
                                 </div>
                             </transition-group>
@@ -464,18 +466,21 @@
         .list-group-item {
             cursor: pointer;
         }
-
-        .people__info {
-            border: 1px solid rgb(233, 233, 233);
-            border-radius: 10px;
+        .btns-group{
+            padding-left: 10px;
         }
-
+        .people__info .accordion-item {
+            border: 1px solid rgb(241, 241, 241);
+        }
+        .accordion-body{
+            padding: 10px !important
+        }
         .slide-fade-enter-active {
             transition: all .3s ease;
         }
 
         .slide-fade-leave-active {
-            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
         }
 
         .slide-fade-enter,
