@@ -134,10 +134,36 @@
                                                 class="btn btn-danger mb-1"><i class="bi bi-trash3">
                                                     Удалить</i></button>
                                             <button title="Удалить документ" v-on:click="getLinqDocuments()"
-                                                data-bs-toggle="modal" data-bs-target="#otherDocumentsModal"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
                                                 class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
                                                     документы</i></button>
+                                                  
+                                                  
+
                                         </div>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                    <div class="accordion-item" v-for="otherDocument in linqDocuments">
+                                                      <h2 class="accordion-header" id="flush-headingOne">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#flush-collapseOne'+otherDocument.Id" aria-expanded="false" :aria-controls="'flush-collapseOne'+otherDocument.Id">
+                                                          {{otherDocument.Title}}
+                                                        </button>
+                                                      </h2>
+                                                      <div :id="'flush-collapseOne'+otherDocument.Id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <div class="list-group"  v-for="otherDocumentFile in otherDocument.Files">
+                                                                <div class="list-item">
+                                                                    {{otherDocumentFile.Name}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                          </div>
+
                                     </div>
                                 </div>
                             </transition-group>
