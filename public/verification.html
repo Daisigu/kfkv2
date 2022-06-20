@@ -39,7 +39,7 @@
                         v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
                         <h3>{{ listDocCheckedFalseClientName }}</h3>
                         <div class="list-group-item d-flex justify-content-between align-items-center " v-for="file in listDocCheckedFalseFiles">
-                            <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal" v-on:click="listDocCheckedFalseFileId=file.Id">{{ file.Name }}</a>
+                            <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"  v-on:click="listDocCheckedFalseFileId=file.Id;removePdfFile(); getPdfFile();">{{ file.Name }}</a>
                             <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
                                 <button class="btn btn-success opacity-0">
                                     <i class="bi bi-download"></i>
@@ -125,12 +125,15 @@
     <div class="modal-dialog  modal-fullscreen">
       <div class="modal-content container ">
         <div class="modal-header">
-          <h5 class="modal-title" id="VerificationModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="VerificationModalLabel">Просмотр Файла</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
            <div class="row h-100">
-            <div class="col-8"><div class="div" style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);"><h1 class="text-center mt-2">Я кароче документ </h1></div></div>
+            <div class="col-8">
+               <div class="div" id="iFrame" style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);">
+                </div> 
+            </div>
             <div class="col-4">
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -245,6 +248,13 @@ var app3 = new Vue({
         }
     },
     methods: {
+        removePdfFile(){
+            document.getElementById('iFrame').innerHTML='';
+        },
+        getPdfFile(){
+            document.getElementById('iFrame').insertAdjacentHTML('afterbegin', `<iframe width=100% height=100% src=${'http://192.168.71.142/Document/FileDownload/'+this.listDocCheckedFalseFileId+ '?preview=true'}></iframe>`)
+        },
+      
         getListDocCheckedFalse() {
             axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
                 console.log(res.data);
@@ -284,11 +294,18 @@ var app3 = new Vue({
         filteredListDocCheckedFalseClientList() {
             if (this.listDocCheckedFalseSearchValue) {
                 return this.listDocCheckedFalse.filter(item => {
-                    return item.DocType.includes(this.listDocCheckedFalseSearchValue);
+                    return item.FIO.includes(this.listDocCheckedFalseSearchValue);
                 });
             }
-            return this.newDocument
+            return this.listDocCheckedFalse
         }
     },
 })
+
+
+
+    
     </script>
+<script>
+ 
+</script>

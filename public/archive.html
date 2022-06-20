@@ -10,6 +10,7 @@
             <div class="row">
 
                 <div class="people__list col-sm-12 col-lg-4">
+                    <!-- List with search Clients -->
                     <div class="input-group mb-3">
                         <input
                             v-on:keyup.enter="getClients(); loading = true; match = true; clientId = ''; documents = []"
@@ -33,7 +34,7 @@
 
                             <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
                                 v-bind:class="{ active: client.Id == clientId }" v-bind:Id="client.Id"
-                                v-on:click="getDocuments(client.Id); clientId = client.Id;">
+                                v-on:click="getDocuments(client.Id); clientId = client.Id; ">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ client.FullName }}</h5>
                                     <small>{{ client.Birthdate }}</small>
@@ -49,9 +50,7 @@
 
                 </div>
                 <div v-if="clients.length > 0" class="people__info col-sm-12 col-lg-8 pt-5">
-
-
-
+                    <!-- List with Clients documents -->
                     <div class="accordion accordion-flush" id="accordionFlush">
                         <transition-group name="slide-fade">
                             <div class="accordion-item" v-for="document in documents" :key="document.Id"
@@ -70,34 +69,35 @@
                                     data-bs-parent="#accordionFlush">
                                     <div class="accordion-body">
                                         <div class="list-group" v-for="file in document.Files">
-                                            <div class="list-group-item mb-1 d-flex justify-content-between align-items-center">
+                                            <div
+                                                class="list-group-item mb-1 d-flex justify-content-between align-items-center">
                                                 <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id + '?preview=true'"
                                                     class="cut-text" :title="file.Name" target="_blank"> {{ file.Name }}
-                                                </a>    
+                                                </a>
 
-                                                    <div class="d-flex flex-row align-items-center">
-                                                        <div>
-                                                <p class="createdFile m-0">{{file.Created}}</p>  
-                                                        </div>
-                                                       <div class="opacity-0 file__buttons">
-                                                        <button title="Заменить файл в документе"
-                                                        v-on:click="Id = file.Id; $refs.changeFile.value = null; fileUpload = false"
-                                                        data-bs-toggle="modal" data-bs-target="#changeModal"
-                                                        class="btn btn-info text-white"><i
-                                                            class="bi bi-arrow-left-right"></i>
-                                                    </button>
-                                                    <button title="Удалить файл в документе"
-                                                        v-on:click="deleteFileId = file.Id" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteFileConfirmModal"
-                                                        class="btn btn-danger "><i class="bi bi-trash3"></i>
-                                                    </button>
-                                                    <button title="История изменениий файла"
-                                                        v-on:click="fileHistory(file.Id)" class="btn  btn-success"
-                                                        data-bs-toggle="modal" data-bs-target="#versionModal"><i
-                                                            class="bi bi-card-checklist"></i>
-                                                    </button>
-                                                       </div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        <p class="createdFile m-0">{{ file.Created }}</p>
                                                     </div>
+                                                    <div class="opacity-0 file__buttons">
+                                                        <button title="Заменить файл в документе"
+                                                            v-on:click="Id = file.Id; $refs.changeFile.value = null; fileUpload = false"
+                                                            data-bs-toggle="modal" data-bs-target="#changeModal"
+                                                            class="btn btn-info text-white"><i
+                                                                class="bi bi-arrow-left-right"></i>
+                                                        </button>
+                                                        <button title="Удалить файл в документе"
+                                                            v-on:click="deleteFileId = file.Id" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteFileConfirmModal"
+                                                            class="btn btn-danger "><i class="bi bi-trash3"></i>
+                                                        </button>
+                                                        <button title="История изменениий файла"
+                                                            v-on:click="fileHistory(file.Id)" class="btn  btn-success"
+                                                            data-bs-toggle="modal" data-bs-target="#versionModal"><i
+                                                                class="bi bi-card-checklist"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -482,7 +482,7 @@
         .spinner-border {
             margin: auto;
         }
-     
+
         @media (max-width: 800px) {
             .cut-text {
                 text-overflow: ellipsis;
@@ -501,18 +501,22 @@
         .accordion-button.unactive {
             color: rgb(216, 216, 216);
         }
-        .createdFile{
+
+        .createdFile {
             position: relative;
             left: 95px;
         }
-        .list-group-item:hover .file__buttons{
+
+        .list-group-item:hover .file__buttons {
             opacity: 1 !important;
             transition: opacity 1s ease;
         }
-        .list-group-item:hover .createdFile{
+
+        .list-group-item:hover .createdFile {
             transition: all 1s ease;
             opacity: 0;
         }
+
         .active {
             transition: all 0.5s ease;
         }
