@@ -46,7 +46,7 @@
                                 <div class="list-group-item d-flex justify-content-between align-items-center "
                                     v-for="file in listDocCheckedFalseFiles">
                                     <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"
-                                        v-on:click="listDocCheckedFalseFileId = file.Id; removePdfFile(); getPdfFile();">{{
+                                        v-on:click="listDocCheckedFalseFileId = file.Id; removePdfFile(); getPdfFile(); listDocCheckedFalseFile=file" >{{
                                                 file.Name
                                         }}</a>
                                     <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
@@ -137,18 +137,19 @@
             aria-hidden="true">
             <div class="modal-dialog  modal-fullscreen">
                 <div class="modal-content container ">
-                    <div class="modal-header">
+                    <div class="modal-header d-flex flex-column justify-content-start align-items-start">
                         <h5 class="modal-title" id="VerificationModalLabel">Просмотр Файла</h5>
+                        <small>{{listDocCheckedFalseFile.Name}}</small>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row h-100">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <div class="div" id="iFrame"
                                     style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);">
                                 </div>
                             </div>
-                            <div class="col-4">
+                     <!--        <div class="col-4">
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
@@ -171,7 +172,7 @@
                                         Fifth checkbox
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -260,6 +261,7 @@
     data() {
         return {
             listDocCheckedFalse: [],
+            listDocCheckedFalseFile: {},
             listDocCheckedFalseId: '',
             listDocCheckedFalseSearchValue: '',
             listDocCheckedFalseFiles: [],
@@ -274,7 +276,7 @@
             document.getElementById('iFrame').innerHTML='';
         },
         getPdfFile(){
-            document.getElementById('iFrame').insertAdjacentHTML('afterbegin', `<iframe width=100% height=100% src=${'http://192.168.71.142/Document/FileDownload/'+this.listDocCheckedFalseFileId+ '?preview=true'}></iframe>`)
+            document.getElementById('iFrame').insertAdjacentHTML('afterbegin', `<iframe width=100% height=100% src=${'http://192.168.71.142/Document/FileDownload/?Id='+this.listDocCheckedFalseFileId+ '&preview=true'}></iframe>`)
         },
       
         getListDocCheckedFalse() {
