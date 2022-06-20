@@ -45,11 +45,12 @@
                             <div class="list-group">
                                 <div class="list-group-item d-flex justify-content-between align-items-center "
                                     v-for="file in listDocCheckedFalseFiles">
-                                    <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"
-                                        v-on:click="listDocCheckedFalseFileId = file.Id; removePdfFile(); getPdfFile(); listDocCheckedFalseFile=file" >{{
+                                    <a class="cursor-pointer col-9" data-bs-toggle="modal" data-bs-target="#VerificationModal"
+                                        v-on:click="listDocCheckedFalseFileId = file.Id; removePdfFile(); getPdfFile(); listDocCheckedFalseFile = file">{{
                                                 file.Name
                                         }}</a>
-                                    <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
+                                    <p class="m-0 badge badge-success bg-success" v-if="file.FlagForReplacement == true">Проверено</p>
+                                    <a  :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
                                         <button class="btn btn-success opacity-0">
                                             <i class="bi bi-download"></i>
                                         </button>
@@ -137,45 +138,28 @@
             aria-hidden="true">
             <div class="modal-dialog  modal-fullscreen">
                 <div class="modal-content container ">
-                    <div class="modal-header d-flex flex-column justify-content-start align-items-start">
+                    <div class="modal-header ">
                         <h5 class="modal-title" id="VerificationModalLabel">Просмотр Файла</h5>
-                        <small>{{listDocCheckedFalseFile.Name}}</small>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row h-100">
-                            <div class="col-12">
+                            <div class="col-9">
                                 <div class="div" id="iFrame"
                                     style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);">
                                 </div>
                             </div>
-                     <!--        <div class="col-4">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                        First checkbox
-                                    </li>
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                        Second checkbox
-                                    </li>
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                        Third checkbox
-                                    </li>
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                        Fourth checkbox
-                                    </li>
-                                    <li class="list-group-item">
-                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                                        Fifth checkbox
-                                    </li>
+                            <div class="col-3">
+                                <ul class="list-group-file">
+                                    <li>{{ listDocCheckedFalseFile.Name }}</li>
+                                    <li>{{ listDocCheckedFalseFile.Created }}</li>
                                 </ul>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            v-on:click="checkFile()">Проверено</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -188,7 +172,9 @@
         * {
             font-family: 'Cuprum', sans-serif !important;
         }
-
+        .badge-success{
+            width: 100px;
+        }
         .slide-fade-enter-active {
             transition: all .3s ease;
         }
@@ -210,7 +196,10 @@
             border: 1px solid rgb(231, 231, 231);
             border-radius: 10px;
         }
-
+        .list-group-file{
+            padding-left: 10px;
+            list-style: none;
+        }
         .badge {
             min-width: 53px;
             font-weight: 400;
@@ -272,6 +261,9 @@
         }
     },
     methods: {
+        checkFile(){
+            this.listDocCheckedFalseFile.FlagForReplacement=true
+        },
         removePdfFile(){
             document.getElementById('iFrame').innerHTML='';
         },
@@ -331,5 +323,5 @@
     
     </script>
     <script>
-
+    
     </script>
