@@ -141,8 +141,14 @@
                                                   
 
                                         </div>
-                                        <div class="collapse" id="collapseExample">
-                                            <div class="card card-body">
+                                        <div class="collapse" id="collapseExample" >
+                                            <div class="card card-body" >
+                                                
+                                                <div v-if="linqDocuments.length==0" class="spinner-border" role="status">
+                                                    <span class="visually-hidden">Загрузка</span>
+                                                </div>
+
+
                                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                                     <div class="accordion-item" v-for="otherDocument in linqDocuments">
                                                       <h2 class="accordion-header" id="flush-headingOne">
@@ -154,7 +160,9 @@
                                                         <div class="accordion-body">
                                                             <div class="list-group"  v-for="otherDocumentFile in otherDocument.Files">
                                                                 <div class="list-item">
+                                                                    <a :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
                                                                     {{otherDocumentFile.Name}}
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </div>
