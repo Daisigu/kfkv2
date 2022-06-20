@@ -73,7 +73,7 @@
                                         <div class="accordion-body list-group">
                                             <div class="list-group-item" v-for="file in document.Files">
                                                 <div class="  d-flex justify-content-between align-items-center">
-                                                    <a :href="'http://192.168.71.142/Document/FileDownload/?Id='+file.Id+'&preview=true'"
+                                                    <a :href="'http://192.168.71.142/Document/FileDownload/?Id=' + file.Id + '&preview=true'"
                                                         class="cut-text" :title="file.Name" target="_blank"> {{
                                                                 file.Name
                                                         }}
@@ -90,6 +90,13 @@
                                                                 class="btn btn-info text-white"><i
                                                                     class="bi bi-arrow-left-right"></i>
                                                             </button>
+                                                            <a
+                                                                :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
+                                                                <button class="btn btn-primary">
+                                                                    <i class="bi bi-download"></i>
+                                                                </button>
+                                                            </a>
+
                                                             <button title="Удалить файл в документе"
                                                                 v-on:click="deleteFileId = file.Id"
                                                                 data-bs-toggle="modal"
@@ -107,28 +114,30 @@
                                                 </div>
                                             </div>
                                         </div>
-                                      <div class="btns-group">
-                                        <button title="Загрузиить файл в документ" :id="document.Id"
-                                        class="btn btn-primary mb-1" v-if="documents.length > 0"
-                                        data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                        v-on:click="Id = document.Id; $refs.downloadFile.value = null; fileUpload = false"><i
-                                            class="bi bi-upload"> Загрузка</i>
-                                    </button>
-                                    <button title="История изменений документа" :id="document.Id"
-                                        class="btn btn-success mb-1" v-if="documents.length > 0"
-                                        data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                        v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist">
-                                            Версии</i>
+                                        <div class="btns-group">
+                                            <button title="Загрузиить файл в документ" :id="document.Id"
+                                                class="btn btn-primary mb-1" v-if="documents.length > 0"
+                                                data-bs-toggle="modal" data-bs-target="#loadingModal"
+                                                v-on:click="Id = document.Id; $refs.downloadFile.value = null; fileUpload = false"><i
+                                                    class="bi bi-upload"> Загрузка</i>
+                                            </button>
+                                            <button title="История изменений документа" :id="document.Id"
+                                                class="btn btn-success mb-1" v-if="documents.length > 0"
+                                                data-bs-toggle="modal" data-bs-target="#documentVersionModal"
+                                                v-on:click="documentHistory(document.Id)"><i
+                                                    class="bi bi-card-checklist">
+                                                    Версии</i>
 
-                                    </button>
-                                    <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
-                                        data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
-                                        class="btn btn-danger mb-1"><i class="bi bi-trash3"> Удалить</i></button>
-                                    <button title="Удалить документ" v-on:click="getLinqDocuments()"
-                                        data-bs-toggle="modal" data-bs-target="#otherDocumentsModal"
-                                        class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
-                                            документы</i></button>
-                                      </div>
+                                            </button>
+                                            <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
+                                                data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
+                                                class="btn btn-danger mb-1"><i class="bi bi-trash3">
+                                                    Удалить</i></button>
+                                            <button title="Удалить документ" v-on:click="getLinqDocuments()"
+                                                data-bs-toggle="modal" data-bs-target="#otherDocumentsModal"
+                                                class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
+                                                    документы</i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </transition-group>
@@ -209,13 +218,14 @@
                     </div>
                     <h1 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h1>
                     <div class="modal-body" v-for="history in fileHistoryArray">
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id+'&preview=true'" target="_blank">{{
-                            history.Name
-                    }}</a>
+                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
+                            target="_blank">{{
+                                    history.Name
+                            }}</a>
                         <div>Изменен: {{ history.Created }}</div>
                         <div>Кем: {{ history.UserName }}</div>
                         <div>Комментарий: {{ history.Comment }}</div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -274,13 +284,14 @@
                     </div>
                     <h1 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h1>
                     <div class="modal-body" v-for="docHistory in documentHistoryArray">
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' +  docHistory.Id+'&preview=true'" target="_blank">{{
-                            docHistory.Name 
-                    }}</a>
+                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
+                            target="_blank">{{
+                                    docHistory.Name
+                            }}</a>
                         <div>Изменен: {{ docHistory.Created }}</div>
                         <div>Кем: {{ docHistory.UserName }}</div>
                         <div>Комментарий: {{ docHistory.Comment }}</div>
-                       
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -314,7 +325,7 @@
         </div>
     </div>
     <script>
-    var app2 = new Vue({
+        var app2 = new Vue({
         el: '#archive',
         data() {
             return {
@@ -468,15 +479,19 @@
         .list-group-item {
             cursor: pointer;
         }
-        .btns-group{
+
+        .btns-group {
             padding-left: 10px;
         }
+
         .people__info .accordion-item {
             border: 1px solid rgb(241, 241, 241);
         }
-        .accordion-body{
+
+        .accordion-body {
             padding: 10px !important
         }
+
         .slide-fade-enter-active {
             transition: all .3s ease;
         }
