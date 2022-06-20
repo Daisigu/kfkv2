@@ -73,10 +73,10 @@
                                 <div class="list-group">
                                     <div  v-for="onWorkDoc in uploadNewDocumentClientFiles"
                                         class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                                        <a :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
+                                        <a class="col-7" :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
                                             target="_blank"> {{ onWorkDoc.Name }}
                                         </a>
-                                        <p v-if="onWorkDoc.FlagForReplacement == true" class="changeFileFlag p-0 m-0">
+                                        <p v-if="onWorkDoc.FlagForReplacement == true" class="changeFileFlag badge bg-success m-0 ">
                                             Заменен
                                         </p>
                                         <div class="buttons-group opacity-0">
@@ -231,7 +231,7 @@
         }
 
         .changeFileFlag {
-            color: rgb(15, 182, 15);
+            width: 100px;
         }
     </style>
 
