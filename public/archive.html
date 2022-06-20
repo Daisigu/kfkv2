@@ -73,7 +73,7 @@
                                         <div class="accordion-body list-group">
                                             <div class="list-group-item" v-for="file in document.Files">
                                                 <div class="  d-flex justify-content-between align-items-center">
-                                                    <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id + '?preview=true'"
+                                                    <a :href="'http://192.168.71.142/Document/FileDownload/?Id='+file.Id+'&preview=true'"
                                                         class="cut-text" :title="file.Name" target="_blank"> {{
                                                                 file.Name
                                                         }}
@@ -209,12 +209,13 @@
                     </div>
                     <h1 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h1>
                     <div class="modal-body" v-for="history in fileHistoryArray">
+                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id+'&preview=true'" target="_blank">{{
+                            history.Name
+                    }}</a>
                         <div>Изменен: {{ history.Created }}</div>
                         <div>Кем: {{ history.UserName }}</div>
                         <div>Комментарий: {{ history.Comment }}</div>
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/' + history.Id">{{
-                                history.Name
-                        }}</a>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -273,12 +274,13 @@
                     </div>
                     <h1 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h1>
                     <div class="modal-body" v-for="docHistory in documentHistoryArray">
+                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' +  docHistory.Id+'&preview=true'" target="_blank">{{
+                            docHistory.Name 
+                    }}</a>
                         <div>Изменен: {{ docHistory.Created }}</div>
                         <div>Кем: {{ docHistory.UserName }}</div>
                         <div>Комментарий: {{ docHistory.Comment }}</div>
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/' + docHistory.Id">{{
-                                docHistory.Name
-                        }}</a>
+                       
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
