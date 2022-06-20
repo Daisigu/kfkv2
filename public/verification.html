@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <div class="verification__page pt-5" id="verification">
         <div class="container">
-            <h1 class="text-center" v-if="listDocCheckedFalse.length==0">Нет документов на проверку</h1>
+            <h1 class="text-center" v-if="listDocCheckedFalse.length == 0">Нет документов на проверку</h1>
             <div class="row">
                 <div class="col-12 col-lg-4">
                     <transition name="slide-fade">
@@ -17,20 +17,22 @@
                                 aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
                             <div class="list-group">
                                 <div v-for="document in filteredListDocCheckedFalseClientList"
-                                v-on:click="commentsCorrection = document.CommentsCorrection;listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
-                                class="list-group-item" v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-1">{{ document.FIO }}</h5>
-                                    <small><span class="badge bg-primary"
-                                            v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
-                                            {{ document.DocType }} </span></small>
+                                    v-on:click="commentsCorrection = document.CommentsCorrection; listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
+                                    class="list-group-item"
+                                    v-bind:class="{ active: listDocCheckedFalseId == document.Id }">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-1">{{ document.FIO }}</h5>
+                                        <small><span class="badge bg-primary"
+                                                v-bind:class="{ 'bg-danger': document.DocType == 'Отказ' }">
+                                                {{ document.DocType }} </span></small>
+                                    </div>
+                                    <small>{{ document.Title }}</small>
+                                    <br />
+                                    <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с
+                                        доработки</small>
                                 </div>
-                                <small>{{ document.Title }}</small>
-                                <br/>
-                                <small v-if="document.CheckDocCor == true" class="text-danger">Пришел с доработки</small>
                             </div>
-                            </div>
-                            
+
                         </div>
                     </transition>
                 </div>
@@ -38,46 +40,51 @@
 
                     <transition name="slide-fade">
                         <div class="listDocCheckedFalseFile-list"
-                        v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
-                        <h3>{{ listDocCheckedFalseClientName }}</h3>
-                        <div class="list-group">
-                            <div class="list-group-item d-flex justify-content-between align-items-center " v-for="file in listDocCheckedFalseFiles">
-                                <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"  v-on:click="listDocCheckedFalseFileId=file.Id;removePdfFile(); getPdfFile();">{{ file.Name }}</a>
-                                <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
-                                    <button class="btn btn-success opacity-0">
-                                        <i class="bi bi-download"></i>
-                                    </button>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
-                            <h5 class="text-center">Комментарии</h5>
-                            <div class="comments-wrapper p-2 d-flex flex-column justify-content-start">
-                                <div class="comment-card col-10 card text-dark bg-light mb-3" v-for="comment in commentsCorrection"
-                                    :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
-                                        <div class=" d-flex flex-nowrap justify-content-between align-items-center">
-                                            <small class="m-0">{{comment.Name}}</small>
-                                          <small class="card-title m-0">{{comment.DateComment}}</small>
-    
-                                        </div>
-                                        <div class="p-1">
-                                          <p class="card-text">{{comment.Comment}}</p>
-                                        </div>
+                            v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
+                            <h3>{{ listDocCheckedFalseClientName }}</h3>
+                            <div class="list-group">
+                                <div class="list-group-item d-flex justify-content-between align-items-center "
+                                    v-for="file in listDocCheckedFalseFiles">
+                                    <a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#VerificationModal"
+                                        v-on:click="listDocCheckedFalseFileId = file.Id; removePdfFile(); getPdfFile();">{{
+                                                file.Name
+                                        }}</a>
+                                    <a :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
+                                        <button class="btn btn-success opacity-0">
+                                            <i class="bi bi-download"></i>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
+                            <div class="col-12 mt-3" v-if="commentsCorrection.length > 0">
+                                <h5 class="text-center">Комментарии</h5>
+                                <div class="comments-wrapper p-2 d-flex flex-column justify-content-start">
+                                    <div class="comment-card col-10 card text-dark bg-light mb-3"
+                                        v-for="comment in commentsCorrection"
+                                        :class="{ 'align-self-end': comment.Role == 0, 'bg-archi': comment.Role == 0 }">
+                                        <div class=" d-flex flex-nowrap justify-content-between align-items-center">
+                                            <small class="m-0">{{ comment.Name }}</small>
+                                            <small class="card-title m-0">{{ comment.DateComment }}</small>
+
+                                        </div>
+                                        <div class="p-1">
+                                            <p class="card-text">{{ comment.Comment }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons-group mt-2">
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#OnWorkDocumentModal">На доработку</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#CheckedDocumentModal">Проверено</button>
+                            </div>
                         </div>
-                        <div class="buttons-group mt-2">
-                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#OnWorkDocumentModal">На доработку</button>
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#CheckedDocumentModal">Проверено</button>
-                        </div>
-                    </div>
                     </transition>
 
 
-                    
-                
+
+
                 </div>
             </div>
         </div>
@@ -116,60 +123,63 @@
                             v-model="onWorkDocumentInputValue">
                     </div>
                     <div class="modal-footer">
-                        <button data-bs-dismiss="modal" class="btn btn-primary col-3" v-bind="{ disabled: onWorkDocumentInputValue=='' }"
-                            v-on:click="reworkDocument(); onWorkDocumentInputValue=''">Отправить</button>
+                        <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                            v-bind="{ disabled: onWorkDocumentInputValue == '' }"
+                            v-on:click="reworkDocument(); onWorkDocumentInputValue = ''">Отправить</button>
                         <button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
             </div>
         </div>
 
-  <!-- Pdf Modal -->
-  <div class="modal fade" id="VerificationModal" tabindex="-1" aria-labelledby="VerificationModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-fullscreen">
-      <div class="modal-content container ">
-        <div class="modal-header">
-          <h5 class="modal-title" id="VerificationModalLabel">Просмотр Файла</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-           <div class="row h-100">
-            <div class="col-8">
-               <div class="div" id="iFrame" style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);">
-                </div> 
+        <!-- Pdf Modal -->
+        <div class="modal fade" id="VerificationModal" tabindex="-1" aria-labelledby="VerificationModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog  modal-fullscreen">
+                <div class="modal-content container ">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="VerificationModalLabel">Просмотр Файла</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row h-100">
+                            <div class="col-8">
+                                <div class="div" id="iFrame"
+                                    style="height: 100%; color: rgb(10, 8, 8); background-color: rgb(209, 209, 209);">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        First checkbox
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        Second checkbox
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        Third checkbox
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        Fourth checkbox
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                                        Fifth checkbox
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-4">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      First checkbox
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      Second checkbox
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      Third checkbox
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      Fourth checkbox
-                    </li>
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
-                      Fifth checkbox
-                    </li>
-                  </ul>
-            </div>
-           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-        </div>
-      </div>
-    </div>
-  </div>
     </div>
 
 
@@ -177,6 +187,7 @@
         * {
             font-family: 'Cuprum', sans-serif !important;
         }
+
         .slide-fade-enter-active {
             transition: all .3s ease;
         }
@@ -193,7 +204,8 @@
             transform: translateX(10px);
             opacity: 0;
         }
-        .comments-wrapper{
+
+        .comments-wrapper {
             border: 1px solid rgb(231, 231, 231);
             border-radius: 10px;
         }
@@ -210,12 +222,14 @@
 
         .listDocCheckedFalseFile-list {
             padding: 10px;
-            border: 1px solid rgb(231, 231, 231);
-            border-radius: 5px;
+            border: 1px solid rgb(221, 220, 220);
+            border-radius: 10px
         }
-        .cursor-pointer{
+
+        .cursor-pointer {
             cursor: pointer;
         }
+
         .comment-card {
             border-radius: 15px;
             color: rgb(0, 0, 0);
@@ -225,6 +239,7 @@
             flex-direction: column;
             justify-content: space-between;
         }
+
         .list-group-item:hover .btn {
             transition: opacity 0.5s ease;
             opacity: 1 !important;
@@ -239,7 +254,7 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
     <script>
-var app3 = new Vue({
+        var app3 = new Vue({
     el: '#verification',
 
     data() {
@@ -313,6 +328,6 @@ var app3 = new Vue({
 
     
     </script>
-<script>
- 
-</script>
+    <script>
+
+    </script>
