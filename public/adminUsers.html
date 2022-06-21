@@ -14,10 +14,10 @@
             <div class="row">
                 <transition name="slide-fade">
                     <!-- LIST WITH USERS CARDS -->
-                    <div class="col-sm-12 col-lg-4 users-cards-list " v-if="usersCards.length !== 0">
+                    <div class="col-sm-12 col-lg-4 users-cards-list pb-2" v-if="usersCards.length !== 0">
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                            <button class="btn btn-primary mb-2">Создать пользователя</button>
+                            <button class="btn btn-primary mb-2" v-on:click="createUser()">Создать пользователя</button>
                         <div class="list-group">
                             <div class="list-group-item" v-for="user in filteredUsersCards"
                                 v-on:click="usersCardId = user.Id; getUser()"
@@ -164,7 +164,7 @@
 
 
 
-                    <div class="users-cards-add-details">
+               <!--      <div class="users-cards-add-details">
                         <transition name="slide-fade">
                             <div class="card-wrapper" v-if="usersCardId !== null">
                                 <form action="http://192.168.71.142/Admin/CreateUser" method="post">
@@ -298,7 +298,7 @@
                                 </form>
                             </div>
                         </transition>
-                    </div>
+                    </div> -->
 
 
 
@@ -344,6 +344,12 @@
         }
     },
     methods: {
+        createUser(){
+            axios.post('http://192.168.71.142/Admin/GetUser/0').then((res)=>{
+                this.user=res.data.User
+                this.userRights=[]
+            })
+        },
         getUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/?Id='+this.usersCardId).then((res)=>{
                 this.user=res.data.data.User
