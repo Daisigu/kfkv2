@@ -277,7 +277,7 @@
             filteredUploadClientList() {
                 if (this.uploadSearchValue) {
                     return this.newDocument.filter(item => {
-                        return item.FIO.includes(this.uploadSearchValue);
+                        return item.FIO.toLowerCase().includes(this.uploadSearchValue.toLowerCase());
                     });
                 }
                 return this.newDocument

@@ -14,6 +14,8 @@
             <div class="row">
                 <transition name="slide-fade">
                     <div class="col-sm-12 col-lg-4 users-list " v-if="usersCards.length !== 0">
+                        <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                            aria-describedby="button-addon2" v-model="searchValue">
                         <div class="list-group">
                             <div class="list-group-item" v-for="user in usersCards" v-on:click="usersCardId=user.Id"
                                :class="{active: usersCardId==user.Id}" >
@@ -54,6 +56,7 @@
     el: '#adminUsers',
     data(){
         return{
+            searchValue: '',
             usersCards: [],
             usersCardId: null,
         }
@@ -73,7 +76,17 @@
     },
     mounted(){
         this.getUsersCards()
-    }
+    },
+    computed:{
+        filteredUsers() {
+                if (this.searchValue) {
+                    return this.usersCards.filter(item => {
+                        return item.FIO.toLowerCase().includes(this.searchValue.toLowerCase());
+                    });
+                }
+                return this.usersCards
+            }
+    },
     
 })
     </script>
