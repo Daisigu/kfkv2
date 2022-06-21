@@ -32,128 +32,130 @@
                     </div>
                 </transition>
                 <!-- USERS CARDS DETAILS -->
-                <div class="col-sm-12 col-lg-8 userds-cards-details" >
-                                   <h4 v-if="user.Id == undefined">Выберите пользователя</h4>
-                    <div class="card-wrapper" v-if="usersCardId!==null">
-                        <form action="">
-                            <div class="user-card">
-                                <div class="list-group justify-content-center align-items-center">
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Имя </p>
-                                            <input type="text" class="form-control" :value="user.FirstName"
-                                                aria-label="Username">
+                <div class="col-sm-12 col-lg-8 userds-cards-details">
+                    <h4 v-if="user.Id == undefined">Выберите пользователя</h4>
+                    <transition name="slide-fade">
+                        <div class="card-wrapper" v-if="usersCardId !== null">
+                            <form action="">
+                                <div class="user-card">
+                                    <div class="list-group justify-content-center align-items-center">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Имя </p>
+                                                <input type="text" class="form-control" :value="user.FirstName"
+                                                    aria-label="FirstName" :name="">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Фамилия </p>
-                                            <input type="text" class="form-control" :value="user.LastName"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Фамилия </p>
+                                                <input type="text" class="form-control" :value="user.LastName"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Отчество </p>
-                                            <input type="text" class="form-control" :value="user.Patronymic"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Отчество </p>
+                                                <input type="text" class="form-control" :value="user.Patronymic"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Дата рождения</p>
-                                            <input type="date" class="form-control" :value="user.Birthdate"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Дата рождения</p>
+                                                <input type="date" class="form-control" :value="user.Birthdate"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Номер телефона</p>
-                                            <input type="text" class="form-control" :value="user.NumberPhone"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Номер телефона</p>
+                                                <input type="text" class="form-control" :value="user.NumberPhone"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Серия паспорта</p>
-                                            <input type="text" class="form-control" :value="user.SeriesPasport"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Серия паспорта</p>
+                                                <input type="text" class="form-control" :value="user.SeriesPasport"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Номер паспорта</p>
-                                            <input type="text" class="form-control" :value="user.NumberPasport"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Номер паспорта</p>
+                                                <input type="text" class="form-control" :value="user.NumberPasport"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Блокирован</p>
-                                            <input type="checkbox" class="form-check-input" aria-label="Username"
-                                                v-bind="{ checked: user.Blocked == true }">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Блокирован</p>
+                                                <input type="checkbox" class="form-check-input" aria-label="Username"
+                                                    v-bind="{ checked: user.Blocked == true }">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Логин</p>
-                                            <input type="text" class="form-control" :value="user.Login"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Логин</p>
+                                                <input type="text" class="form-control" :value="user.Login"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Пароль</p>
-                                            <input type="text" class="form-control" :value="user.Password"
-                                                aria-label="Username">
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Пароль</p>
+                                                <input type="text" class="form-control" :value="user.Password"
+                                                    aria-label="Username">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Офис</p>
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option v-bind="{ selected: select.Member == true }"
-                                                    v-for="select in user.Offices">{{ select.Name }}</option>
-                                            </select>
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Офис</p>
+                                                <select class="form-select" aria-label="Default select example">
+                                                    <option v-bind="{ selected: select.Member == true }"
+                                                        v-for="select in user.Offices">{{ select.Name }}</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Группы</p>
-                                            <div class="form-check-wrapper">
-                                                <div class="form-check" v-for="radio in user.Groups">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        v-bind="{ checked: radio.Member == true }"
-                                                        id="flexRadioDefault1">
-                                                    <label class="form-check-label" for="flexRadioDefault1">
-                                                        {{ radio.Description }}
-                                                    </label>
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Группы</p>
+                                                <div class="form-check-wrapper">
+                                                    <div class="form-check" v-for="radio in user.Groups">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="flexRadioDefault"
+                                                            v-bind="{ checked: radio.Member == true }"
+                                                            id="flexRadioDefault1">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            {{ radio.Description }}
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Права</p>
-                                            <div class="rights-checkbox-wrapper">
-                                                <div class="form-check" v-for="rights in user.Rights">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="flexCheckDefault"
-                                                        v-bind="{ checked: rights.Enabled == true }">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        {{ rights.Description }}
-                                                    </label>
+                                        <div class="list-group-item col-12">
+                                            <div class="d-flex align-items-center">
+                                                <p class="m-0 p-2 col-5">Права</p>
+                                                <div class="rights-checkbox-wrapper">
+                                                    <div class="form-check" v-for="rights in user.Rights">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault"
+                                                            v-bind="{ checked: rights.Enabled == true }">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            {{ rights.Description }}
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <button class="btn btn-success admin-submit-button"
+                                            type="submit">Сохранить</button>
                                     </div>
-                                    <button class="btn btn-success admin-submit-button" type="submit">Сохранить</button>
-
                                 </div>
-
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    </transition>
                 </div>
             </div>
         </div>
