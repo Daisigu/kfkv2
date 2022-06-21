@@ -142,7 +142,7 @@
                                                     <div class="form-check" v-for="right in rights">
                                                         <input class="form-check-input" type="checkbox" value=""
                                                             id="flexCheckDefault"
-                                                            v-bind="{ checked:  == true }">
+                                                            v-bind="{ checked: userRights.includes(right.Id)}">
                                                         <label class="form-check-label" for="flexCheckDefault">
                                                             {{ right.Description }}
                                                         </label>
@@ -327,12 +327,14 @@
             groups: [],
             rights: [],
             offices: [],
+            userRights: [],
         }
     },
     methods: {
         getUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/?Id='+this.usersCardId).then((res)=>{
                 this.user=res.data.data.User
+                this.userRights=res.data.data.User.Rights
             })
         },
         getUsersCards(){
