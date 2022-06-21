@@ -112,7 +112,7 @@
                                         <div class="d-flex align-items-center">
                                             <p class="m-0 p-2 col-5">Офис</p>
                                             <select class="form-select" aria-label="Default select example">
-                                                <option :selected="{ selected: select.Member == true }"
+                                                <option v-bind="{ selected: select.Member == true }"
                                                     v-for="select in user.Offices">{{ select.Name }}</option>
                                             </select>
                                         </div>
@@ -120,17 +120,33 @@
                                     <div class="list-group-item col-10">
                                         <div class="d-flex align-items-center">
                                             <p class="m-0 p-2 col-5">Группы</p>
-                                            <div class="form-check flex-column">
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                  Default radio
-                                                </label>
-                                              </div>
-                                            
+                                            <div class="form-check-wrapper">
+                                                <div class="form-check" v-for="radio in user.Groups">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        v-bind="{ checked: radio.Member == true }" id="flexRadioDefault1">
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        {{ radio.Description }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Права</p>
+                                            <div class="rights-checkbox-wrapper">
+                                                <div class="form-check" v-for="rights in user.Rights">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                      {{rights.Description}}
+                                                    </label>
+                                                  </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <button></button>
                         </form>
                     </div>
                 </div>
