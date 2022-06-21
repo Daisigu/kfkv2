@@ -33,8 +33,95 @@
                 </transition>
                 <!-- USERS CARDS DETAILS -->
                 <div class="col-sm-12 col-lg-8 userds-cards-details" v-if="">
-                    <div class="card-wrapper">
-
+                                   <div class="card-wrapper">
+                        <h4 v-if="user.Id == undefined">Выберите пользователя</h4>
+                        <form action="">
+                            <div class="user-card">
+                                <div class="list-group justify-content-center align-items-center">
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Имя </p>
+                                            <input type="text" class="form-control" :value="user.FirstName"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Фамилия </p>
+                                            <input type="text" class="form-control" :value="user.LastName"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Отчество </p>
+                                            <input type="text" class="form-control" :value="user.Patronymic"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Дата рождения</p>
+                                            <input type="date" class="form-control" :value="user.Birthdate"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Номер телефона</p>
+                                            <input type="text" class="form-control" :value="user.NumberPhone"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Серия паспорта</p>
+                                            <input type="text" class="form-control" :value="user.SeriesPasport"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Номер паспорта</p>
+                                            <input type="text" class="form-control" :value="user.NumberPasport"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Блокирован</p>
+                                            <input type="checkbox" class="form-check-input" :value="user.Blocked"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Логин</p>
+                                            <input type="text" class="form-control" :value="user.Login"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Пароль</p>
+                                            <input type="text" class="form-control" :value="user.Password"
+                                                aria-label="Username">
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item col-10">
+                                        <div class="d-flex align-items-center">
+                                            <p class="m-0 p-2 col-5">Офис</p>
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>Open this select menu</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                              </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -67,12 +154,13 @@
             searchValue: '',
             usersCards: [],
             usersCardId: null,
+            user:{},
         }
     },
     methods: {
         getUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/?Id='+this.usersCardId).then((res)=>{
-                console.log(res);
+                this.user=res.data.data.User
             })
         },
         getUsersCards(){
@@ -110,6 +198,12 @@
 
         .list-group-item {
             cursor: pointer;
+        }
+
+        .card-wrapper {
+            border: 1px solid rgb(226, 226, 226);
+            border-radius: 10px;
+            padding: 15px;
         }
 
         .slide-fade-enter,
