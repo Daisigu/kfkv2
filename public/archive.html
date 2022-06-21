@@ -31,7 +31,6 @@
                     <transition name="slide-fade">
                         <div v-if="loading == false"
                             class="list-group d-flex justify-content-center align-items-center">
-
                             <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
                                 v-bind:class="{ active: client.Id == clientId }" v-bind:Id="client.Id"
                                 v-on:click="getDocuments(client.Id); clientId = client.Id; ">

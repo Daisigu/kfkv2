@@ -9,29 +9,36 @@
 
 
 
-    <div class="adminUsers__page" id="adminUsers">
+    <div class="adminUsers__page pt-5 pb-5" id="adminUsers">
         <div class="container">
             <div class="row">
-                Admin Users
+                <transition name="slide-fade">
+                    <div class="col-sm-12 col-lg-4 users-list " v-if="usersCards.length !== 0">
+                        <div class="list-group">
+                            <div class="list-group-item" v-for="user in usersCards" v-on:click="usersCardId=user.Id"
+                               :class="{active: usersCardId==user.Id}" >
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ user.FIO }}</h5>
+                                    <small>{{ user.Birthdate }}</small>
+                                </div>
+                                    <small>{{user.Position}}</small>
+                                <small v-if="user.Blocked == true" class="badge bg-danger">Заблокирован</small>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>
 
-    <script>
-        
-    var app4 = new Vue({
-        el: '#adminUsers',
-        data(){
-            return{
 
-            }
-        },
-        methods: {
 
-        },
-    })
-    </script>
-      
+
+
+
+
+
+
 
 
 
@@ -41,3 +48,58 @@
     <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
+
+    <script>
+        var app4 = new Vue({
+    el: '#adminUsers',
+    data(){
+        return{
+            usersCards: [],
+            usersCardId: null,
+        }
+    },
+    methods: {
+        getUsers(){
+            axios.post('http://192.168.71.142/Admin/GetUsers').then((res)=>{
+                console.log(res);
+            })
+        },
+        getUsersCards(){
+            axios.post('http://192.168.71.142/Admin/GetUsersCards').then((res)=>{
+                console.log(res);
+                this.usersCards=res.data.data.UsersCards;
+            }) 
+        },
+    },
+    mounted(){
+        this.getUsersCards()
+    }
+    
+})
+    </script>
+
+    <style>
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        .slide-fade-enter,
+        .slide-fade-leave-to
+
+        /* .slide-fade-leave-active below version 2.1.8 */
+            {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+        * {
+            font-family: 'Cuprum', sans-serif !important;
+        }
+    </style>
