@@ -56,7 +56,7 @@
                         <div class="accordion accordion-flush" id="accordionFlush">
                             <transition-group name="slide-fade">
                                 <div class="accordion-item" v-for="document in documents" :key="document.Id"
-                                    v-on:click="orderId = document.OrderId; ">
+                                    v-on:click="orderId = document.OrderId; getLinqDocuments();">
                                     <h2 class="accordion-header" :id="'flush-headingOne' + document.Id" v-on:click=" linqDocuments=''">
                                         <button class="accordion-button collapsed"
                                             v-bind:class="{ unactive: !document.Uploaded }" type="button"
@@ -133,7 +133,7 @@
                                                 data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
                                                 class="btn btn-danger mb-1"><i class="bi bi-trash3">
                                                     Удалить</i></button>
-                                            <button title="Другие документы" v-if="document.CountLinqDocument>0" v-on:click="getLinqDocuments()"
+                                            <button title="Другие документы" v-if="document.CountLinqDocument>0"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOtherDocuments" aria-expanded="false" aria-controls="collapseOtherDocuments"
                                                 class="btn btn-warning mb-1"><i class="bi bi-files"> Другие 
                                                     документы</i></button>
@@ -155,9 +155,9 @@
                                                         </button>
                                                       </h2>
                                                       <div :id="'flush-collapseOne'+otherDocument.Id" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushOtherDocuments">
-                                                        <div class="accordion-body">
-                                                            <div class="list-group"  v-for="otherDocumentFile in otherDocument.Files">
-                                                                <div class="list-item">
+                                                        <div class="accordion-body list-group">
+                                                            <div class="list-group-item"  v-for="otherDocumentFile in otherDocument.Files">
+                                                                <div class="">
                                                                     <a :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
                                                                     {{otherDocumentFile.Name}}
                                                                     </a>
