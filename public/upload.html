@@ -165,7 +165,7 @@
                         <div class="modal-footer">
                             <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal"
                                 class="btn btn-primary"
-                                v-on:click="fileUpload = false; changeUploadDocumentFile(); onWorkFile.FlagForReplacement = true">Загрузить</button>
+                                v-on:click="fileUpload = false; changeUploadDocumentFile(); ">Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
@@ -309,6 +309,7 @@
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.onWorkFileId, formData, { headers }).then((response) => {
                     if (response.data.success == false) {
                         alert(response.data.message)
+                  
                     }
                     else {
                         alert('Файл заменен')
@@ -317,6 +318,7 @@
                         this.$refs.changeFile.value = null
                         this.changeInputValue = null
                         this.fileUpload = false;
+                        this.onWorkFile.FlagForReplacement = true
     
                     }
                 })
