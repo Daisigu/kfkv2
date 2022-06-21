@@ -13,22 +13,30 @@
         <div class="container">
             <div class="row">
                 <transition name="slide-fade">
-                    <div class="col-sm-12 col-lg-4 users-list " v-if="usersCards.length !== 0">
+                    <!-- LIST WITH USERS CARDS -->
+                    <div class="col-sm-12 col-lg-4 users-cards-list " v-if="usersCards.length !== 0">
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
                         <div class="list-group">
-                            <div class="list-group-item" v-for="user in usersCards" v-on:click="usersCardId=user.Id"
-                               :class="{active: usersCardId==user.Id}" >
+                            <div class="list-group-item" v-for="user in filteredUsersCards"
+                                v-on:click="usersCardId = user.Id; getUser()"
+                                :class="{ active: usersCardId == user.Id }">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ user.FIO }}</h5>
                                     <small>{{ user.Birthdate }}</small>
                                 </div>
-                                    <small>{{user.Position}}</small>
+                                <small>{{ user.Position }}</small>
                                 <small v-if="user.Blocked == true" class="badge bg-danger">Заблокирован</small>
                             </div>
                         </div>
                     </div>
                 </transition>
+                <!-- USERS CARDS DETAILS -->
+                <div class="col-sm-12 col-lg-8 userds-cards-details" v-if="">
+                    <div class="card-wrapper">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,8 +70,8 @@
         }
     },
     methods: {
-        getUsers(){
-            axios.post('http://192.168.71.142/Admin/GetUsers').then((res)=>{
+        getUser(){
+            axios.post('http://192.168.71.142/Admin/GetUser/?Id='+this.usersCardId).then((res)=>{
                 console.log(res);
             })
         },
@@ -78,7 +86,7 @@
         this.getUsersCards()
     },
     computed:{
-        filteredUsers() {
+        filteredUsersCards() {
                 if (this.searchValue) {
                     return this.usersCards.filter(item => {
                         return item.FIO.toLowerCase().includes(this.searchValue.toLowerCase());
@@ -112,6 +120,7 @@
             transform: translateX(10px);
             opacity: 0;
         }
+
         * {
             font-family: 'Cuprum', sans-serif !important;
         }
