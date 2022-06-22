@@ -44,10 +44,6 @@
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
 
-
-
-
-
                                             <div class="list-group-item col-12 d-none">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">User Id </p>
@@ -178,7 +174,7 @@
                                             <button class="btn btn-success admin-submit-button" v-if="user.Id > 0"
                                                 type="submit">Сохранить</button>
                                             <button class="btn btn-success admin-submit-button" v-if="user.Id == 0"
-                                                v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateUser'"
+                                                v-on:click="formUrl ='http://192.168.71.142/Admin/CreateUser'"
                                                 type="submit">Создать</button>
                                         </div>
                                     </div>
@@ -372,13 +368,13 @@
         }
     },
     methods: {
+      
         format(value, event) {
             return moment(value).format('DD-MM-YYYY')
         },
         postUser($event){
-
-            console.log(this.$data.user);
             $event.preventDefault();
+            console.log(this.$data.user);
             axios.post(this.formUrl,this.$data.user).then((res)=>{
                 console.log(res);
             })
