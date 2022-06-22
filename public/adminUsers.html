@@ -17,10 +17,10 @@
                     <div class="col-sm-12 col-lg-4 users-cards-list pb-2" v-if="usersCards.length !== 0">
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                            <button class="btn btn-primary mb-2" v-on:click="createUser()">Создать пользователя</button>
+                            <button class="btn btn-primary mb-2" v-on:click="createUser() ;usersCardId=user.Id ; formUrl='http://192.168.71.142/Admin/CreateUser'">Создать пользователя</button>
                         <div class="list-group">
                             <div class="list-group-item" v-for="user in filteredUsersCards"
-                                v-on:click="usersCardId = user.Id; getUser()"
+                                v-on:click="usersCardId = user.Id; getUser(); formUrl='http://192.168.71.142/Admin/EditUser'"
                                 :class="{ active: usersCardId == user.Id }">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ user.FIO }}</h5>
@@ -38,84 +38,84 @@
                     <div class="users-cards-change-details">
                         <transition name="slide-fade">
                             <div class="card-wrapper" v-if="usersCardId !== null">
-                                <form action="">
+                                <form :action="formUrl" method="post">
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Имя </p>
-                                                    <input type="text" class="form-control" :value="user.FirstName"
+                                                    <input type="text" class="form-control" :value="user.FirstName"  name="FirstName"
                                                         aria-label="FirstName">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Фамилия </p>
-                                                    <input type="text" class="form-control" :value="user.LastName"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.LastName" name="LastName"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Отчество </p>
-                                                    <input type="text" class="form-control" :value="user.Patronymic"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.Patronymic" name="Patronymic"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Дата рождения</p>
-                                                    <input type="date" class="form-control" :value="user.Birthdate"
-                                                        aria-label="Username">
+                                                    <input type="date" class="form-control" :value="user.Birthdate" name="Birthdate"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Номер телефона</p>
-                                                    <input type="text" class="form-control" :value="user.NumberPhone"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.NumberPhone" name="NumberPhone"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Серия паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.SeriesPasport"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.SeriesPasport" name="SeriesPasport"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Номер паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.NumberPasport"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.NumberPasport" name="NumberPasport"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Блокирован</p>
                                                     <input type="checkbox" class="form-check-input"
-                                                        aria-label="Username"
+                                                         name="NumberPasport"
                                                         v-bind="{ checked: user.Blocked == true }">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Логин</p>
-                                                    <input type="text" class="form-control" :value="user.Login"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.Login"  name="Login"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Пароль</p>
-                                                    <input type="text" class="form-control" :value="user.Password"
-                                                        aria-label="Username">
+                                                    <input type="text" class="form-control" :value="user.Password"  name="Password"
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Офис</p>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" aria-label="Default select example"  name="Office">
                                                         <option v-bind="{ selected: user.OfficeId == select.Id }"
                                                             v-for="select in offices">{{ select.Name }}</option>
                                                     </select>
@@ -126,7 +126,7 @@
                                                     <p class="m-0 p-2 col-5">Группы</p>
                                                     <div class="form-check-wrapper">
                                                         <div class="form-check" v-for="radio in groups">
-                                                            <input class="form-check-input" type="radio"
+                                                            <input class="form-check-input" type="radio" name="GroupId" :value="radio.Id"
                                                                 name="flexRadioDefault"
                                                                 v-bind="{ checked: user.GroupId == radio.Id }"
                                                                 id="flexRadioDefault1">
@@ -142,7 +142,7 @@
                                                     <p class="m-0 p-2 col-5">Права</p>
                                                     <div class="rights-checkbox-wrapper">
                                                         <div class="form-check" v-for="right in rights">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox" value=""  :name="'right_' +right.KeyWord" :id="right.KeyWord"
                                                                 id="flexCheckDefault"
                                                                 v-bind="{ checked: userRights.includes(right.Id) }">
                                                             <label class="form-check-label" for="flexCheckDefault">
@@ -152,8 +152,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-success admin-submit-button"
+                                            <button class="btn btn-success admin-submit-button" v-if="user.Id>0" 
                                                 type="submit">Сохранить</button>
+                                                <button class="btn btn-success admin-submit-button" v-if="user.Id==0" v-on:click="formUrl='http://192.168.71.142/Admin/CreateUser'"
+                                                type="submit">Создать</button>
                                         </div>
                                     </div>
                                 </form>
@@ -341,6 +343,7 @@
             rights: [],
             offices: [],
             userRights: [],
+            formUrl: '',
         }
     },
     methods: {
