@@ -43,23 +43,21 @@
                                 <form :action="formUrl" method="post">
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
-                                            
 
 
-                                                
+
+
 
                                             <div class="list-group-item col-12 d-none">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">User Id </p>
-                                                    <input type="text" name="Id" class="form-control" :value="user.Id"
-                                                        >
+                                                    <input type="text" name="Id" class="form-control" :value="user.Id">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12 d-none">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Enable</p>
-                                                    <input type="text" name="Enable" value='true' class="form-control"
-                                                       >
+                                                    <input type="text" name="Enable" value='true' class="form-control">
                                                 </div>
                                             </div>
 
@@ -90,8 +88,8 @@
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Дата рождения</p>
-                                                    <input type="date" class="form-control" :value="user.Birthdate" value="01.01.1990"
-                                                        name="Birthdate">
+                                                    <input  class="form-control" type="date" :formatter="format" value="01.01.1980"
+                                                        :value="user.Birthdate" name="Birthdate">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
@@ -118,8 +116,8 @@
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Блокирован</p>
-                                                    <input type="checkbox" class="form-check-input" name="Blocked" value="true"
-                                                        v-bind="{ checked: user.Blocked == true }">
+                                                    <input type="checkbox" class="form-check-input" name="Blocked"
+                                                        value="true" v-bind="{ checked: user.Blocked == true }">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
@@ -140,7 +138,8 @@
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Офис</p>
                                                     <select class="form-select" name="OfficeId">
-                                                        <option  :value="select.Id" v-bind="{ selected: user.OfficeId == select.Id }"
+                                                        <option :value="select.Id"
+                                                            v-bind="{ selected: user.OfficeId == select.Id }"
                                                             v-for="select in offices">{{ select.Name }}</option>
                                                     </select>
                                                 </div>
@@ -150,7 +149,7 @@
                                                     <p class="m-0 p-2 col-5">Группы</p>
                                                     <div class="form-check-wrapper">
                                                         <div class="form-check" v-for="radio in groups">
-                                                            <input class="form-check-input" type="radio" name="GroupId" 
+                                                            <input class="form-check-input" type="radio" name="GroupId"
                                                                 :value="radio.Id"
                                                                 v-bind="{ checked: user.GroupId == radio.Id }"
                                                                 :id='user.NameGroup'>
@@ -166,7 +165,7 @@
                                                     <p class="m-0 p-2 col-5">Права</p>
                                                     <div class="rights-checkbox-wrapper">
                                                         <div class="form-check" v-for="right in rights">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox"
                                                                 :name="'right_' + right.KeyWord" :id="right.KeyWord"
                                                                 v-bind="{ checked: userRights.includes(right.Id) }">
                                                             <label class="form-check-label">
@@ -372,6 +371,9 @@
         }
     },
     methods: {
+        format(value, event) {
+        return moment(value).format('DD-MM-YYYY')
+},
         createUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/0').then((res)=>{
                 this.user=res.data.User
