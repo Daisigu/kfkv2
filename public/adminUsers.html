@@ -187,11 +187,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-success admin-submit-button" v-if="user.Id > 0"
+                                           <div>
+                                             <button class="btn btn-success admin-submit-button" v-if="user.Id > 0"
                                                 type="submit">Сохранить</button>
+                                                <button title="Удалить документ" v-if="user.Id > 0"
+                                                data-bs-toggle="modal" data-bs-target="#deleteUserConfirmModal" type="button"
+                                                class="btn btn-danger admin-submit-button"><i class="bi bi-trash3">
+                                                    Удалить</i></button>
                                             <button class="btn btn-success admin-submit-button" v-if="user.Id == 0"
                                                 v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateUser'"
                                                 type="submit">Создать</button>
+                                           </div>
                                         </div>
                                     </div>
                                 </form>
@@ -346,6 +352,26 @@
                 </div>
             </div>
         </div>
+         <!-- delete document confirm Modal -->
+         <div class="modal fade" id="deleteUserConfirmModal" tabindex="-1"
+         aria-labelledby="deleteUserConfirmModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="deleteUserConfirmModalLabel">Удаление пользователя</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body d-flex justify-content-around">
+                     <h4 class="text-center">Вы действительно хотите удалить пользователя?</h4>
+                 </div>
+                 <div class="modal-footer">
+                     <button class="btn btn-danger col-3" v-on:click="deleteUser()"
+                         data-bs-dismiss="modal">Да</button>
+                     <button type="button" class="btn btn-primary col-3" data-bs-dismiss="modal">Закрыть</button>
+                 </div>
+             </div>
+         </div>
+     </div>
     </div>
 
 
@@ -385,6 +411,13 @@
       
         format(value, event) {
             return moment(value).format('DD-MM-YYYY')
+        },
+        deleteUser(){
+            axios.post('http://192.168.71.142/Admin/DeleteUser/'+this.user.Id).then((res)=>{
+                this.getUsersCards()
+                this.user={}
+                this.usersCardId=null
+            })
         },
         postUser($event){
             $event.preventDefault();
