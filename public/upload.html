@@ -163,7 +163,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button v-bind:class="{ disabled: !fileUpload }" data-bs-dismiss="modal"
+                            <button v-bind:class="{ disabled: !fileUpload || changeInputValue.length<5}" data-bs-dismiss="modal"
                                 class="btn btn-primary"
                                 v-on:click="fileUpload = false; changeUploadDocumentFile(); ">Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
