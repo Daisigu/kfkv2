@@ -44,7 +44,6 @@
                                 <form method="post" v-on:submit="postUser($event)">
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
-
                                             <div class="list-group-item col-12 d-none">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">User Id </p>
@@ -380,7 +379,6 @@
             groups: [],
             rights: [],
             offices: [],
-            userRights: [],
             formUrl: '',
         }
     },
@@ -401,7 +399,7 @@
             if(res.data.success==true){
                 console.log(res);
                 alert(res.data.data.message)
-                
+                this.usersCardId=null
             }
             this.getUsersCards();
            })
@@ -412,7 +410,7 @@
                 console.log(res);
                 this.user=res.data.data.User
                 this.user.Birthdate='2004-04-04'
-                this.userRights=[]
+               
             })
         },
         getUser(){
