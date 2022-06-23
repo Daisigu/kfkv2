@@ -9,27 +9,46 @@
 
 
 
-    <div class="adminUsers__page" id="adminGroups">
+    <div class="adminUsers__page pt-5 pb-5" id="adminGroups">
         <div class="container">
             <div class="row">
-                Admin Groups
+                <transition name="slide-fade">
+                    <!-- LIST WITH USERS CARDS -->
+                    <div class="col-sm-12 col-lg-4 users-cards-list pb-2" v-if="groupsArr.length !== 0">
+                        <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                            aria-describedby="button-addon2" v-model="searchValue">
+                        <button class="btn btn-primary mb-2"
+                            v-on:click="createGroup() ; groupId = user.Id; ">Создать
+                            пользователя</button>
+                        <div class="list-group">
+                            <div class="list-group-item" v-for="group in groupsArr"
+                                v-on:click="usersCardId = user.Id; getUser(); "
+                                :class="{ active: usersCardId == user.Id }">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ user.FIO }}</h5>
+                                    <small>{{ user.Birthdate }}</small>
+                                </div>
+                                <small>{{ user.Position }}</small>
+                                <small v-if="user.Blocked == true" class="badge bg-danger">Заблокирован</small>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>
 
-    <script>
-        var app4 = new Vue({
-    el: '#adminGroups',
-    data(){
-        return{
 
-        }
-    },
-    methods: {
 
-    },
-})
-    </script>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -40,3 +59,29 @@
     <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
+
+
+    <script>
+        var app4 = new Vue({
+    el: '#adminGroups',
+    data(){
+        return{
+            groupId: '',
+            groupsArr:[],
+            groupObj: {},
+            searchValue:'',
+        }
+    },
+    methods: {
+
+    },
+    mounted(){
+        axios.post('http://192.168.71.142/Admin/GetGroups').then((res)=>{
+           this.groups=res.data.data.Groups
+        })
+    }
+})
+    </script>
+
+
+

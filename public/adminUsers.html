@@ -29,7 +29,8 @@
                                     <small>{{ user.Birthdate }}</small>
                                 </div>
                                 <small>{{ user.Position }}</small>
-                                <small v-if="user.Blocked == true" class="badge bg-danger">Заблокирован</small>
+                               
+                                <small  v-if="user.Blocked == true" class=" badge bg-danger">Заблокирован</small>
                             </div>
                         </div>
                     </div>
@@ -40,7 +41,7 @@
                     <div class="users-cards-change-details">
                         <transition name="slide-fade">
                             <div class="card-wrapper" v-if="usersCardId !== null">
-                                <form  method="post" v-on:submit="postUser($event)" >
+                                <form method="post" v-on:submit="postUser($event)">
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
 
@@ -56,85 +57,99 @@
                                                     <input type="text" name="Enable" value='true' class="form-control">
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Имя </p>
-                                                    <input type="text" class="form-control" :value="user.FirstName" v-on:change="user.FirstName=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.FirstName"
+                                                        v-on:change="user.FirstName = $event.target.value"
                                                         name="FirstName" aria-label="FirstName">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Фамилия </p>
-                                                    <input type="text" class="form-control" :value="user.LastName"  v-on:change="user.LastName=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.LastName"
+                                                        v-on:change="user.LastName = $event.target.value"
                                                         name="LastName">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Отчество </p>
-                                                    <input type="text" class="form-control" :value="user.Patronymic"  v-on:change="user.Patronymic=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.Patronymic"
+                                                        v-on:change="user.Patronymic = $event.target.value"
+                                                        name="Patronymic">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Должность </p>
+                                                    <input type="text" class="form-control" :value="user.Position"
+                                                        v-on:change="user.Position = $event.target.value"
                                                         name="Patronymic">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Дата рождения</p>
-                                                    <input  class="form-control"  type="date" :formatter="format"  v-on:change="user.Birthdate=$event.target.value"
+                                                    <input class="form-control" type="date" :formatter="format"
+                                                        v-on:change="user.Birthdate = $event.target.value"
                                                         :value="user.Birthdate" name="Birthdate">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Номер телефона</p>
-                                                    <input type="text" class="form-control" :value="user.NumberPhone"  v-on:change="user.NumberPhone=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.NumberPhone"
+                                                        v-on:change="user.NumberPhone = $event.target.value"
                                                         name="NumberPhone">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Серия паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.SeriesPasport"  v-on:change="user.SeriesPasport=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.SeriesPasport"
+                                                        v-on:change="user.SeriesPasport = $event.target.value"
                                                         name="SeriesPasport">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Номер паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.NumberPasport"  v-on:change="user.NumberPasport=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.NumberPasport"
+                                                        v-on:change="user.NumberPasport = $event.target.value"
                                                         name="NumberPasport">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Блокирован</p>
-                                                    <input type="checkbox" class="form-check-input" name="Blocked" v-on:change="user.Blocked=$event.target.value"
-                                                        value="true" v-bind="{ checked: user.Blocked == true }">
+                                                    <input type="checkbox" class="form-check-input" name="Blocked"
+                                                        v-on:click="user.Blocked = !user.Blocked" value="true"
+                                                        v-bind="{ checked: user.Blocked == true }">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Логин</p>
-                                                    <input type="text" class="form-control" :value="user.Login" v-on:change="user.Login=$event.target.value"
-                                                        name="Login">
+                                                    <input type="text" class="form-control" :value="user.Login"
+                                                        v-on:change="user.Login = $event.target.value" name="Login">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Пароль</p>
-                                                    <input type="text" class="form-control" :value="user.Password" v-on:change="user.Password=$event.target.value"
+                                                    <input type="text" class="form-control" :value="user.Password"
+                                                        v-on:change="user.Password = $event.target.value"
                                                         name="Password">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Офис</p>
-                                                    <select class="form-select" name="OfficeId" v-on:click="user.OfficeId=$event.target.value">
-                                                        <option :value="select.Id" 
+                                                    <select class="form-select" name="OfficeId"
+                                                        v-on:click="user.OfficeId = $event.target.value">
+                                                        <option :value="select.Id"
                                                             v-bind="{ selected: user.OfficeId == select.Id }"
                                                             v-for="select in offices">{{ select.Name }}</option>
                                                     </select>
@@ -146,7 +161,8 @@
                                                     <div class="form-check-wrapper">
                                                         <div class="form-check" v-for="radio in groups">
                                                             <input class="form-check-input" type="radio" name="GroupId"
-                                                                :value="radio.Id" v-on:change="user.GroupId=$event.target.value"
+                                                                :value="radio.Id"
+                                                                v-on:change="user.GroupId = $event.target.value"
                                                                 v-bind="{ checked: user.GroupId == radio.Id }"
                                                                 :id='user.NameGroup'>
                                                             <label class="form-check-label" for="flexRadioDefault1">
@@ -161,9 +177,10 @@
                                                     <p class="m-0 p-2 col-5">Права</p>
                                                     <div class="rights-checkbox-wrapper">
                                                         <div class="form-check" v-for="right in user.UserRights">
-                                                            <input class="form-check-input" type="checkbox" 
-                                                                :name="'right_' + right.KeyWord" :id="right.KeyWord" v-on:change="right.Member=!right.Member"
-                                                                v-bind="{ checked: right.Member==true }">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                :name="right.Name" :id="right.KeyWord"
+                                                                v-on:change="right.Member = !right.Member"
+                                                                v-bind="{ checked: right.Member == true }">
                                                             <label class="form-check-label">
                                                                 {{ right.Description }}
                                                             </label>
@@ -174,7 +191,7 @@
                                             <button class="btn btn-success admin-submit-button" v-if="user.Id > 0"
                                                 type="submit">Сохранить</button>
                                             <button class="btn btn-success admin-submit-button" v-if="user.Id == 0"
-                                                v-on:click="formUrl ='http://192.168.71.142/Admin/CreateUser'"
+                                                v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateUser'"
                                                 type="submit">Создать</button>
                                         </div>
                                     </div>
@@ -359,7 +376,7 @@
             searchValue: '',
             usersCards: [],
             usersCardId: null,
-            user:{},
+            user: {},
             groups: [],
             rights: [],
             offices: [],
@@ -374,10 +391,21 @@
         },
         postUser($event){
             $event.preventDefault();
-            console.log(this.$data.user);
-            axios.post(this.formUrl,this.$data.user).then((res)=>{
+          
+           axios({
+            method: 'post',
+            url: this.formUrl,
+            data: this.user
+           }).then((res)=>{
+            console.log(res);
+            if(res.data.success==true){
                 console.log(res);
-            })
+                alert(res.data.data.message)
+                
+            }
+            this.getUsersCards();
+           })
+
         },
         createUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/0').then((res)=>{
