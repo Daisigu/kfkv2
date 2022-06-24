@@ -1,4 +1,4 @@
-
+<!-- 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
@@ -7,37 +7,47 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
 
-
-
+ -->
+<!-- 
     <div class="adminUsers__page pt-5 pb-5" id="adminGroups">
         <div class="container">
             <div class="row">
                 <transition name="slide-fade">
-                    <!-- LIST WITH USERS CARDS -->
-                    <div class="col-sm-12 col-lg-4 users-cards-list pb-2" v-if="groupsArr.length !== 0">
+                    <div class="col-sm-12 col-lg-4 group-cards-list pb-2" v-if="groupsArr.length !== 0">
                         <input type="text" class="form-control mb-3 " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                        <button class="btn btn-primary mb-2"
-                            v-on:click="createGroup() ; groupId = user.Id; ">Создать
-                            пользователя</button>
+                        <button class="btn btn-primary mb-2" v-on:click="groupId = group.Id;">Создать группу</button>
                         <div class="list-group">
                             <div class="list-group-item" v-for="group in groupsArr"
-                                v-on:click="usersCardId = user.Id; getUser(); "
+                                v-on:click="groupId = group.Id; groupObj = group "
                                 :class="{ active: groupId == group.Id }">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{ user.FIO }}</h5>
-                                    <small>{{ user.Birthdate }}</small>
+                                <div class="d-flex w-100 justify-content-between flex-column">
+                                    <h5 class="mb-1">{{ group.NameGroup }}</h5>
+                                    <small>{{ group.Description }}</small>
                                 </div>
-                                <small>{{ user.Position }}</small>
-                                <small v-if="user.Blocked == true" class="badge bg-danger">Заблокирован</small>
                             </div>
                         </div>
+                    </div>
+                </transition>
+                <transition name="slide-fade">
+                    <div class="col-sm-12 col-lg-8 group-cards-list ">
+                       <form action="">
+                        <div class="list-group justify-content-center align-items-center">
+                            <div class="list-group-item col-12" v-for="right in groupObj.GroupRights">
+                                <div class="d-flex align-items-center justify-content-center col-12">
+                                    <p class="m-0 p-2 col-3">{{ right.Description }}</p>
+                                    <input type="checkbox" name="LastName" class="form-check-input">
+                                </div>
+                            </div>
+                        </div>
+                       </form>
                     </div>
                 </transition>
             </div>
         </div>
     </div>
 
+ -->
 
 
 
@@ -52,16 +62,15 @@
 
 
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
         integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
-    </script>
+    </script> -->
 
 
-    <script>
+ <!--    <script>
         var app4 = new Vue({
     el: '#adminGroups',
     data(){
@@ -73,15 +82,315 @@
         }
     },
     methods: {
+        createGroup(){
+            axios.post('http://192.168.71.142/Admin/GetGroups').then((res)=>{
+                this.groupsArr=res.data.data.Groups
+            })
+        },
+        editGroup(){
+            
+        },
+        getGroupsCards(){
+            axios.post('http://192.168.71.142/Admin/GetGroupsCards').then((res)=>{
+           this.groupsArr=res.data.data.Groups
+        })
+        }
 
     },
     mounted(){
-        axios.post('http://192.168.71.142/Admin/GetGroups').then((res)=>{
-           this.groupsArr=res.data.data.Groups
-        })
+      this.getGroupsCards();
     }
 })
     </script>
+ -->
+
+<!--     <style>
+        .list-group-item {
+            cursor: pointer;
+        }
+
+        * {
+            font-family: 'Cuprum', sans-serif !important;
+        }
+    </style>
+ -->
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
+<link href="https://fonts.googleapis.com/css2?family=Cuprum&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+
+
+
+<div class="adminGroups__page pt-5 pb-5" id="adminGroups">
+ <div class="container">
+     <div class="row">
+         <transition name="slide-fade">
+             <!-- LIST WITH groups CARDS -->
+             <div class="col-sm-12 col-lg-4 groups-cards-list pb-2" v-if="groupsCards.length !== 0">
+                 <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                     aria-describedby="button-addon2" v-model="searchValue">
+                 <button class="btn btn-primary mb-2"
+                     v-on:click="createGroup() ; groupsCardId = group.Id; formUrl = 'http://192.168.71.142/Admin/CreateGroup'">Создать
+                     пользователя</button>
+                 <div class="list-group">
+                     <div class="list-group-item" v-for="group in filteredGroupsCards"
+                         v-on:click="groupsCardId = group.Id; getGroup(); formUrl = 'http://192.168.71.142/Admin/EditGroup'"
+                         :class="{ active: groupsCardId == group.Id }">
+                         <div class="d-flex w-100 justify-content-between flex-column">
+                             <h5 class="mb-1">{{ group.NameGroup }}</h5>
+                             <small>{{ group.Description }}</small>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </transition>
+         <!-- groups CARDS DETAILS -->
+         <div class="col-sm-12 col-lg-8 groups-cards-details">
+             <h4 v-if="group.Id == undefined">Выберите группу прав</h4>
+             <div class="groups-cards-change-details">
+                 <transition name="slide-fade">
+                     <div class="card-wrapper" v-if="groupsCardId !== null">
+                         <form method="post" v-on:submit="postGroup($event)">
+                             <div class="group-card">
+                                 <div class="list-group justify-content-center align-items-center">
+                                     <div class="list-group-item col-12">
+                                         <div class="d-flex align-items-center">
+                                             <p class="m-0 p-2 col-5">Фамилия </p>
+                                             <input type="text" class="form-control" :value="group.LastName"
+                                                 v-on:change="group.LastName = $event.target.value"
+                                                 name="LastName">
+                                         </div>
+                                     </div>
+                                
+                                  
+                                    <div>
+                                      <button class="btn btn-success admin-submit-button" v-if="group.Id > 0"
+                                         type="submit">Сохранить</button>
+                                         <button title="Удалить документ" v-if="group.Id > 0"
+                                         data-bs-toggle="modal" data-bs-target="#deleteGroupConfirmModal" type="button"
+                                         class="btn btn-danger admin-submit-button"><i class="bi bi-trash3">
+                                             Удалить</i></button>
+                                     <button class="btn btn-success admin-submit-button" v-if="group.Id == 0"
+                                         v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateGroup'"
+                                         type="submit">Создать</button>
+                                    </div>
+                                 </div>
+                             </div>
+                         </form>
+                     </div>
+                 </transition>
+             </div>
+
+
+
+
+
+
+
+
+         </div>
+     </div>
+ </div>
+  <!-- delete document confirm Modal -->
+  <div class="modal fade" id="deleteGroupConfirmModal" tabindex="-1"
+  aria-labelledby="deleteGroupConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="deleteGroupConfirmModalLabel">Удаление пользователя</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex justify-content-around">
+              <h4 class="text-center">Вы действительно хотите удалить пользователя?</h4>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-danger col-3" v-on:click="deleteGroup()"
+                  data-bs-dismiss="modal">Да</button>
+              <button type="button" class="btn btn-primary col-3" data-bs-dismiss="modal">Закрыть</button>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
+ integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
+ integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+
+<script>
+ var app4 = new Vue({
+el: '#adminGroups',
+data(){
+ return{
+     searchValue: '',
+     groupsCards: [],
+     groupsCardId: null,
+     group: {},
+     groups: [],
+     formUrl: '',
+ }
+},
+methods: {
+
+ format(value, event) {
+     return moment(value).format('DD-MM-YYYY')
+ },
+ deleteGroup(){
+     axios.post('http://192.168.71.142/Admin/DeleteGroup/'+this.group.Id).then((res)=>{
+         this.getGroupCards()
+         this.group={}
+         this.groupsCardId=null
+     })
+ },
+ postGroup($event){
+     $event.preventDefault();
+   
+    axios({
+     method: 'post',
+     url: this.formUrl,
+     data: this.group
+    }).then((res)=>{
+     console.log(res);
+     if(res.data.success==true){
+         console.log(res);
+         alert(res.data.data.message)
+         this.groupsCardId=null
+         this.getGroupCards();
+     }
+     else{
+         alert(res.data.message)
+     this.getGroupsCards();
+
+     }
+    })
+
+ },
+ createGroup(){
+     axios.post('http://192.168.71.142/Admin/GetGroup/0').then((res)=>{
+         console.log(res);
+         this.group=res.data.data.Group
+        
+     })
+ },
+ getGroup(){
+     axios.post('http://192.168.71.142/Admin/GetGroup/'+this.groupsCardId).then((res)=>{
+        console.log(res);
+         this.group=res.data.data.Group
+     })
+ },
+ getGroupsCards(){
+     axios.post('http://192.168.71.142/Admin/GetGroupsCards').then((res)=>{
+         console.log(res);
+         this.groupsCards=res.data.data.Groups;
+         this.groups=res.data.data.Groups
+         this.rights=res.data.data.Rights
+         this.offices=res.data.data.Offices
+     }) 
+ },
+},
+mounted(){
+ this.getGroupsCards()
+},
+computed:{
+ filteredGroupsCards() {
+         if (this.searchValue) {
+             return this.groupsCards.filter(item => {
+                 return item.Description.toLowerCase().includes(this.searchValue.toLowerCase());
+             });
+         }
+         return this.groupsCards
+     }
+},
+
+})
+</script>
+
+<style>
+ .slide-fade-enter-active {
+     transition: all .3s ease;
+ }
+
+ .slide-fade-leave-active {
+     transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+ }
+
+ .list-group-item {
+     cursor: pointer;
+ }
+
+ .card-wrapper {
+     border: 1px solid rgb(226, 226, 226);
+     border-radius: 10px;
+     padding: 15px;
+ }
+
+ .admin-submit-button {
+     margin-top: 10px;
+ }
+
+ .slide-fade-enter,
+ .slide-fade-leave-to
+
+ /* .slide-fade-leave-active below version 2.1.8 */
+     {
+     transform: translateX(10px);
+     opacity: 0;
+ }
+
+ * {
+     font-family: 'Cuprum', sans-serif !important;
+ }
+</style>
