@@ -485,7 +485,7 @@
             },
             async getClients() {
                 var thiz = this;
-                axios.post('http://192.168.71.142/Admin/ClientSearch?clientSearch=' + this.clientName)
+                axios.post('http://192.168.71.142/Document/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
                         if (response.data.success == false) {
                             alert(response.data.message)
