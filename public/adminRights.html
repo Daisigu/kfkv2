@@ -1,137 +1,143 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
- integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Cuprum&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-<div class="adminRights__page pt-5 pb-5" id="adminRights">
- <div class="container">
-     <div class="row">
-         <transition name="slide-fade">
-             <!-- LIST WITH Rights CARDS -->
-             <div class="col-sm-12 col-lg-4 rights-cards-list pb-2" v-if="rightsCards.length !== 0">
-                 <input type="text" class="form-control mb-3 " placeholder="Поиск"
-                     aria-describedby="button-addon2" v-model="searchValue">
-                 <button class="btn btn-primary mb-2"
-                     v-on:click="createRight() ; rightsCardId = rightObj.Id; formUrl = 'http://192.168.71.142/Admin/CreateRight'">Создать
-                     право</button>
-                 <div class="list-group">
-                     <div class="list-group-item" v-for="rightFor in filteredRightsCards"
-                         v-on:click=" rightsCardId = rightFor.Id; rightObj=rightFor; formUrl = 'http://192.168.71.142/Admin/EditRight';"
-                         :class="{ active: rightsCardId == rightFor.Id }">
-                         <div class="d-flex w-100 justify-content-between flex-column" v-on:click="rightObj=rightFor">
-                             <h5 class="mb-1">{{ rightFor.Name }}</h5>
-                             <small>{{ rightFor.Description }}</small>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </transition>
-         <!-- rights CARDS DETAILS -->
-         <div class="col-sm-12 col-lg-8 rights-cards-details">
-             <h4 v-if="rightObj.Id == undefined">Выберите права</h4>
-             <div class="rights-cards-change-details">
-                 <transition name="slide-fade">
-                     <div class="card-wrapper" v-if="rightsCardId !== null">
-                         <form method="post" v-on:submit="postRight($event)">
-                             <div class="rightObj-card">
-                                 <div class="list-group justify-content-center align-items-center">
-                                     <div class="list-group-item col-12">
-                                         <div class="d-flex align-items-center">
-                                             <p class="m-0 p-2 col-5">Название права</p>
-                                             <input type="text" class="form-control" :value="rightObj.Name"
-                                                 v-on:change="rightObj.Name = $event.target.value"
-                                                 name="Name">
-                                         </div>
-                                     </div>
-                                     <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Описание права</p>
-                                            <input type="text" class="form-control" :value="rightObj.Description"
-                                                v-on:change="rightObj.Description = $event.target.value"
-                                                name="Description">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cuprum&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div class="adminRights__page pt-5 pb-5" id="adminRights">
+        <div class="container">
+            <div class="row">
+                <transition name="slide-fade">
+                    <!-- LIST WITH Rights CARDS -->
+                    <div class="col-sm-12 col-lg-4 rights-cards-list pb-2" v-if="rightsCards.length !== 0">
+                        <input type="text" class="form-control mb-3 shadow" placeholder="Поиск"
+                            aria-describedby="button-addon2" v-model="searchValue">
+                        <button class="btn btn-primary mb-2"
+                            v-on:click="createRight() ; rightsCardId = rightObj.Id; formUrl = 'http://192.168.71.142/Admin/CreateRight'">Создать
+                            право</button>
+                        <div class="list-group shadow">
+                            <div class="list-group-item" v-for="rightFor in filteredRightsCards"
+                                v-on:click="rightsCardId = rightFor.Id; rightObj = rightFor; formUrl = 'http://192.168.71.142/Admin/EditRight';"
+                                :class="{ active: rightsCardId == rightFor.Id }">
+                                <div class="d-flex w-100 justify-content-between flex-column"
+                                    v-on:click="rightObj = rightFor">
+                                    <h5 class="mb-1">{{ rightFor.Name }}</h5>
+                                    <small>{{ rightFor.Description }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+                <!-- rights CARDS DETAILS -->
+                <div class="col-sm-12 col-lg-8 rights-cards-details">
+                    <h4 v-if="rightObj.Id == undefined">Выберите права</h4>
+                    <div class="rights-cards-change-details">
+                        <transition name="slide-fade">
+                            <div class="card-wrapper shadow" v-if="rightsCardId !== null">
+                                <form method="post" v-on:submit="postRight($event)">
+                                    <div class="rightObj-card">
+                                        <div class="list-group justify-content-center align-items-center">
+                                            <div class="list-group-item col-12">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Название права</p>
+                                                    <input type="text" class="form-control" :value="rightObj.Name"
+                                                        v-on:change="rightObj.Name = $event.target.value" name="Name">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Описание права</p>
+                                                    <input type="text" class="form-control"
+                                                        :value="rightObj.Description"
+                                                        v-on:change="rightObj.Description = $event.target.value"
+                                                        name="Description">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Ключевое слово</p>
+                                                    <input type="text" class="form-control" :value="rightObj.KeyWord"
+                                                        v-bind="{ disabled: rightObj.KeyWord != '' }"
+                                                        v-on:change="rightObj.KeyWord = $event.target.value"
+                                                        name="Description">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12 d-none">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Right Id </p>
+                                                    <input type="text" name="Id" class="form-control"
+                                                        :value="rightObj.Id">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12 d-none">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">Enabled</p>
+                                                    <input type="text" name="Enabled" :value="'true'"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+
+
+
+                                            <div>
+                                                <button class="btn btn-success admin-submit-button"
+                                                    v-if="rightObj.Id > 0" type="submit">Сохранить</button>
+                                                <button title="Удалить документ" v-if="rightObj.Id > 0"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteRightConfirmModal"
+                                                    type="button" class="btn btn-danger admin-submit-button"><i
+                                                        class="bi bi-trash3">
+                                                        Удалить</i></button>
+                                                <button class="btn btn-success admin-submit-button"
+                                                    v-if="rightObj.Id == 0"
+                                                    v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateRight'"
+                                                    type="submit">Создать</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item col-12">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Ключевое слово</p>
-                                            <input type="text" class="form-control" :value="rightObj.KeyWord"
-                                                v-bind="{disabled: rightObj.KeyWord!=''}"
-                                                v-on:change="rightObj.KeyWord = $event.target.value" 
-                                                name="Description">
-                                        </div>
-                                    </div>
-                                    <div class="list-group-item col-12 d-none">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Right Id </p>
-                                            <input type="text" name="Id" class="form-control" :value="rightObj.Id">
-                                        </div>
-                                    </div>
-                                    <div class="list-group-item col-12 d-none">
-                                        <div class="d-flex align-items-center">
-                                            <p class="m-0 p-2 col-5">Enabled</p>
-                                            <input type="text" name="Enabled" :value="'true'" class="form-control">
-                                        </div>
-                                    </div>
-                                   
-                                
-                                  
-                                    <div>
-                                      <button class="btn btn-success admin-submit-button" v-if="rightObj.Id > 0"
-                                         type="submit">Сохранить</button>
-                                         <button title="Удалить документ" v-if="rightObj.Id > 0"
-                                         data-bs-toggle="modal" data-bs-target="#deleteRightConfirmModal" type="button"
-                                         class="btn btn-danger admin-submit-button"><i class="bi bi-trash3">
-                                             Удалить</i></button>
-                                     <button class="btn btn-success admin-submit-button" v-if="rightObj.Id == 0"
-                                         v-on:click="formUrl = 'http://192.168.71.142/Admin/CreateRight'"
-                                         type="submit">Создать</button>
-                                    </div>
-                                 </div>
-                             </div>
-                         </form>
-                     </div>
-                 </transition>
-             </div>
+                                </form>
+                            </div>
+                        </transition>
+                    </div>
 
 
 
-         </div>
-     </div>
- </div>
-  <!-- delete document confirm Modal -->
-  <div class="modal fade" id="deleteRightConfirmModal" tabindex="-1"
-  aria-labelledby="deleteRightConfirmModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="deleteRightConfirmModalLabel">Удаление пользователя</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body d-flex justify-content-around">
-              <h4 class="text-center">Вы действительно хотите удалить пользователя?</h4>
-          </div>
-          <div class="modal-footer">
-              <button class="btn btn-danger col-3" v-on:click="deleteRight()"
-                  data-bs-dismiss="modal">Да</button>
-              <button type="button" class="btn btn-primary col-3" data-bs-dismiss="modal">Закрыть</button>
-          </div>
-      </div>
-  </div>
-</div>
-</div>
+                </div>
+            </div>
+        </div>
+        <!-- delete document confirm Modal -->
+        <div class="modal fade" id="deleteRightConfirmModal" tabindex="-1"
+            aria-labelledby="deleteRightConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteRightConfirmModalLabel">Удаление пользователя</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex justify-content-around">
+                        <h4 class="text-center">Вы действительно хотите удалить пользователя?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger col-3" v-on:click="deleteRight()"
+                            data-bs-dismiss="modal">Да</button>
+                        <button type="button" class="btn btn-primary col-3" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
- integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
- crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
- integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
-</script>
-<script>
- var app4 = new Vue({
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
+        integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js
+        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
+    </script>
+    <script>
+        var app4 = new Vue({
 el: '#adminRights',
 data(){
  return{
@@ -211,45 +217,72 @@ computed:{
 },
 
 })
-</script>
+    </script>
 
-<style>
- .slide-fade-enter-active {
-     transition: all .3s ease;
- }
+    <style>
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
 
- .slide-fade-leave-active {
-     transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
- }
+        .slide-fade-leave-active {
+            transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
 
- .list-group-item {
-     cursor: pointer;
- }
+        .list-group-item {
+            cursor: pointer;
+        }
 
- .card-wrapper {
-     border: 1px solid rgb(226, 226, 226);
-     border-radius: 10px;
-     padding: 15px;
-     box-shadow: 3px 3px 3px rgb(236, 236, 236) !important
- }
+        .card-wrapper {
+            border: 1px solid rgb(226, 226, 226);
+            border-radius: 10px;
+            padding: 15px;
+        }
 
- .admin-submit-button {
-     margin-top: 10px;
- }
+        .shadow {
+            box-shadow: 2px 2px 2px rgb(240, 240, 240) !important
+        }
 
- .slide-fade-enter,
- .slide-fade-leave-to
+        .admin-submit-button {
+            margin-top: 10px;
+        }
 
- /* .slide-fade-leave-active below version 2.1.8 */
-     {
-     transform: translateX(10px);
-     opacity: 0;
- }
+        .slide-fade-enter,
+        .slide-fade-leave-to
 
- * {
-     font-family: 'Cuprum', sans-serif !important;
- }
- .btn{
-    box-shadow: 2px 2px 2px rgb(196, 196, 196) !important
- }
-</style>
+        /* .slide-fade-leave-active below version 2.1.8 */
+            {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
+        * {
+            font-family: 'Cuprum', sans-serif !important;
+        }
+
+        .bg-primary {
+            background-color: #fff !important;
+        }
+
+        .btn-primary {
+            background-color: #3298ffd5 !important;
+            border: none;
+        }
+
+        .bg-primary {
+            background-color: #3298ffd5 !important;
+
+        }
+
+        .btn-primary:hover {
+            background-color: #004696d5 !important
+        }
+
+        .active {
+            background-color: #3298ffd5 !important;
+            border: none;
+        }
+
+        .active:hover {
+            transition: all 0.2s ease !important;
+        }
+    </style>
