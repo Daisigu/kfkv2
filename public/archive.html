@@ -351,8 +351,8 @@
                         <form v-on:submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
                             <input class="form-control mb-3" type="file" v-on:change="changeUploadFile"
                                 ref="changeFile">
-                            <input type="text" class="form-control mb-3" :v-model="changeValue"
-                                v-on:change="setChangeValue($event)">
+                            <input type="text" class="form-control mb-3" v-model="changeValue"
+                                >
                         </form>
                     </div>
                     <div class="modal-footer">
