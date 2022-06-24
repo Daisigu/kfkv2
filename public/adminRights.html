@@ -14,7 +14,7 @@
                     <div class="col-sm-12 col-lg-4 rights-cards-list pb-2" v-if="rightsCards.length !== 0">
                         <input type="text" class="form-control mb-3 shadow" placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                        <button class="btn btn-primary mb-2"
+                        <button class="btn btn-primary mb-2 shadow"
                             v-on:click="createRight() ; rightsCardId = rightObj.Id; formUrl = 'http://192.168.71.142/Admin/CreateRight'">Создать
                             право</button>
                         <div class="list-group shadow">
@@ -239,7 +239,7 @@ computed:{
         }
 
         .shadow {
-            box-shadow: 2px 2px 2px rgb(240, 240, 240) !important
+            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
         }
 
         .admin-submit-button {
@@ -259,7 +259,7 @@ computed:{
             font-family: 'Cuprum', sans-serif !important;
         }
 
-        .bg-primary {
+     /*    .bg-primary {
             background-color: #fff !important;
         }
 
@@ -284,5 +284,5 @@ computed:{
 
         .active:hover {
             transition: all 0.2s ease !important;
-        }
+        } */
     </style>
