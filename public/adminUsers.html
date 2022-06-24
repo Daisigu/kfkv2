@@ -107,16 +107,16 @@
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Серия паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.SeriesPasport"
-                                                        v-on:change="user.SeriesPasport = $event.target.value"
+                                                    <input type="text" class="form-control" :value="user.SeriesPassport"
+                                                        v-on:change="user.SeriesPassport = $event.target.value"
                                                         name="SeriesPasport">
                                                 </div>
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Номер паспорта</p>
-                                                    <input type="text" class="form-control" :value="user.NumberPasport"
-                                                        v-on:change="user.NumberPasport = $event.target.value"
+                                                    <input type="text" class="form-control" :value="user.NumberPassport"
+                                                        v-on:change="user.NumberPassport = $event.target.value"
                                                         name="NumberPasport">
                                                 </div>
                                             </div>
@@ -146,10 +146,10 @@
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Офис</p>
-                                                    <select class="form-select" name="OfficeId"
-                                                        v-on:click="user.OfficeId = $event.target.value">
+                                                    <select class="form-select" name="RelisePlaceId"
+                                                        v-on:click="user.RelisePlaceId = $event.target.value">
                                                         <option :value="select.Id"
-                                                            v-bind="{ selected: user.OfficeId == select.Id }"
+                                                            v-bind="{ selected: user.RelisePlaceId == select.Id }"
                                                             v-for="select in offices">{{ select.Name }}</option>
                                                     </select>
                                                 </div>
@@ -457,6 +457,7 @@
         },
         getUsersCards(){
             axios.post('http://192.168.71.142/Admin/GetUsersCards').then((res)=>{
+                console.log(res);
                 this.usersCards=res.data.data.UsersCards;
                 this.groups=res.data.data.Groups
                 this.rights=res.data.data.Rights
