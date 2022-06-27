@@ -15,13 +15,13 @@
                 <transition name="slide-fade">
                     <!-- LIST WITH USERS CARDS -->
                     <div class="col-sm-12 col-lg-4 users-cards-list pb-2" v-if="usersCards.length !== 0">
-                        <input type="text" class="form-control mb-3 " placeholder="Поиск"
+                        <input type="text" class="form-control mb-3 m-shadow " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                        <button class="btn btn-primary mb-2"
+                        <button class="btn btn-primary mb-2 m-shadow "
                             v-on:click="createUser() ; usersCardId = user.Id; formUrl = 'http://192.168.71.142/Admin/CreateUser'">Создать
                             пользователя</button>
                         <div class="list-group">
-                            <div class="list-group-item" v-for="user in filteredUsersCards"
+                            <div class="list-group-item m-shadow" v-for="user in filteredUsersCards"
                                 v-on:click="usersCardId = user.Id; getUser(); formUrl = 'http://192.168.71.142/Admin/EditUser'"
                                 :class="{ active: usersCardId == user.Id }">
                                 <div class="d-flex w-100 justify-content-between">
@@ -40,7 +40,7 @@
                     <h4 v-if="user.Id == undefined">Выберите пользователя</h4>
                     <div class="users-cards-change-details">
                         <transition name="slide-fade">
-                            <div class="card-wrapper" v-if="usersCardId !== null">
+                            <div class="card-wrapper m-shadow" v-if="usersCardId !== null">
                                 <form method="post" v-on:submit="postUser($event)">
                                     <div class="user-card">
                                         <div class="list-group justify-content-center align-items-center">
@@ -489,7 +489,9 @@
         .slide-fade-leave-active {
             transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
         }
-
+        .m-shadow {
+            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
+        }
         .list-group-item {
             cursor: pointer;
         }
