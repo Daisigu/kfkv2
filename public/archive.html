@@ -52,7 +52,7 @@
                 <transition name="slide-fade">
                     <div v-if="documents.length > 0" class="people__info col-sm-12 col-lg-8 ">
                         <!-- List with Clients documents -->
-                        <div class="accordion accordion-flush" id="accordionFlush">
+                        <div class="accordion " id="accordionFlush">
                             <transition-group name="slide-fade">
                                 <div class="accordion-item" v-for="document in documents" :key="document.Id"
                                     v-on:click="orderId = document.OrderId; getLinqDocuments();">
