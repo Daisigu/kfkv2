@@ -166,9 +166,7 @@ methods: {
      url: this.formUrl,
      data: this.group
     }).then((res)=>{
-     console.log(res);
      if(res.data.success==true){
-         console.log(res);
          alert(res.data.data.message)
          this.groupsCardId=null
          this.getGroupsCards();
@@ -183,19 +181,16 @@ methods: {
  },
  createGroup(){
      axios.post('http://192.168.71.142/Admin/GetGroup/0').then((res)=>{
-         console.log(res);
          this.group=res.data.data.Group
      })
  },
  getGroup(){
      axios.post('http://192.168.71.142/Admin/GetGroup/'+this.groupsCardId).then((res)=>{
-        console.log(res);
          this.group=res.data.data.Group
      })
  },
  getGroupsCards(){
      axios.post('http://192.168.71.142/Admin/GetGroupsCards').then((res)=>{
-         console.log(res);
          this.groupsCards=res.data.data.Groups;
      }) 
  },
