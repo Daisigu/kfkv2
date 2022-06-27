@@ -82,6 +82,14 @@
                                             </div>
                                             <div class="list-group-item col-12">
                                                 <div class="d-flex align-items-center">
+                                                    <p class="m-0 p-2 col-5">E-mail </p>
+                                                    <input type="text" class="form-control" :value="user.Email"
+                                                        v-on:change="user.Email = $event.target.value"
+                                                        name="Email">
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item col-12">
+                                                <div class="d-flex align-items-center">
                                                     <p class="m-0 p-2 col-5">Должность </p>
                                                     <input type="text" class="form-control" :value="user.Position"
                                                         v-on:change="user.Position = $event.target.value"
