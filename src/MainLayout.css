@@ -30,7 +30,9 @@
 .btns-group {
     padding-left: 10px;
 }
-
+.file__buttons  button{
+    margin-left: 2px;
+}
 .people__info .accordion-item {
     border: 1px solid rgb(241, 241, 241);
 }

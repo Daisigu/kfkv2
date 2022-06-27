@@ -7,6 +7,7 @@
 <div class="adminGroups__page pt-5 pb-5" id="adminGroups">
  <div class="container">
      <div class="row">
+        <h1 class="text-center" v-if="groupsCards==0">Нет групп</h1>
          <transition name="slide-fade">
              <!-- LIST WITH groups CARDS -->
              <div class="col-sm-12 col-lg-4 groups-cards-list pb-2 " v-if="groupsCards.length !== 0">
@@ -14,7 +15,7 @@
                      aria-describedby="button-addon2" v-model="searchValue">
                  <button class="btn btn-primary mb-2 m-shadow"
                      v-on:click="createGroup() ; groupsCardId = group.Id; formUrl = 'http://192.168.71.142/Admin/CreateGroup'">Создать
-                     пользователя</button>
+                     группу</button>
                  <div class="list-group m-shadow">
                      <div class="list-group-item" v-for="group in filteredGroupsCards"
                          v-on:click="groupsCardId = group.Id; getGroup(); formUrl = 'http://192.168.71.142/Admin/EditGroup'"
@@ -29,7 +30,7 @@
          </transition>
          <!-- groups CARDS DETAILS -->
          <div class="col-sm-12 col-lg-8 groups-cards-details">
-             <h4 v-if="group.Id == undefined">Выберите группу прав</h4>
+             <h4 v-if="group.Id == undefined && groupsCards!=0">Выберите группу прав</h4>
              <div class="groups-cards-change-details m-shadow">
                  <transition name="slide-fade">
                      <div class="card-wrapper" v-if="groupsCardId !== null">

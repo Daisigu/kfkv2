@@ -83,7 +83,7 @@
                                                         <div>
                                                             <p class="createdFile m-0">{{ file.CreationDate }}</p>
                                                         </div>
-                                                        <div class="opacity-0 file__buttons">
+                                                        <div class="opacity-0 file__buttons d-flex flex-nowrap">
                                                             <button title="Заменить файл в документе"
                                                                 v-on:click="Id = file.Id; $refs.changeFile.value = null; fileUpload = false"
                                                                 data-bs-toggle="modal" data-bs-target="#changeModal"
@@ -493,7 +493,9 @@
         .list-group-item {
             cursor: pointer;
         }
-
+        .file__buttons button{
+            margin-left: 2px;
+        }
         .btns-group {
             padding-left: 10px;
         }
