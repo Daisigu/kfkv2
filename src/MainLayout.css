@@ -1,10 +1,11 @@
 /* ADMIN RIGHTS */
-/* ADMIN GROUPS.HTML */ 
+/* ADMIN GROUPS.HTML */
 /* ADMIN USERS */
 
 .slide-fade-enter-active {
     transition: all .3s ease;
 }
+
 .slide-fade-leave-active {
     transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
@@ -24,23 +25,28 @@
 }
 
 
-                    /* ARCHIVE SEARCH */
+/* ARCHIVE SEARCH */
 
 .btns-group {
     padding-left: 10px;
 }
+
 .people__info .accordion-item {
     border: 1px solid rgb(241, 241, 241);
 }
+
 .accordion-body {
     padding: 10px !important
 }
+
 * {
     font-family: 'Cuprum', sans-serif !important;
 }
+
 .spinner-border {
     margin: auto;
 }
+
 @media (max-width: 800px) {
     .cut-text {
         text-overflow: ellipsis;
@@ -50,6 +56,7 @@
         white-space: nowrap;
     }
 }
+
 .cut-text {
     min-height: 30px;
 }
@@ -57,13 +64,16 @@
 .accordion-button.unactive {
     color: rgb(216, 216, 216);
 }
+
 .m-shadow {
     box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
 }
+
 .createdFile {
     position: relative;
     left: 95px;
 }
+
 .list-group-item:hover .file__buttons {
     opacity: 1 !important;
     transition: opacity 0.5s ease;
@@ -76,4 +86,119 @@
 
 .active {
     transition: all 0.5s ease;
+}
+
+
+
+/* AUTORIZATION  */
+
+
+
+.autorization__form {
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.autorization__page {
+    padding: 200px 20px 0px 20px;
+}
+
+.logo-wrapper {
+    width: 114px;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+
+
+/* Loading */
+
+
+.badge {
+    min-width: 53px;
+    font-weight: 400;
+    font-size: 13px !important;
+}
+
+* {
+    font-family: 'Cuprum', sans-serif !important;
+}
+
+.comment-card {
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(248, 245, 245);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.comments-wrapper{
+    border: 1px solid rgb(231, 231, 231);
+    border-radius: 10px;
+}
+.form-border {
+    padding: 15px;
+    border: 1px solid rgb(221, 220, 220);
+    border-radius: 10px;
+}
+
+.bg-archi {
+    background-color: rgb(244, 248, 248);
+}
+
+.list-group-item:hover .buttons-group {
+    transition: opacity 0.5s ease;
+    opacity: 1 !important;
+}
+
+.changeFileFlag {
+    width: 100px;
+}
+
+
+/* DOCUMENT VERIFICATION  */
+
+.badge-success{
+    width: 100px;
+}
+
+.comments-wrapper {
+    border: 1px solid rgb(231, 231, 231);
+    border-radius: 10px;
+}
+.list-group-file{
+    padding-left: 10px;
+    list-style: none;
+}
+.badge {
+    min-width: 53px;
+    font-weight: 400;
+    font-size: 13px !important;
+}
+.listDocCheckedFalseFile-list {
+    padding: 10px;
+    border: 1px solid rgb(221, 220, 220);
+    border-radius: 10px
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.comment-card {
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(248, 245, 245);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.list-group-item:hover .btn {
+    transition: opacity 0.5s ease;
+    opacity: 1 !important;
 }
