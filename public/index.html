@@ -18,7 +18,7 @@
     </head>
 
     <body>
-        <header class="bg-primary">
+        <header class="bg-primary" id="mainLayout">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                     <div class="container-fluid">
@@ -130,6 +130,10 @@
                                         <li>
                                             <a href="/upload.html" class="dropdown-item">Подгрузка</a>
                                         </li>
+                                        <li>
+                                            <a href="" data-bs-toggle="modal"
+                                                data-bs-target="#changePasswordModal" v-on:click="oldPassword=''; newPassword='';newCheckPassword=''">123</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -137,7 +141,86 @@
                     </div>
                 </nav>
             </div>
+            <!-- Change Upload File Modal -->
+            <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="changePasswordLabel">Сменить пароль</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" ref="submitPassword" action="http://192.168.71.142/Admin/ChangePassword">
+                                <div class="mb-3">
+                                    <label for="oldPassword" class="form-label">Старый пароль</label>
+                                    <input type="password" name="oldPassword" class="form-control" id="oldPassword"
+                                        v-model="oldPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">Новый пароль</label>
+                                    <input type="password" name="firstPassword" class="form-control" id="newPassword"
+                                        v-model="newPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newCheckPassword" class="form-label">Повторить новый пароль</label>
+                                    <input type="password" name="secondPassword" class="form-control"
+                                        id="newCheckPassword" v-model="newCheckPassword">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary"  data-bs-dismiss="modal"
+                                v-bind="{ disabled: oldPassword == '' || newPassword == '' || newCheckPassword == '' }"
+                                type="submit" v-on:click="postPassword()" >Подтвердить</button>
+                            <button class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </header>
+
+
+
+        <script>
+            var app4 = new Vue({
+        el: '#mainLayout',
+                data(){
+                    return{
+                        oldPassword: '',
+                        newPassword: '',
+                        newCheckPassword: '',
+                    }
+                },
+                methods:{
+                    postPassword(){
+                   axios({
+                         method: 'post',
+                        url: 'http://192.168.71.142/Admin/ChangePassword',
+                          data: this.$refs.submitPassword
+           }).then((res)=>{
+        
+            if(res.data.success==true){
+                console.log(res);
+                alert(res.data.message)
+                this.$refs.submitPassword=''
+            }
+            if(res.data.success==false){
+                alert(res.data.message)
+                
+            }
+         
+           })
+
+        },
+                   
+                    }
+                }
+            )
+        </script>
+
+
+
 
         <style>
             .nav-link {
