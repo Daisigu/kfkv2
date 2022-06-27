@@ -315,8 +315,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button v-bind:class="{ disabled: !fileUpload || changeValue.length < 5 }" data-bs-dismiss="modal"
-                            class="btn btn-primary" v-on:click="fileUpload = false; changeFile()">Загрузить</button>
+                        <button v-bind:class="{ disabled: !fileUpload || changeValue.length < 5 }"
+                            data-bs-dismiss="modal" class="btn btn-primary"
+                            v-on:click="fileUpload = false; changeFile()">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -344,6 +345,7 @@
                 clientId: '',
                 fileUpload: false,
                 match: false,
+                documentsLoading: false,
             }
         },
         methods: {
@@ -449,6 +451,7 @@
                         if (response.data.success == false) {
                             alert(response.data.message)
                             thiz.loading = false
+                            thiz.clients=[]
                         }
                         else {
                             console.log(response);
@@ -456,10 +459,14 @@
                             thiz.loading = false
                         }
                     })
+                 
             },
             async getDocuments(Id) {
                 var thiz = this;
-                axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
+                if(this.documentsLoading==false){
+                    this.documentsLoading=true
+                    console.log(this.documentsLoading);
+                    axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
                         console.log(response);
                         if (response.data.success == false) {
@@ -470,6 +477,12 @@
                             thiz.loading = false
                         }
                     })
+                    .then(data=>{
+                        thiz.documentsLoading=false
+                        console.log(this.documentsLoading);
+                    })
+                }
+            
             },
         }
     })
@@ -530,9 +543,11 @@
         .accordion-button.unactive {
             color: rgb(216, 216, 216);
         }
+
         .m-shadow {
             box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
         }
+
         .createdFile {
             position: relative;
             left: 95px;
