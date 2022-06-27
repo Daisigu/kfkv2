@@ -1,0 +1,79 @@
+/* ADMIN RIGHTS */
+/* ADMIN GROUPS.HTML */ 
+/* ADMIN USERS */
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+.slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.card-wrapper {
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.admin-submit-button {
+    margin-top: 10px;
+}
+
+
+                    /* ARCHIVE SEARCH */
+
+.btns-group {
+    padding-left: 10px;
+}
+.people__info .accordion-item {
+    border: 1px solid rgb(241, 241, 241);
+}
+.accordion-body {
+    padding: 10px !important
+}
+* {
+    font-family: 'Cuprum', sans-serif !important;
+}
+.spinner-border {
+    margin: auto;
+}
+@media (max-width: 800px) {
+    .cut-text {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        min-height: 30px;
+        width: 140px;
+        white-space: nowrap;
+    }
+}
+.cut-text {
+    min-height: 30px;
+}
+
+.accordion-button.unactive {
+    color: rgb(216, 216, 216);
+}
+.m-shadow {
+    box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
+}
+.createdFile {
+    position: relative;
+    left: 95px;
+}
+.list-group-item:hover .file__buttons {
+    opacity: 1 !important;
+    transition: opacity 0.5s ease;
+}
+
+.list-group-item:hover .createdFile {
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.active {
+    transition: all 0.5s ease;
+}
