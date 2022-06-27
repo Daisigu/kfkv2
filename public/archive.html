@@ -351,7 +351,6 @@
         methods: {
             getLinqDocuments() {
                 axios.post('http://192.168.71.142/Document/LinqDocuments/?orderId=' + this.orderId).then((res) => {
-                    console.log(res.data.data.LinqDocuments);
                     this.linqDocuments = res.data.data.LinqDocuments
                 })
             },
@@ -446,7 +445,9 @@
             },
             async getClients() {
                 var thiz = this;
-                axios.post('http://192.168.71.142/Document/ClientSearch?clientSearch=' + this.clientName)
+                if(this.documentsLoading==false){
+                    this.documentsLoading=true
+                    axios.post('http://192.168.71.142/Document/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
                         if (response.data.success == false) {
                             alert(response.data.message)
@@ -454,21 +455,23 @@
                             thiz.clients=[]
                         }
                         else {
-                            console.log(response);
                             thiz.clients = response.data.data.clients
                             thiz.loading = false
                         }
                     })
+                    .then(data=>{
+                        thiz.documentsLoading=false
+                    })
                  
+                }
+                
             },
             async getDocuments(Id) {
                 var thiz = this;
                 if(this.documentsLoading==false){
                     this.documentsLoading=true
-                    console.log(this.documentsLoading);
                     axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
-                        console.log(response);
                         if (response.data.success == false) {
                             alert(response.data.message)
                         }
@@ -479,7 +482,6 @@
                     })
                     .then(data=>{
                         thiz.documentsLoading=false
-                        console.log(this.documentsLoading);
                     })
                 }
             
