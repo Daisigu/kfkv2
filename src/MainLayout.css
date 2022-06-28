@@ -26,11 +26,17 @@
 
 
 /* ARCHIVE SEARCH */
+.list-group-item:hover .createdFile{
+    z-index: -1;
+}
+.archive__serach-input{
+    box-shadow: 0px 3px 3px rgb(241, 237, 237) !important;
 
+}
 .btns-group {
     padding-left: 10px;
 }
-.file__buttons  button{
+.file__buttons .btn{
     margin-left: 2px;
 }
 .people__info .accordion-item {
@@ -49,7 +55,7 @@
     margin: auto;
 }
 
-@media (max-width: 800px) {
+
     .cut-text {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -57,7 +63,7 @@
         width: 140px;
         white-space: nowrap;
     }
-}
+
 
 .cut-text {
     min-height: 30px;

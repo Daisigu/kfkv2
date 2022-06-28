@@ -14,11 +14,11 @@
                     <div class="input-group mb-3 ">
                         <input
                             v-on:keyup.enter="getClients(); loading = true; match = true; clientId = ''; documents = []"
-                            v-model="clientName" type="text" class="form-control m-shadow"
+                            v-model="clientName" type="text" class="form-control archive__search-input"
                             placeholder="ФИО клиента или № договора" aria-label="Recipient's clientname"
                             aria-describedby="button-addon2">
                         <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []"
-                            class="btn btn-primary m-shadow" type="button" id="button-addon2">Поиск</button>
+                            class="btn btn-primary archive__search-input" type="button" id="button-addon2">Поиск</button>
                     </div>
                     <h2 class="text-center" v-if="loading == false && clients.length == 0 && match == true">Нет
                         совпадений
@@ -90,11 +90,9 @@
                                                                 class="btn btn-info text-white"><i
                                                                     class="bi bi-arrow-left-right"></i>
                                                             </button>
-                                                            <a
+                                                            <a title="Скачать файл" class="btn btn-primary"
                                                                 :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
-                                                                <button class="btn btn-primary">
                                                                     <i class="bi bi-download"></i>
-                                                                </button>
                                                             </a>
 
                                                             <button title="Удалить файл в документе"
@@ -256,7 +254,7 @@
                         <h5 class="modal-title" id="versionModalLabel">История изменений</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <h1 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h1>
+                    <h5 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h5>
                     <div class="modal-body" v-for="history in fileHistoryArray">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{
@@ -282,17 +280,19 @@
                         <h5 class="modal-title" id="documentVersionModalLabel">История изменений документа</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <h1 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h1>
-                    <div class="modal-body" v-for="docHistory in documentHistoryArray">
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
-                            target="_blank">{{
-                                    docHistory.Name
-                            }}</a>
-                        <div>Изменен: {{ docHistory.Created }}</div>
-                        <div>Кем: {{ docHistory.UserName }}</div>
-                        <div>Комментарий: {{ docHistory.Comment }}</div>
+               <div class="modal-body">
+                <h5 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h5>
+                <div v-for="docHistory in documentHistoryArray">
+                    <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
+                        target="_blank">{{
+                                docHistory.Name
+                        }}</a>
+                    <div>Изменен: {{ docHistory.Created }}</div>
+                    <div>Кем: {{ docHistory.UserName }}</div>
+                    <div>Комментарий: {{ docHistory.Comment }}</div>
 
-                    </div>
+                </div>
+               </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -493,7 +493,7 @@
         .list-group-item {
             cursor: pointer;
         }
-        .file__buttons button{
+        .file__buttons .btn{
             margin-left: 2px;
         }
         .btns-group {
@@ -549,6 +549,9 @@
         .m-shadow {
             box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
         }
+        .archive__search-input{
+            box-shadow: 0 4px 0px 0px rgb(241, 237, 237) !important;
+        }
 
         .createdFile {
             position: relative;
@@ -558,6 +561,9 @@
         .list-group-item:hover .file__buttons {
             opacity: 1 !important;
             transition: opacity 1s ease;
+        }
+        .list-group-item:hover .createdFile{
+            z-index: -1;
         }
 
         .list-group-item:hover .createdFile {
