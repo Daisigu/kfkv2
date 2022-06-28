@@ -434,10 +434,10 @@
                 const headers = { 'Content-Type': 'multipart/form-data' };
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData, { headers }).then((response) => {
                     if (response.data.success == false) {
-                        alert(response.data.message)
+                        alert(response.data.data.message)
                     }
                     else {
-                        alert(response.data.message)
+                        alert(response.data.data.message)
                         response.data.files;
                         response.status;
                         this.$refs.changeFile.value = null
