@@ -13,12 +13,12 @@
                 <transition name="slide-fade">
                     <!-- LIST WITH Rights CARDS -->
                     <div class="col-sm-12 col-lg-4 rights-cards-list pb-2" v-if="rightsCards.length !== 0">
-                        <input type="text" class="form-control mb-3 m-shadow" placeholder="Поиск"
+                        <input type="text" class="form-control mb-3 shadow" placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="searchValue">
-                        <button class="btn btn-primary mb-2 m-shadow"
+                        <button class="btn btn-primary mb-2 shadow"
                             v-on:click="createRight() ; rightsCardId = rightObj.Id; formUrl = 'http://192.168.71.142/Admin/CreateRight'">Создать
                             право</button>
-                        <div class="list-group m-shadow">
+                        <div class="list-group shadow">
                             <div class="list-group-item" v-for="rightFor in filteredRightsCards"
                                 v-on:click="rightsCardId = rightFor.Id; rightObj = rightFor; formUrl = 'http://192.168.71.142/Admin/EditRight';"
                                 :class="{ active: rightsCardId == rightFor.Id }">
@@ -36,7 +36,7 @@
                     <h4 v-if="rightObj.Id == undefined && rightsCards!=0">Выберите права</h4>
                     <div class="rights-cards-change-details">
                         <transition name="slide-fade">
-                            <div class="card-wrapper m-shadow" v-if="rightsCardId !== null">
+                            <div class="card-wrapper shadow" v-if="rightsCardId !== null">
                                 <form method="post" v-on:submit="postRight($event)">
                                     <div class="rightObj-card">
                                         <div class="list-group justify-content-center align-items-center">
@@ -237,10 +237,6 @@ computed:{
             border: 1px solid rgb(226, 226, 226);
             border-radius: 10px;
             padding: 15px;
-        }
-
-        .m-shadow {
-            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
         }
 
         .admin-submit-button {

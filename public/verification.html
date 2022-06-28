@@ -13,9 +13,9 @@
                 <div class="col-12 col-lg-4">
                     <transition name="slide-fade">
                         <div class="listDocCheckedFalseClient-list " v-if="listDocCheckedFalse.length > 0">
-                            <input type="text" class="form-control mb-3 m-shadow" placeholder="Поиск"
+                            <input type="text" class="form-control mb-3 shadow" placeholder="Поиск"
                                 aria-describedby="button-addon2" v-model="listDocCheckedFalseSearchValue">
-                            <div class="list-group m-shadow">
+                            <div class="list-group shadow">
                                 <div v-for="document in filteredListDocCheckedFalseClientList"
                                     v-on:click="commentsCorrection = document.CommentsCorrection; listDocCheckedFalseId = document.Id; listDocCheckedFalseFiles = document.Files; listDocCheckedFalseClientName = document.FIO"
                                     class="list-group-item"
@@ -39,7 +39,7 @@
                 <div class="col-12 col-lg-8 list-group">
 
                     <transition name="slide-fade">
-                        <div class="listDocCheckedFalseFile-list m-shadow"
+                        <div class="listDocCheckedFalseFile-list shadow"
                             v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
                             <h3>{{ listDocCheckedFalseClientName }}</h3>
                             <div class="list-group">
@@ -234,9 +234,7 @@
             transition: opacity 0.5s ease;
             opacity: 1 !important;
         }
-        .m-shadow {
-            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
-        }
+       
     </style>
 
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>

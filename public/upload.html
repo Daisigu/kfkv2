@@ -12,10 +12,10 @@
                 <h1 v-if="newDocument.length == 0" class="text-center">Нет документов на подгрузку</h1>
                 <transition name="slide-fade">
                     <div class="col-sm-12 col-lg-4 upload-client-list " v-if="newDocument.length !== 0">
-                        <input type="text" class="form-control mb-3 m-shadow " placeholder="Поиск"
+                        <input type="text" class="form-control mb-3 shadow " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="uploadSearchValue">
                         <!-- //$refs.downloadFile.value = null// -->
-                      <div class="list-group upload-client-list m-shadow">
+                      <div class="list-group upload-client-list shadow">
                         <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
                         v-on:click=" clientFIO=client.FIO; clientTitle = client.Title; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Rework; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false;"
                         class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
@@ -43,7 +43,7 @@
                     <div class="col-12">
                         <transition name="slide-fade">
                             <form v-if="requiredDocuments.length !== 0 && workType == false" method="post"
-                                enctype="multipart/form-data" class="form-border m-shadow"
+                                enctype="multipart/form-data" class="form-border shadow"
                                 :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId">
                                 <h3 class="upload-client-title">{{ clientTitle }}</h3>
                                 <small>{{clientFIO}}</small>
@@ -233,9 +233,7 @@
         .changeFileFlag {
             width: 100px;
         }
-        .m-shadow {
-            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
-        }
+      
     </style>
 
 
