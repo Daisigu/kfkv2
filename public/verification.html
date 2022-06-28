@@ -37,7 +37,7 @@
                     </transition>
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-
+                    <h4 v-if="listDocCheckedFalseId=='' && listDocCheckedFalse!=0">Выберите клиента</h4>
                     <transition name="slide-fade">
                         <div class="listDocCheckedFalseFile-list shadow"
                             v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
@@ -119,7 +119,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <h5 class="text-center">Вы уверены что хотите отправить?</h5>
+                        <h5 class="text-center">Вы уверены что хотите отправить документ на доработку?</h5>
                         <input class="form-control" type="text" placeholder="Введите ваш комментарий"
                             v-model="onWorkDocumentInputValue">
                     </div>
@@ -274,7 +274,6 @@
       
         getListDocCheckedFalse() {
             axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
-                console.log(res.data);
                 this.listDocCheckedFalse = res.data.data.Documents;
             })
         },
@@ -290,14 +289,12 @@
                 if (res.data.success==false){
                     alert(res.data.message)
                 }
-                console.log(res);
                 this.getListDocCheckedFalse()
                 this.listDocCheckedFalseId = ''
             })
         },
         getDocSetupCheckedTrue() {
             axios.post('http://192.168.71.142/Document/ListDocCheckedFalse').then((res) => {
-                console.log(res.data);
             })
         },
 

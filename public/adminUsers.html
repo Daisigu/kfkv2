@@ -292,9 +292,7 @@
             url: this.formUrl,
             data: this.user
            }).then((res)=>{
-            console.log(res);
             if(res.data.success==true){
-                console.log(res);
                 alert(res.data.data.message)
                 this.usersCardId=null
                 this.getUsersCards();
@@ -309,7 +307,6 @@
         },
         createUser(){
             axios.post('http://192.168.71.142/Admin/GetUser/0').then((res)=>{
-                console.log(res);
                 this.user=res.data.data.User
                
             })
@@ -321,7 +318,6 @@
         },
         getUsersCards(){
             axios.post('http://192.168.71.142/Admin/GetUsersCards').then((res)=>{
-                console.log(res);
                 this.usersCards=res.data.data.UsersCards;
                 this.groups=res.data.data.Groups
                 this.rights=res.data.data.Rights

@@ -15,23 +15,24 @@
                         <input type="text" class="form-control mb-3 shadow " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="uploadSearchValue">
                         <!-- //$refs.downloadFile.value = null// -->
-                      <div class="list-group upload-client-list shadow">
-                        <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
-                        v-on:click=" clientFIO=client.FIO; clientTitle = client.Title; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Rework; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false;"
-                        class="list-group-item list-group-item-action" v-for="client in filteredUploadClientList">
-                        <div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ client.FIO }}</h5>
-                                <small><span class="badge bg-primary"
-                                        v-bind:class="{ 'bg-danger': client.DocTypeInt == 2 }">
-                                        {{ client.DocType }} </span></small>
+                        <div class="list-group upload-client-list shadow">
+                            <div v-bind:class="{ active: uploadClientId == client.DocumentId }"
+                                v-on:click="clientFIO = client.FIO; clientTitle = client.Title; commentsCorrection = client.CommentsCorrection; uploadNewDocumentClientFiles = client.Files; docCorId = client.DocCorId; workType = client.Rework; requiredDocuments = client.RequiredDocuments; uploadClientId = client.DocumentId; clientDocType = client.DocTypeInt; uploadFileClientUp = false;"
+                                class="list-group-item list-group-item-action"
+                                v-for="client in filteredUploadClientList">
+                                <div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ client.FIO }}</h5>
+                                        <small><span class="badge bg-primary"
+                                                v-bind:class="{ 'bg-danger': client.DocTypeInt == 2 }">
+                                                {{ client.DocType }} </span></small>
+                                    </div>
+                                    <small>{{ client.Title }}</small>
+                                    <br />
+                                    <small v-if="client.Rework == true" class="text-danger">На доработку</small>
+                                </div>
                             </div>
-                            <small>{{ client.Title }}</small>
-                            <br />
-                            <small v-if="client.Rework == true" class="text-danger">На доработку</small>
                         </div>
-                    </div>
-                      </div>
                     </div>
                 </transition>
 
@@ -46,9 +47,9 @@
                                 enctype="multipart/form-data" class="form-border shadow"
                                 :action="'http://192.168.71.142/Document/UploadFileInLoading?documentId=' + uploadClientId">
                                 <h3 class="upload-client-title">{{ clientTitle }}</h3>
-                                <small>{{clientFIO}}</small>
+                                <small>{{ clientFIO }}</small>
                                 <div class="list-group">
-                                    <div  v-for="uploadDoc in requiredDocuments"
+                                    <div v-for="uploadDoc in requiredDocuments"
                                         class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
                                         <span>
                                             {{ uploadDoc.Name }}
@@ -60,23 +61,52 @@
                                     </div>
 
                                 </div>
-                                <button v-bind="{ disabled: !uploadFileClientUp }" type="submit"
-                                    class="btn btn-primary mt-2">Отправить</button>
+                                <button v-bind="{ disabled: !uploadFileClientUp }" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#ConfirmSubmitModal" class="btn btn-primary mt-2">Отправить</button>
+                                
+                                
+                                    <!--Confirm send Modal -->
+                                <div class="modal fade" id="ConfirmSubmitModal" tabindex="-1"
+                                    aria-labelledby="#ConfirmSubmitModal" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="#ConfirmSubmitModal">Отправить на проверку
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="text-center">Вы уверены что хотите отправить на проверку?</h5>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" data-bs-dismiss="modal"
+                                                    class="btn btn-primary col-3"
+                                                    data-bs-dismiss="modal">Отправить</button>
+                                                <button type="button" class="btn btn-secondary col-3"
+                                                    data-bs-dismiss="modal">Закрыть</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </transition>
                         <transition name="slide-fade">
                             <div class="onWork form-border" v-if="workType == true && requiredDocuments.length !== 0">
                                 <div class="row">
-                                    <h3 class="upload-client-title">{{ clientTitle}}</h3>
-                                <small>{{clientFIO}}</small>
+                                    <h3 class="upload-client-title">{{ clientTitle }}</h3>
+                                    <small>{{ clientFIO }}</small>
                                 </div>
                                 <div class="list-group">
-                                    <div  v-for="onWorkDoc in uploadNewDocumentClientFiles"
+                                    <div v-for="onWorkDoc in uploadNewDocumentClientFiles"
                                         class="list-group-item d-flex justify-content-between align-items-center flex-row flex-wrap">
-                                        <a class="col-7" :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
+                                        <a class="col-7"
+                                            :href="'http://192.168.71.142/Document/FileDownload/' + onWorkDoc.Id + '?preview=true'"
                                             target="_blank"> {{ onWorkDoc.Name }}
                                         </a>
-                                        <p v-if="onWorkDoc.FlagForReplacement == true" class="changeFileFlag badge bg-success m-0 ">
+                                        <p v-if="onWorkDoc.FlagForReplacement == true"
+                                            class="changeFileFlag badge bg-success m-0 ">
                                             Заменен
                                         </p>
                                         <div class="buttons-group opacity-0">
@@ -146,6 +176,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Change Upload File Modal -->
             <div class="modal fade" id="changeUploadFileModal" tabindex="-1"
                 aria-labelledby="changeUploadFileModalLabel" aria-hidden="true">
@@ -159,12 +190,12 @@
                             <form v-on:submit.prevent="changeFile(Id)" enctype="multipart/form-data" method="post">
                                 <input class="form-control mb-3" type="file" v-on:change="changeUploadInputFile"
                                     ref="changeFile">
-                                <input type="text" class="form-control mb-3" v-model="changeInputValue">
+                                <input type="text" placeholder="Введите ваш комментарий" class="form-control mb-3" v-model="changeInputValue">
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button v-bind:class="{ disabled: !fileUpload || changeInputValue.length<5}" data-bs-dismiss="modal"
-                                class="btn btn-primary"
+                            <button v-bind:class="{ disabled: !fileUpload || changeInputValue.length < 5 }"
+                                data-bs-dismiss="modal" class="btn btn-primary"
                                 v-on:click="fileUpload = false; changeUploadDocumentFile(); ">Загрузить</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         </div>
@@ -179,6 +210,7 @@
         .slide-fade-enter-active {
             transition: all .2s ease;
         }
+
         .slide-fade-enter,
         .slide-fade-leave-to
 
@@ -207,10 +239,12 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        .comments-wrapper{
+
+        .comments-wrapper {
             border: 1px solid rgb(231, 231, 231);
             border-radius: 10px;
         }
+
         .form-border {
             padding: 15px;
             border: 1px solid rgb(221, 220, 220);
@@ -233,7 +267,6 @@
         .changeFileFlag {
             width: 100px;
         }
-      
     </style>
 
 
@@ -247,7 +280,7 @@
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous">
     </script>
     <script>
-    var app4 = new Vue({
+        var app4 = new Vue({
         el: '#upload',
     
         data() {
@@ -298,7 +331,6 @@
     
             },
             changeUploadInputFile() {
-                console.log('File Uploaded');
                 this.fileUpload = true;
                 this.changedFiles = this.$refs.changeFile.files[0];
             },
@@ -325,19 +357,16 @@
                 })
             },
             downloadFile() {
-                console.log('file upload');
                 this.uploadFileClientUp = true;
             },
             getNewDocument() {
                 axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
-                    console.log(res.data.data.NewDocument);
                     this.newDocument = res.data.data.NewDocument;
     
                 })
             },
             async getClientDocument(Id) {
                 axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id).then((response) => {
-                    console.log(response.data.data.Documents);
                     this.uploadClientDocuments = response.data.data.Documents
     
                 })

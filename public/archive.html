@@ -357,34 +357,38 @@
             }
         },
         methods: {
+            /* Получить дополнительные документы */
             getLinqDocuments($event) {
               
                 axios.post('http://192.168.71.142/Document/LinqDocuments/?orderId=' + this.orderId).then((res) => {
                     this.linqDocuments = res.data.data.LinqDocuments
                 })
             },
+            /* История документа */
             documentHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((response) => {
     
                     if (response.data.success == false) {
-                        alert(response.data.message)
+                        alert(response.data.data.message)
                     }
                     else {
                         this.documentHistoryArray = response.data.data.HistoryDoc;
                     }
                 })
             },
+            /* Удаление документа */
             deleteDocument(Id) {
                 axios.post('http://192.168.71.142/Document/DeleteDocument/' + Id).then((response) => {
     
                     if (response.data.success == false) {
-                        alert(response.data.message)
+                        alert(response.data.data.message)
                     }
                     else {
                         this.getDocuments(this.clientId)
                     }
                 })
             },
+            /* История файла */
             fileHistory(Id) {
                 axios.post('http://192.168.71.142/Document/CheckArchHistoryFile/' + Id).then((response) => {
     
@@ -394,11 +398,12 @@
                     else this.fileHistoryArray = response.data.data.HistoryFile
                 })
             },
-    
+            /* Данные инпута на загрузке файла */
             downloadFile() {
                 this.fileUpload=true
                 this.downloadFiles = this.$refs.downloadFile.files[0];
             },
+            /*  */
             changeUploadFile() {
                 this.fileUpload=true
                 this.changedFiles = this.$refs.changeFile.files[0];
@@ -406,7 +411,7 @@
             deleteFile(Id) {
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id).then((response) => {
                     if (response.data.success == false) {
-                        alert(response.data.message)
+                        alert(response.data.data.message)
                     }
                     else this.getDocuments(this.clientId)
                 })
@@ -453,7 +458,7 @@
                     axios.post('http://192.168.71.142/Document/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
                         if (response.data.success == false) {
-                            alert(response.data.message)
+                            alert(response.data.data.message)
                             thiz.loading = false
                             thiz.clients=[]
                         }
@@ -476,7 +481,7 @@
                     axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
                         if (response.data.success == false) {
-                            alert(response.data.message)
+                            alert(response.data.data.message)
                         }
                         else {
                             thiz.documents = response.data.data.Documents

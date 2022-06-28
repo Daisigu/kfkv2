@@ -169,9 +169,7 @@ methods: {
      url: this.formUrl,
      data: this.rightObj
     }).then((res)=>{
-     console.log(res);
      if(res.data.success==true){
-         console.log(res);
          alert(res.data.data.message)
          this.rightsCardId=null
          this.getRightsCards();
@@ -198,7 +196,6 @@ methods: {
  },
  getRightsCards(){
      axios.post('http://192.168.71.142/Admin/GetRights').then((res)=>{
-         console.log(res);
          this.rightsCards=res.data.data.Rights;
      }) 
  },
