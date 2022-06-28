@@ -53,7 +53,6 @@
                     <div v-if="documents.length > 0" class="people__info  col-sm-12 col-lg-8  p-3">
                         <!-- List with Clients documents -->
                         <div class="accordion shadow border rounded-3" id="accordionFlush">
-                            <transition-group name="slide-fade">
                                 <div class="accordion-item" v-for="document in documents" :key="document.Id"
                                     v-on:click="orderId = document.OrderId;">
                                     <h2 class="accordion-header" :id="'flush-headingOne' + document.Id"
@@ -180,7 +179,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </transition-group>
                         </div>
                     </div>
                 </transition>
@@ -322,7 +320,7 @@
                     <div class="modal-footer">
                         <button 
                             data-bs-dismiss="modal" class="btn btn-primary" v-bind:class="{disabled: fileUpload==false || changeValue.length<5}"
-                            v-on:click="changeFile()">Загрузить</button>
+                            v-on:click="changeFile(); changeValue=''">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
