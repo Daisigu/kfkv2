@@ -255,8 +255,8 @@
                         <h5 class="modal-title" id="versionModalLabel">История изменений</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <h5 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h5>
                   <div class="modal-body">
+                    <h5 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h5>
                     <div v-for="history in fileHistoryArray">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{

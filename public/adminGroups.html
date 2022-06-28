@@ -31,7 +31,7 @@
          <!-- groups CARDS DETAILS -->
          <div class="col-sm-12 col-lg-8 groups-cards-details">
              <h4 v-if="group.Id == undefined && groupsCards!=0">Выберите группу прав</h4>
-             <div class="groups-cards-change-details border rounded-3 shadow">
+             <div v-if="group.Id!=undefined" class="groups-cards-change-details border rounded-3 shadow">
                  <transition name="slide-fade">
                      <div class="card-wrapper " v-if="groupsCardId !== null">
                          <form method="post" v-on:submit="postGroup($event)">
