@@ -14,11 +14,11 @@
                     <div class="input-group mb-3 ">
                         <input
                             v-on:keyup.enter="getClients(); loading = true; match = true; clientId = ''; documents = []"
-                            v-model="clientName" type="text" class="form-control archive__search-input"
+                            v-model="clientName" type="text" class="form-control  shadow"
                             placeholder="ФИО клиента или № договора" aria-label="Recipient's clientname"
                             aria-describedby="button-addon2">
                         <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []"
-                            class="btn btn-primary archive__search-input" type="button" id="button-addon2">Поиск</button>
+                            class="btn btn-primary  shadow" type="button" id="button-addon2">Поиск</button>
                     </div>
                     <h2 class="text-center" v-if="loading == false && clients.length == 0 && match == true">Нет
                         совпадений
@@ -30,7 +30,7 @@
                     </div>
                     <transition name="slide-fade">
                         <div v-if="loading == false"
-                            class="list-group d-flex justify-content-center align-items-center m-shadow">
+                            class="list-group d-flex justify-content-center align-items-center shadow">
                             <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
                                 v-bind:class="{ active: client.Id == clientId }" v-bind:Id="client.Id"
                                 v-on:click="getDocuments(client.Id); clientId = client.Id; ">
@@ -50,7 +50,7 @@
                 </div>
 
                 <transition name="slide-fade">
-                    <div v-if="documents.length > 0" class="people__info col-sm-12 col-lg-8 ">
+                    <div v-if="documents.length > 0" class="people__info border rounded-3 col-sm-12 col-lg-8 shadow p-3">
                         <!-- List with Clients documents -->
                         <div class="accordion " id="accordionFlush">
                             <transition-group name="slide-fade">
@@ -112,7 +112,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="btns-group">
+                                        <div class="btns-group pb-2">
                                             <button title="Загрузиить файл в документ" :id="document.Id"
                                                 class="btn btn-primary mb-1" v-if="documents.length > 0"
                                                 data-bs-toggle="modal" data-bs-target="#loadingModal"
@@ -139,9 +139,9 @@
                                                     документы</i></button>
                                         </div>
                                         <!-- Other document Collapse -->
-                                        <div class="collapse" id="collapseOtherDocuments"
+                                        <div class="collapse p-1" id="collapseOtherDocuments"
                                             v-if="linqDocuments.length > 0">
-                                            <div class="card card-body">
+                                            <div class="card card-body p-1">
                                                 <div v-if="linqDocuments.length == 0" class="spinner-border"
                                                     role="status">
                                                     <span class="visually-hidden">Загрузка</span>
@@ -503,10 +503,7 @@
             padding-left: 10px;
         }
 
-        .people__info .accordion-item {
-            border: 1px solid rgb(241, 241, 241);
-        }
-
+      
         .accordion-body {
             padding: 10px !important
         }
