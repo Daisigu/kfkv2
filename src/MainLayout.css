@@ -2,16 +2,8 @@
 /* ADMIN GROUPS.HTML */
 /* ADMIN USERS */
 
-.slide-fade-enter-active {
-    transition: all .3s ease;
-}
-
-.slide-fade-leave-active {
-    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-
-.list-group-item {
-    cursor: pointer;
+.admin-submit-button {
+    margin-top: 10px;
 }
 
 .card-wrapper {
@@ -20,31 +12,36 @@
     padding: 15px;
 }
 
-.admin-submit-button {
-    margin-top: 10px;
-}
-
-
 /* ARCHIVE SEARCH */
-.list-group-item:hover .createdFile{
-    z-index: -1;
+.list-group-item {
+    cursor: pointer;
 }
-.archive__serach-input{
-    box-shadow: 0px 3px 3px rgb(241, 237, 237) !important;
 
+.file__buttons .btn {
+    margin-left: 2px;
 }
+
 .btns-group {
     padding-left: 10px;
 }
-.file__buttons .btn{
-    margin-left: 2px;
-}
-.people__info .accordion-item {
-    border: 1px solid rgb(241, 241, 241);
-}
+
 
 .accordion-body {
     padding: 10px !important
+}
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
 }
 
 * {
@@ -55,15 +52,13 @@
     margin: auto;
 }
 
-
-    .cut-text {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        min-height: 30px;
-        width: 140px;
-        white-space: nowrap;
-    }
-
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 30px;
+    width: 540px;
+    white-space: nowrap;
+}
 
 .cut-text {
     min-height: 30px;
@@ -77,6 +72,10 @@
     box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
 }
 
+.archive__search-input {
+    box-shadow: 0 4px 0px 0px rgb(241, 237, 237) !important;
+}
+
 .createdFile {
     position: relative;
     left: 95px;
@@ -88,6 +87,10 @@
 }
 
 .list-group-item:hover .createdFile {
+    z-index: -1;
+}
+
+.list-group-item:hover .createdFile {
     transition: all 0.5s ease;
     opacity: 0;
 }
@@ -95,8 +98,6 @@
 .active {
     transition: all 0.5s ease;
 }
-
-
 
 /* AUTORIZATION  */
 
@@ -145,10 +146,12 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.comments-wrapper{
+
+.comments-wrapper {
     border: 1px solid rgb(231, 231, 231);
     border-radius: 10px;
 }
+
 .form-border {
     padding: 15px;
     border: 1px solid rgb(221, 220, 220);
@@ -157,6 +160,10 @@
 
 .bg-archi {
     background-color: rgb(244, 248, 248);
+}
+
+.upload-client-list>.list-group-item {
+    cursor: pointer;
 }
 
 .list-group-item:hover .buttons-group {
@@ -171,31 +178,57 @@
 
 /* DOCUMENT VERIFICATION  */
 
-.badge-success{
+.badge-success {
     width: 100px;
+}
+
+.slide-fade-enter-active {
+    transition: all .2s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+
+/* .slide-fade-leave-active below version 2.1.8 */
+    {
+    transform: translateX(10px);
+    opacity: 0;
 }
 
 .comments-wrapper {
     border: 1px solid rgb(231, 231, 231);
     border-radius: 10px;
 }
-.list-group-file{
+
+.list-group-file {
     padding-left: 10px;
     list-style: none;
 }
+
 .badge {
     min-width: 53px;
     font-weight: 400;
     font-size: 13px !important;
 }
+
+.listDocCheckedFalseClient-list>.list-group .list-group-item {
+    cursor: pointer;
+}
+
 .listDocCheckedFalseFile-list {
     padding: 10px;
     border: 1px solid rgb(221, 220, 220);
     border-radius: 10px
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
+
 .comment-card {
     border-radius: 15px;
     color: rgb(0, 0, 0);

@@ -50,9 +50,9 @@
                 </div>
 
                 <transition name="slide-fade">
-                    <div v-if="documents.length > 0" class="people__info border rounded-3 col-sm-12 col-lg-8 shadow p-3">
+                    <div v-if="documents.length > 0" class="people__info  col-sm-12 col-lg-8  p-3">
                         <!-- List with Clients documents -->
-                        <div class="accordion " id="accordionFlush">
+                        <div class="accordion shadow border rounded-3" id="accordionFlush">
                             <transition-group name="slide-fade">
                                 <div class="accordion-item" v-for="document in documents" :key="document.Id"
                                     v-on:click="orderId = document.OrderId; getLinqDocuments();">
@@ -85,7 +85,7 @@
                                                         </div>
                                                         <div class="opacity-0 file__buttons d-flex flex-nowrap">
                                                             <button title="Заменить файл в документе"
-                                                                v-on:click="Id = file.Id; $refs.changeFile.value = null; fileUpload = false"
+                                                                v-on:click="Id = file.Id; $refs.changeFile.value = null; fileUpload = false; changeValue=''"
                                                                 data-bs-toggle="modal" data-bs-target="#changeModal"
                                                                 class="btn btn-info text-white"><i
                                                                     class="bi bi-arrow-left-right"></i>
@@ -437,6 +437,7 @@
                         alert(response.data.message)
                     }
                     else {
+                        alert(response.data.message)
                         response.data.files;
                         response.status;
                         this.$refs.changeFile.value = null
