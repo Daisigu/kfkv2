@@ -11,12 +11,12 @@
          <transition name="slide-fade">
              <!-- LIST WITH groups CARDS -->
              <div class="col-sm-12 col-lg-4 groups-cards-list pb-2 " v-if="groupsCards.length !== 0">
-                 <input type="text" class="form-control mb-3 m-shadow" placeholder="Поиск"
+                 <input type="text" class="form-control mb-3 shadow" placeholder="Поиск"
                      aria-describedby="button-addon2" v-model="searchValue">
-                 <button class="btn btn-primary mb-2 m-shadow"
+                 <button class="btn btn-primary mb-2 shadow"
                      v-on:click="createGroup() ; groupsCardId = group.Id; formUrl = 'http://192.168.71.142/Admin/CreateGroup'">Создать
                      группу</button>
-                 <div class="list-group m-shadow">
+                 <div class="list-group shadow">
                      <div class="list-group-item" v-for="group in filteredGroupsCards"
                          v-on:click="groupsCardId = group.Id; getGroup(); formUrl = 'http://192.168.71.142/Admin/EditGroup'"
                          :class="{ active: groupsCardId == group.Id }">
@@ -31,9 +31,9 @@
          <!-- groups CARDS DETAILS -->
          <div class="col-sm-12 col-lg-8 groups-cards-details">
              <h4 v-if="group.Id == undefined && groupsCards!=0">Выберите группу прав</h4>
-             <div class="groups-cards-change-details m-shadow">
+             <div class="groups-cards-change-details border rounded-3 shadow">
                  <transition name="slide-fade">
-                     <div class="card-wrapper" v-if="groupsCardId !== null">
+                     <div class="card-wrapper " v-if="groupsCardId !== null">
                          <form method="post" v-on:submit="postGroup($event)">
                              <div class="group-card">
                                  <div class="list-group justify-content-center align-items-center">
@@ -217,9 +217,6 @@ computed:{
  .slide-fade-enter-active {
      transition: all .3s ease;
  }
- .m-shadow {
-            box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
-        }
  .slide-fade-leave-active {
      transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
  }
@@ -228,11 +225,6 @@ computed:{
      cursor: pointer;
  }
 
- .card-wrapper {
-     border: 1px solid rgb(226, 226, 226);
-     border-radius: 10px;
-     padding: 15px;
- }
 
  .admin-submit-button {
      margin-top: 10px;
