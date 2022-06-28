@@ -85,7 +85,7 @@
                                                         </div>
                                                         <div class="opacity-0 file__buttons d-flex flex-nowrap">
                                                             <button title="Заменить файл в документе"
-                                                                v-on:click="Id = file.Id; $refs.changeFile.value = null; changeValue=''"
+                                                                v-on:click="Id = file.Id; $refs.changeFile.value = null; "
                                                                 data-bs-toggle="modal" data-bs-target="#changeModal"
                                                                 class="btn btn-info text-white"><i
                                                                     class="bi bi-arrow-left-right"></i>
@@ -191,16 +191,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="loadingModalLabel">Загрузить документы</h5>
+                        <h5 class="modal-title" id="loadingModalLabel">Загрузить файл</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p>Выберите файл для загрузки в документ</p>
                         <input class="form-control mb-3" type="file" v-on:change="downloadFile" ref="downloadFile">
 
                     </div>
                     <div class="modal-footer">
                         <button data-bs-dismiss="modal" class="btn btn-primary" 
-                            v-on:click="submitFile()">Загрузить</button>
+                            v-on:click="submitFile()" v-bind:class="{disabled:  fileUpload==false}">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -255,7 +256,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <h5 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h5>
-                    <div class="modal-body" v-for="history in fileHistoryArray">
+                  <div class="modal-body">
+                    <div v-for="history in fileHistoryArray">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{
                                     history.Name
@@ -265,6 +267,7 @@
                         <div>Комментарий: {{ history.Comment }}</div>
 
                     </div>
+                  </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -318,7 +321,7 @@
                     </div>
                     <div class="modal-footer">
                         <button 
-                            data-bs-dismiss="modal" class="btn btn-primary"
+                            data-bs-dismiss="modal" class="btn btn-primary" v-bind:class="{disabled: fileUpload==false || changeValue.length<5}"
                             v-on:click="changeFile()">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -350,6 +353,7 @@
                 changeFileName:'',
                 downloadFiles:'',
                 changedFiles:'',
+                fileUpload: false,
             }
         },
         methods: {
@@ -390,15 +394,13 @@
                     else this.fileHistoryArray = response.data.data.HistoryFile
                 })
             },
-            setChangeValue(event) {
-                this.changeValue = event.target.value
-                event.target.value = ''
-            },
     
             downloadFile() {
+                this.fileUpload=true
                 this.downloadFiles = this.$refs.downloadFile.files[0];
             },
             changeUploadFile() {
+                this.fileUpload=true
                 this.changedFiles = this.$refs.changeFile.files[0];
             },
             deleteFile(Id) {
@@ -419,6 +421,7 @@
                         this.getDocuments(this.clientId)
                     }
                     else{
+                        this.fileUpload=false
                         alert(response.data.data.message)
                         this.getDocuments(this.clientId)
 
@@ -426,7 +429,7 @@
                   
                 })
             },
-            changeFile(Id, changeValue) {
+            changeFile() {
                 const formData = new FormData();
                 formData.append('newFile', this.changedFiles);
                 formData.append('comment', this.changeValue)
@@ -436,8 +439,9 @@
                         this.getDocuments(this.clientId)
                     }
                     else {
+                        this.fileUpload=false
                         alert(response.data.data.message)
-                        this.changeValue = null
+                        this.changeValue = ''
                         this.getDocuments(this.clientId)
                     }
                 })
