@@ -77,15 +77,15 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <h5 class="text-center">Вы уверены что хотите отправить на проверку?
-                                                </h5>
+                                                <p class="text-center">Вы уверены что хотите отправить на проверку?
+                                                </p>
 
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit"
-                                                    class="btn btn-primary col-3"
+                                                    class="btn btn-primary"
                                                     data-bs-dismiss="modal">Отправить</button>
-                                                <button type="button" class="btn btn-secondary col-3"
+                                                <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Закрыть</button>
                                             </div>
                                         </div>
@@ -159,14 +159,14 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h5>Вы уверены что хотите отправить на проверку?</h5>
+                            <p>Вы уверены что хотите отправить на проверку?</p>
                             <input class="form-control" type="text" placeholder="Введите ваш комментарий"
                                 v-model="submitInputValue">
                         </div>
                         <div class="modal-footer">
-                            <button data-bs-dismiss="modal" class="btn btn-primary col-3"
+                            <button data-bs-dismiss="modal" class="btn btn-primary "
                                 v-on:click="submitOnWorkDocumentComment(); commentsCorrection = []; requiredDocuments = []; submitInputValue = ''">Отправить</button>
-                            <button type="button" class="btn btn-secondary col-3"
+                            <button type="button" class="btn btn-secondary "
                                 data-bs-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
