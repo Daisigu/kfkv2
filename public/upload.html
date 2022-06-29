@@ -9,9 +9,9 @@
     <div class="container">
         <div class="loading__page pt-5 pb-5" id="upload">
             <div class="row">
-                <h1 v-if="newDocument.length == 0" class="text-center">Нет документов на подгрузку</h1>
+                <h1 v-if="newDocument.length == 0 && newDocumentLoading==false" class="text-center">Нет документов на подгрузку</h1>
                 <transition name="slide-fade">
-                <div class="col-sm-12 col-lg-4 upload-client-list " v-if="newDocument.length !== 0">
+                <div class="col-sm-12 col-lg-4 upload-client-list pb-4 " v-if="newDocument.length !== 0">
                         <input type="text" class="form-control mb-3 shadow " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="uploadSearchValue">
                         <!-- //$refs.downloadFile.value = null// -->
@@ -282,7 +282,6 @@
     
         data() {
             return {
-                show: false,
                 newDocument: [],
                 fileUpload: false,
                 uploadClientId: '',
@@ -302,6 +301,7 @@
                 commentsCorrection: '',
                 onWorkFile: {},
                 clientTitle: {},
+                newDocumentLoading: true,
             }
         },
         computed: {
@@ -356,8 +356,12 @@
             },
             getNewDocument() {
                 axios.post('http://192.168.71.142/Document/NewDocument').then((res) => {
+                    this.newDocumentLoading=true
                     this.newDocument = res.data.data.NewDocument;
     
+                })
+                .then(()=>{
+                    this.newDocumentLoading=false
                 })
             },
             async getClientDocument(Id) {
