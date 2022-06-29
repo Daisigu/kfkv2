@@ -295,7 +295,7 @@
                         target="_blank">{{
                                 docHistory.Name
                         }}</a>
-                    <div>Изменен: {{ docHistory.Created }}</div>
+                    <div>Изменен: {{ docHistory.CreationDate }}</div>
                     <div>Кем: {{ docHistory.UserName }}</div>
                     <div>Комментарий: {{ docHistory.Comment }}</div>
 
@@ -513,25 +513,24 @@
             padding-left: 10px;
         }
         .docs-img-wrapper{  
-           
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .docs-img-wrapper img{
-            transition: all 0.3s ease-in-out;
+            transition: all 0.4s ease-in-out;
             width: 250px;
             height: 250px;
         }
         .hide{
             opacity: 0;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.4s ease-in-out;
             width: 0 !important;
             z-index: -100;
             height: 0 !important;
         }
         .hide-wrapper{
-            padding: 0 !important;
+          
             z-index: -100;
         }
        
