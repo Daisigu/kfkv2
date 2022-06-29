@@ -31,8 +31,8 @@
                     <transition name="slide-fade">
                         <div v-if="loading == false"
                             class="list-group d-flex justify-content-center align-items-center shadow">
-                            <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
-                                v-bind:class="{ active: client.Id == clientId }" v-bind:Id="client.Id"
+                            <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" 
+                                v-bind:class="[{ active: client.Id == clientId}, {disabled: documentsLoading==true}]" v-bind:Id="client.Id"
                                 v-on:click="getDocuments(client.Id); clientId = client.Id; ">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ client.FullName }}</h5>
@@ -479,7 +479,7 @@
                 }
                 
             },
-            async getDocuments(Id) {
+             getDocuments(Id) {
                 var thiz = this;
                 if(this.documentsLoading==false){
                     this.documentsLoading=true
