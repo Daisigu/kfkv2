@@ -37,7 +37,7 @@
                     </transition>
                 </div>
                 <div class="col-12 col-lg-8 list-group">
-                    <h4 v-if="listDocCheckedFalseId=='' && listDocCheckedFalse!=0">Выберите клиента</h4>
+                    <h4 class="text-center" v-if="listDocCheckedFalseId=='' && listDocCheckedFalse!=0">Выберите клиента</h4>
                     <transition name="slide-fade">
                         <div class="listDocCheckedFalseFile-list shadow"
                             v-if="listDocCheckedFalseFiles.length > 0 && listDocCheckedFalseId !== ''">
