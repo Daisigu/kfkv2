@@ -338,7 +338,7 @@
                 const headers = { 'Content-Type': 'multipart/form-data' };
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.onWorkFileId, formData, { headers }).then((response) => {
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                   
                     }
                     else {

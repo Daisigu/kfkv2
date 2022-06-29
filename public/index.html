@@ -201,7 +201,7 @@
            }).then((res)=>{
         
             if(res.data.success==true){
-                alert(res.data.message)
+                alert(res.data.data.message)
                 this.$refs.submitPassword=''
             }
             if(res.data.success==false){

@@ -379,7 +379,7 @@
                 axios.post('http://192.168.71.142/Document/CheckArchHistory/' + Id).then((response) => {
     
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                     }
                     else {
                         this.documentHistoryArray = response.data.data.HistoryDoc;
@@ -391,7 +391,7 @@
                 axios.post('http://192.168.71.142/Document/DeleteDocument/' + Id).then((response) => {
     
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                     }
                     else {
                         this.getDocuments(this.clientId)
@@ -421,7 +421,7 @@
             deleteFile(Id) {
                 axios.post('http://192.168.71.142/Document/DeleteFile/' + Id).then((response) => {
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                     }
                     else this.getDocuments(this.clientId)
                 })
@@ -432,7 +432,7 @@
                 axios.post('http://192.168.71.142/Document/UploadFile?documentId=' + this.Id, formData).then((response) => {
     
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                         this.getDocuments(this.clientId)
                     }
                     else{
@@ -450,7 +450,7 @@
                 formData.append('comment', this.changeValue)
                 axios.post('http://192.168.71.142/Document/ReplaceFile/' + this.Id, formData).then((response) => {
                     if (response.data.success == false) {
-                        alert(response.data.data.message)
+                        alert(response.data.message)
                         this.getDocuments(this.clientId)
                     }
                     else {
@@ -468,7 +468,7 @@
                     axios.post('http://192.168.71.142/Document/ClientSearch?clientSearch=' + this.clientName)
                     .then(function (response) {
                         if (response.data.success == false) {
-                            alert(response.data.data.message)
+                            alert(response.data.message)
                             thiz.loading = false
                             thiz.clients=[]
                         }
@@ -491,7 +491,7 @@
                     axios.post('http://192.168.71.142/Document/DocumentsClient/' + Id)
                     .then(function (response) {
                         if (response.data.success == false) {
-                            alert(response.data.data.message)
+                            alert(response.data.message)
                         }
                         else {
                             thiz.documents = response.data.data.Documents
