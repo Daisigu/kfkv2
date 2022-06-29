@@ -52,12 +52,12 @@
                 <transition name="slide-fade">
                     
                     <div  class="people__info  col-sm-12 col-lg-8  p-3">
-                        <h4 v-if="clientId=='' && clients.length>0">Выберите клиента</h4>
-                        <div class="row">
-                            <div v-if="documentsLoading == true && clients.length>0" class="spinner-border mt-5" role="status">
-                                <span class="visually-hidden">Загрузка</span>
+
+                        <div  class="docs-img-wrapper " v-bind:class="{'hide-wrapper': documents.length>0}">
+                            <img v-bind:class="{'hide': documents.length>0}" src="http://192.168.71.142/Content/archive_picture.svg" alt="">
                             </div>
-                        </div>
+
+                       
                         <!-- List with Clients documents -->
                         <div v-if="documents.length > 0 && documentsLoading==false" class="accordion shadow border rounded-3" id="accordionFlush">
                                 <div class="accordion-item" v-for="document in documents" :key="document.Id"
@@ -320,7 +320,7 @@
                         <form v-on:submit.prevent="changeFile" enctype="multipart/form-data" method="post">
                             <input class="form-control mb-3" type="file" v-on:change="changeUploadFile"
                                 ref="changeFile">
-                                <label for="commentTextArea">Комментарий</label>
+                                <label for="commentTextArea">Причина замены</label>
                                 <textarea  v-model="changeValue" class="form-control mb-3" id="commentTextArea" rows="3"></textarea>
                         </form>
                     </div>
@@ -512,8 +512,29 @@
         .btns-group {
             padding-left: 10px;
         }
-
-      
+        .docs-img-wrapper{  
+            padding-top: 140px;
+            padding-left: 170px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .docs-img-wrapper img{
+            width: 250px;
+            height: 250px;
+        }
+        .hide{
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+            width: 0 !important;
+            z-index: -100;
+            height: 0 !important;
+        }
+        .hide-wrapper{
+            padding: 0 !important;
+            z-index: -100;
+        }
+       
         .accordion-body {
             padding: 10px !important
         }
