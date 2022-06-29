@@ -206,7 +206,7 @@
                     </div>
                     <div class="modal-footer">
                         <button data-bs-dismiss="modal" class="btn btn-primary" 
-                            v-on:click="submitFile()" v-bind:class="{disabled:  fileUpload==false}">Загрузить</button>
+                            v-on:click="submitFile(); fileUpload=false" v-bind:class="{disabled:  fileUpload==false}">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
