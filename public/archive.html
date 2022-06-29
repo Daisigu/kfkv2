@@ -107,7 +107,7 @@
                                                                 data-bs-target="#deleteFileConfirmModal"
                                                                 class="btn btn-danger "><i class="bi bi-trash3"></i>
                                                             </button>
-                                                            <button title="История изменениий файла"
+                                                            <button title="Версии файла"
                                                                 v-on:click="fileHistory(file.Id)"
                                                                 class="btn  btn-success" data-bs-toggle="modal"
                                                                 data-bs-target="#versionModal"><i
@@ -125,7 +125,7 @@
                                                 v-on:click="Id = document.Id; $refs.downloadFile.value = null; "><i
                                                     class="bi bi-upload"> Загрузка</i>
                                             </button>
-                                            <button title="История изменений документа" :id="document.Id"
+                                            <button title="Версии файлов" :id="document.Id"
                                                 class="btn btn-success mb-1"
                                                 v-if="documents.length > 0 && document.VersionsInDoc == true"
                                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
@@ -257,7 +257,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="versionModalLabel">История изменений</h5>
+                        <h5 class="modal-title" id="versionModalLabel">Версии</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                   <div class="modal-body">
@@ -267,9 +267,9 @@
                             target="_blank">{{
                                     history.Name
                             }}</a>
-                        <div>Изменен: {{ history.CreationDate }}</div>
+                        <div>Создан: {{ history.CreationDate }}</div>
                         <div>Кем: {{ history.UserName }}</div>
-                        <div>Комментарий: {{ history.Comment }}</div>
+                        <div>Причина замены: "{{ history.Comment }}"</div>
 
                     </div>
                   </div>
@@ -285,7 +285,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="documentVersionModalLabel">История изменений документа</h5>
+                        <h5 class="modal-title" id="documentVersionModalLabel">Версии файлов</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                <div class="modal-body">
@@ -295,9 +295,9 @@
                         target="_blank">{{
                                 docHistory.Name
                         }}</a>
-                    <div>Изменен: {{ docHistory.CreationDate }}</div>
+                    <div>Создан: {{ docHistory.CreationDate }}</div>
                     <div>Кем: {{ docHistory.UserName }}</div>
-                    <div>Комментарий: {{ docHistory.Comment }}</div>
+                    <div>Причина замены: "{{ docHistory.Comment }}"</div>
 
                 </div>
                </div>
