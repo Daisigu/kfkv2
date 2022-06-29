@@ -133,9 +133,10 @@
                                             <button title="Версии файлов" :id="document.Id" class="btn btn-success mb-1"
                                                 v-if="documents.length > 0 && document.VersionsInDoc == true"
                                                 data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                                v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist">
+                                                v-on:click="documentHistory(document.Id)"><i
+                                                    class="bi bi-card-checklist">
                                                     Версии</i>
-    
+
                                             </button>
                                             <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
                                                 data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
@@ -149,7 +150,7 @@
                                                     документы</i></button>
                                         </div>
                                     </div>
-                                  
+
                                     <!-- Other document Collapse -->
                                     <div class="collapse p-1" id="collapseOtherDocuments"
                                         v-if="linqDocuments.length > 0">
@@ -173,16 +174,19 @@
                                                         class="accordion-collapse collapse"
                                                         aria-labelledby="flush-headingOne"
                                                         data-bs-parent="#accordionFlushOtherDocuments">
-                                                        <div class="accordion-body list-group">
-                                                            <div class="list-group-item"
-                                                                v-for="otherDocumentFile in otherDocument.Files">
-                                                                <div class="">
-                                                                    <a
-                                                                        :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
-                                                                        {{ otherDocumentFile.Name }}
-                                                                    </a>
+                                                        <div class="accordion-body ">
+                                                            <div class="list-group">
+                                                                <div class="list-group-item"
+                                                                    v-for="otherDocumentFile in otherDocument.Files">
+                                                                    <div class="">
+                                                                        <a
+                                                                            :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
+                                                                            {{ otherDocumentFile.Name }}
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
