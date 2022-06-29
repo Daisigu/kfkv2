@@ -225,7 +225,7 @@
                         <p class="text-center">Вы действительно хотите удалить документ?</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger" v-on:click="deleteDocument(deleteDocumentId)"
+                        <button class="btn btn-danger col-2" v-on:click="deleteDocument(deleteDocumentId)"
                             data-bs-dismiss="modal">Да</button>
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -242,12 +242,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex justify-content-around">
-                        <h4 class="text-center">Вы действительно хотите удалить файл?</h4>
+                        <p class="text-center">Вы действительно хотите удалить файл?</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn-danger btn col-3" v-on:click="deleteFile(deleteFileId)"
+                        <button class="btn-danger btn col-2" v-on:click="deleteFile(deleteFileId)"
                             data-bs-dismiss="modal">Да</button>
-                        <button type="button" class="btn btn-primary col-3" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
             </div>
@@ -261,7 +261,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                   <div class="modal-body">
-                    <h5 class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</h5>
+                    <p class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
                     <div v-for="history in fileHistoryArray">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{
@@ -289,7 +289,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                <div class="modal-body">
-                <h5 class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</h5>
+                <p class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
                 <div v-for="docHistory in documentHistoryArray">
                     <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
                         target="_blank">{{
