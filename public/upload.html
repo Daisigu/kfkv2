@@ -11,7 +11,7 @@
             <div class="row">
                 <h1 v-if="newDocument.length == 0" class="text-center">Нет документов на подгрузку</h1>
                 <transition name="slide-fade">
-                    <div class="col-sm-12 col-lg-4 upload-client-list " v-if="newDocument.length !== 0">
+                <div class="col-sm-12 col-lg-4 upload-client-list " v-if="newDocument.length !== 0">
                         <input type="text" class="form-control mb-3 shadow " placeholder="Поиск"
                             aria-describedby="button-addon2" v-model="uploadSearchValue">
                         <!-- //$refs.downloadFile.value = null// -->
