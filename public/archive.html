@@ -262,7 +262,8 @@
                     </div>
                   <div class="modal-body">
                     <p class="text-center m-0" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
-                    <div v-for="history in fileHistoryArray">
+                   <div class="list-group">
+                    <div v-for="history in fileHistoryArray" class="list-group-item">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{
                                     history.Name
@@ -272,6 +273,7 @@
                         <div>Причина замены: "{{ history.Comment }}"</div>
 
                     </div>
+                   </div>
                   </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -290,15 +292,18 @@
                     </div>
                <div class="modal-body">
                 <p class="text-center m-0" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
-                <div v-for="docHistory in documentHistoryArray">
-                    <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
-                        target="_blank">{{
-                                docHistory.Name
-                        }}</a>
-                    <div>Создан: {{ docHistory.CreationDate }}</div>
-                    <div>Кем: {{ docHistory.UserName }}</div>
-                    <div>Причина замены: "{{ docHistory.Comment }}"</div>
+                <div class="list-group">
 
+                    <div v-for="docHistory in documentHistoryArray" class="list-group-item">
+                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
+                            target="_blank">{{
+                                    docHistory.Name
+                            }}</a>
+                        <div>Создан: {{ docHistory.CreationDate }}</div>
+                        <div>Кем: {{ docHistory.UserName }}</div>
+                        <div>Причина замены: "{{ docHistory.Comment }}"</div>
+    
+                    </div>
                 </div>
                </div>
                     <div class="modal-footer">
