@@ -261,7 +261,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                   <div class="modal-body">
-                    <p class="text-center" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
+                    <p class="text-center m-0" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
                     <div v-for="history in fileHistoryArray">
                         <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
                             target="_blank">{{
@@ -289,7 +289,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                <div class="modal-body">
-                <p class="text-center" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
+                <p class="text-center m-0" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
                 <div v-for="docHistory in documentHistoryArray">
                     <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
                         target="_blank">{{
@@ -600,7 +600,7 @@
             transition: all 1s ease;
             opacity: 0;
         }
-
+    
         .active {
             transition: all 0.5s ease;
         }
