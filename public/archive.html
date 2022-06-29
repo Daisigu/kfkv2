@@ -17,7 +17,7 @@
                             v-model="clientName" type="text" class="form-control  shadow"
                             placeholder="ФИО клиента или № договора" aria-label="Recipient's clientname"
                             aria-describedby="button-addon2">
-                        <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []"
+                        <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []" v-bind:class="{disabled: documentsLoading==true}"
                             class="btn btn-primary  shadow" type="button" id="button-addon2">Поиск</button>
                     </div>
                     <h2 class="text-center" v-if="loading == false && clients.length == 0 && match == true">Нет
