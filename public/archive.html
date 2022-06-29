@@ -17,8 +17,9 @@
                             v-model="clientName" type="text" class="form-control  shadow"
                             placeholder="ФИО клиента или № договора" aria-label="Recipient's clientname"
                             aria-describedby="button-addon2">
-                        <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []" v-bind:class="{disabled: documentsLoading==true}"
-                            class="btn btn-primary  shadow" type="button" id="button-addon2">Поиск</button>
+                        <button v-on:click="loading = true ; getClients(); match = true; clientId = ''; documents = []"
+                            v-bind:class="{ disabled: documentsLoading == true }" class="btn btn-primary  shadow"
+                            type="button" id="button-addon2">Поиск</button>
                     </div>
                     <h2 class="text-center" v-if="loading == false && clients.length == 0 && match == true">Нет
                         совпадений
@@ -31,9 +32,9 @@
                     <transition name="slide-fade">
                         <div v-if="loading == false"
                             class="list-group d-flex justify-content-center align-items-center shadow">
-                            <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id" 
-                                v-bind:class="[{ active: client.Id == clientId}, {disabled: documentsLoading==true}]" v-bind:Id="client.Id"
-                                v-on:click="getDocuments(client.Id); clientId = client.Id; ">
+                            <a class="list-group-item list-group-item-action" v-for="client in clients" :key="client.Id"
+                                v-bind:class="[{ active: client.Id == clientId }, { disabled: documentsLoading == true }]"
+                                v-bind:Id="client.Id" v-on:click="getDocuments(client.Id); clientId = client.Id; ">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1">{{ client.FullName }}</h5>
                                     <small>{{ client.Birthdate }}</small>
@@ -50,133 +51,130 @@
                 </div>
 
                 <transition name="slide-fade">
-                    
-                    <div  class="people__info  col-sm-12 col-lg-8  p-3">
 
-                        <div  class="docs-img-wrapper " v-bind:class="{'hide-wrapper': documents.length>0}">
-                            <img v-bind:class="{'hide': documents.length>0}" src="http://192.168.71.142/Content/archive_picture.svg" alt="">
-                            </div>
+                    <div class="people__info  col-sm-12 col-lg-8  p-3">
 
-                       
+                        <div class="docs-img-wrapper " v-bind:class="{ 'hide-wrapper': documents.length > 0 }">
+                            <img v-bind:class="{ 'hide': documents.length > 0 }"
+                                src="http://192.168.71.142/Content/archive_picture.svg" alt="">
+                        </div>
+
+
                         <!-- List with Clients documents -->
-                        <div v-if="documents.length > 0 && documentsLoading==false" class="accordion shadow border rounded-3" id="accordionFlush">
-                                <div class="accordion-item" v-for="document in documents" :key="document.Id"
-                                    v-on:click="orderId = document.OrderId;">
-                                    <h2 class="accordion-header" :id="'flush-headingOne' + document.Id"
-                                        v-on:click="linqDocuments = ''">
-                                        <button class="accordion-button collapsed"
-                                            v-bind:class="{ unactive: !document.Uploaded }" type="button"
-                                            data-bs-toggle="collapse"
-                                            :data-bs-target="'#flush-collapseOne' + document.Id" aria-expanded="false"
-                                            :aria-controls="'flush-collapseOne' + document.Id"
-                                            v-bind="{ disabled: !document.Uploaded }">
-                                            {{ document.Title }}
-                                        </button>
-                                    </h2>
-                                    <div :id="'flush-collapseOne' + document.Id" class="accordion-collapse collapse"
-                                        :aria-labelledby="'flush-headingOne' + document.Id"
-                                        data-bs-parent="#accordionFlush">
-                                        <div class="accordion-body list-group">
-                                            <div class="list-group-item" v-for="file in document.Files" v-on:click="changeFileName=file.Name">
-                                                <div class="  d-flex justify-content-between align-items-center">
-                                                    <a :href="'http://192.168.71.142/Document/FileDownload/?Id=' + file.Id + '&preview=true'"
-                                                        class="cut-text" :title="file.Name" target="_blank"> {{
-                                                                file.Name
-                                                        }}
-                                                    </a>
+                        <div v-if="documents.length > 0 && documentsLoading == false"
+                            class="accordion shadow border rounded-3" id="accordionFlush">
+                            <div class="accordion-item" v-for="document in documents" :key="document.Id"
+                                v-on:click="orderId = document.OrderId;">
+                                <h2 class="accordion-header" :id="'flush-headingOne' + document.Id"
+                                    v-on:click="linqDocuments = ''">
+                                    <button class="accordion-button collapsed"
+                                        v-bind:class="{ unactive: !document.Uploaded }" type="button"
+                                        data-bs-toggle="collapse" :data-bs-target="'#flush-collapseOne' + document.Id"
+                                        aria-expanded="false" :aria-controls="'flush-collapseOne' + document.Id"
+                                        v-bind="{ disabled: !document.Uploaded }">
+                                        {{ document.Title }}
+                                    </button>
+                                </h2>
+                                <div :id="'flush-collapseOne' + document.Id" class="accordion-collapse collapse"
+                                    :aria-labelledby="'flush-headingOne' + document.Id"
+                                    data-bs-parent="#accordionFlush">
+                                    <div class="accordion-body list-group">
+                                        <div class="list-group-item" v-for="file in document.Files"
+                                            v-on:click="changeFileName = file.Name">
+                                            <div class="  d-flex justify-content-between align-items-center">
+                                                <a :href="'http://192.168.71.142/Document/FileDownload/?Id=' + file.Id + '&preview=true'"
+                                                    class="cut-text" :title="file.Name" target="_blank"> {{
+                                                            file.Name
+                                                    }}
+                                                </a>
 
-                                                    <div class="d-flex flex-row align-items-center">
-                                                        <div>
-                                                            <p class="createdFile m-0">{{ file.CreationDate }}</p>
-                                                        </div>
-                                                        <div class="opacity-0 file__buttons d-flex flex-nowrap">
-                                                            <button title="Заменить файл в документе"
-                                                                v-on:click="Id = file.Id; $refs.changeFile.value = null; "
-                                                                data-bs-toggle="modal" data-bs-target="#changeModal"
-                                                                class="btn btn-info text-white"><i
-                                                                    class="bi bi-arrow-left-right"></i>
-                                                            </button>
-                                                            <a title="Скачать файл" class="btn btn-primary"
-                                                                :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
-                                                                    <i class="bi bi-download"></i>
-                                                            </a>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div>
+                                                        <p class="createdFile m-0">{{ file.CreationDate }}</p>
+                                                    </div>
+                                                    <div class="opacity-0 file__buttons d-flex flex-nowrap">
+                                                        <button title="Заменить файл в документе"
+                                                            v-on:click="Id = file.Id; $refs.changeFile.value = null; "
+                                                            data-bs-toggle="modal" data-bs-target="#changeModal"
+                                                            class="btn btn-info text-white"><i
+                                                                class="bi bi-arrow-left-right"></i>
+                                                        </button>
+                                                        <a title="Скачать файл" class="btn btn-primary"
+                                                            :href="'http://192.168.71.142/Document/FileDownload/' + file.Id">
+                                                            <i class="bi bi-download"></i>
+                                                        </a>
 
-                                                            <button title="Удалить файл в документе"
-                                                                v-on:click="deleteFileId = file.Id"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#deleteFileConfirmModal"
-                                                                class="btn btn-danger "><i class="bi bi-trash3"></i>
-                                                            </button>
-                                                            <button title="Версии файла"
-                                                                v-on:click="fileHistory(file.Id)"
-                                                                class="btn  btn-success" data-bs-toggle="modal"
-                                                                data-bs-target="#versionModal"><i
-                                                                    class="bi bi-card-checklist"></i>
-                                                            </button>
-                                                        </div>
+                                                        <button title="Удалить файл в документе"
+                                                            v-on:click="deleteFileId = file.Id" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteFileConfirmModal"
+                                                            class="btn btn-danger "><i class="bi bi-trash3"></i>
+                                                        </button>
+                                                        <button title="Версии файла" v-on:click="fileHistory(file.Id)"
+                                                            class="btn  btn-success" data-bs-toggle="modal"
+                                                            data-bs-target="#versionModal"><i
+                                                                class="bi bi-card-checklist"></i>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="btns-group pb-2">
-                                            <button title="Загрузиить файл в документ" :id="document.Id"
-                                                class="btn btn-primary mb-1" v-if="documents.length > 0"
-                                                data-bs-toggle="modal" data-bs-target="#loadingModal"
-                                                v-on:click="Id = document.Id; $refs.downloadFile.value = null; "><i
-                                                    class="bi bi-upload"> Загрузка</i>
-                                            </button>
-                                            <button title="Версии файлов" :id="document.Id"
-                                                class="btn btn-success mb-1"
-                                                v-if="documents.length > 0 && document.VersionsInDoc == true"
-                                                data-bs-toggle="modal" data-bs-target="#documentVersionModal"
-                                                v-on:click="documentHistory(document.Id)"><i
-                                                    class="bi bi-card-checklist">
-                                                    Версии</i>
+                                    </div>
+                                    <div class="btns-group pb-2">
+                                        <button title="Загрузиить файл в документ" :id="document.Id"
+                                            class="btn btn-primary mb-1" v-if="documents.length > 0"
+                                            data-bs-toggle="modal" data-bs-target="#loadingModal"
+                                            v-on:click="Id = document.Id; $refs.downloadFile.value = null; "><i
+                                                class="bi bi-upload"> Загрузка</i>
+                                        </button>
+                                        <button title="Версии файлов" :id="document.Id" class="btn btn-success mb-1"
+                                            v-if="documents.length > 0 && document.VersionsInDoc == true"
+                                            data-bs-toggle="modal" data-bs-target="#documentVersionModal"
+                                            v-on:click="documentHistory(document.Id)"><i class="bi bi-card-checklist">
+                                                Версии</i>
 
-                                            </button>
-                                            <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
-                                                data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
-                                                class="btn btn-danger mb-1"><i class="bi bi-trash3">
-                                                    Удалить</i></button>
-                                            <button title="Другие документы" v-if="document.CountLinqDocument > 0" v-on:click="getLinqDocuments()"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseOtherDocuments"
-                                                aria-expanded="false" aria-controls="collapseOtherDocuments"
-                                                class="btn btn-warning mb-1"><i class="bi bi-files"> Другие
-                                                    документы</i></button>
-                                        </div>
-                                        <!-- Other document Collapse -->
-                                        <div class="collapse p-1" id="collapseOtherDocuments"
-                                            v-if="linqDocuments.length > 0">
-                                            <div class="card card-body p-1">
-                                                <div v-if="linqDocuments.length == 0" class="spinner-border"
-                                                    role="status">
-                                                    <span class="visually-hidden">Загрузка</span>
-                                                </div>
-                                                <div class="accordion accordion-flush" id="accordionFlushOtherDocuments"
-                                                    v-if="linqDocuments.length > 0">
-                                                    <div class="accordion-item" v-for="otherDocument in linqDocuments">
-                                                        <h2 class="accordion-header" id="flush-headingOne">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse"
-                                                                :data-bs-target="'#flush-collapseOne' + otherDocument.Id"
-                                                                aria-expanded="false"
-                                                                :aria-controls="'flush-collapseOne' + otherDocument.Id">
-                                                                {{ otherDocument.Title }}
-                                                            </button>
-                                                        </h2>
-                                                        <div :id="'flush-collapseOne' + otherDocument.Id"
-                                                            class="accordion-collapse collapse"
-                                                            aria-labelledby="flush-headingOne"
-                                                            data-bs-parent="#accordionFlushOtherDocuments">
-                                                            <div class="accordion-body list-group">
-                                                                <div class="list-group-item"
-                                                                    v-for="otherDocumentFile in otherDocument.Files">
-                                                                    <div class="">
-                                                                        <a
-                                                                            :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
-                                                                            {{ otherDocumentFile.Name }}
-                                                                        </a>
-                                                                    </div>
+                                        </button>
+                                        <button title="Удалить документ" v-on:click="deleteDocumentId = document.Id"
+                                            data-bs-toggle="modal" data-bs-target="#deleteDocumentConfirmModal"
+                                            class="btn btn-danger mb-1"><i class="bi bi-trash3">
+                                                Удалить</i></button>
+                                        <button title="Другие документы" v-if="document.CountLinqDocument > 0"
+                                            v-on:click="getLinqDocuments()" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOtherDocuments" aria-expanded="false"
+                                            aria-controls="collapseOtherDocuments" class="btn btn-warning mb-1"><i
+                                                class="bi bi-files"> Другие
+                                                документы</i></button>
+                                    </div>
+                                    <!-- Other document Collapse -->
+                                    <div class="collapse p-1" id="collapseOtherDocuments"
+                                        v-if="linqDocuments.length > 0">
+                                        <div class="card card-body p-1">
+                                            <div v-if="linqDocuments.length == 0" class="spinner-border" role="status">
+                                                <span class="visually-hidden">Загрузка</span>
+                                            </div>
+                                            <div class="accordion accordion-flush" id="accordionFlushOtherDocuments"
+                                                v-if="linqDocuments.length > 0">
+                                                <div class="accordion-item" v-for="otherDocument in linqDocuments">
+                                                    <h2 class="accordion-header" id="flush-headingOne">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            :data-bs-target="'#flush-collapseOne' + otherDocument.Id"
+                                                            aria-expanded="false"
+                                                            :aria-controls="'flush-collapseOne' + otherDocument.Id">
+                                                            {{ otherDocument.Title }}
+                                                        </button>
+                                                    </h2>
+                                                    <div :id="'flush-collapseOne' + otherDocument.Id"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="flush-headingOne"
+                                                        data-bs-parent="#accordionFlushOtherDocuments">
+                                                        <div class="accordion-body list-group">
+                                                            <div class="list-group-item"
+                                                                v-for="otherDocumentFile in otherDocument.Files">
+                                                                <div class="">
+                                                                    <a
+                                                                        :href="'http://192.168.71.142/Document/FileDownload/?Id=' + otherDocumentFile.Id + '&preview=true'">
+                                                                        {{ otherDocumentFile.Name }}
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -186,6 +184,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </transition>
@@ -205,8 +204,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button data-bs-dismiss="modal" class="btn btn-primary" 
-                            v-on:click="submitFile(); fileUpload=false" v-bind:class="{disabled:  fileUpload==false}">Загрузить</button>
+                        <button data-bs-dismiss="modal" class="btn btn-primary"
+                            v-on:click="submitFile(); fileUpload = false"
+                            v-bind:class="{ disabled: fileUpload == false }">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -260,21 +260,21 @@
                         <h5 class="modal-title" id="versionModalLabel">Версии</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  <div class="modal-body">
-                    <p class="text-center m-0" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
-                   <div class="list-group">
-                    <div v-for="history in fileHistoryArray" class="list-group-item">
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
-                            target="_blank">{{
-                                    history.Name
-                            }}</a>
-                        <div>Создан: {{ history.CreationDate }}</div>
-                        <div>Кем: {{ history.UserName }}</div>
-                        <div>Причина замены: "{{ history.Comment }}"</div>
+                    <div class="modal-body">
+                        <p class="text-center m-0" v-if="this.fileHistoryArray.length == 0"> Изменений нет</p>
+                        <div class="list-group shadow">
+                            <div v-for="history in fileHistoryArray" class="list-group-item">
+                                <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?id=' + history.Id + '&preview=true'"
+                                    target="_blank">{{
+                                            history.Name
+                                    }}</a>
+                                <div>Создан: {{ history.CreationDate }}</div>
+                                <div>Кем: {{ history.UserName }}</div>
+                                <div>Причина замены: "{{ history.Comment }}"</div>
 
+                            </div>
+                        </div>
                     </div>
-                   </div>
-                  </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -282,30 +282,31 @@
             </div>
         </div>
         <!-- Document Version Modal -->
-        <div class="modal fade" id="documentVersionModal" tabindex="-1" aria-labelledby="documentVersionModalLabel"
+        <div class="modal fade " id="documentVersionModal" tabindex="-1" aria-labelledby="documentVersionModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="documentVersionModalLabel">Версии файлов</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-               <div class="modal-body">
-                <p class="text-center m-0" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
-                <div class="list-group">
+                    <div class="modal-body">
+                        <p class="text-center m-0" v-if="this.documentHistoryArray.length == 0"> Изменений нет</p>
+                        <div class="list-group shadow">
 
-                    <div v-for="docHistory in documentHistoryArray" class="list-group-item">
-                        <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
-                            target="_blank">{{
-                                    docHistory.Name
-                            }}</a>
-                        <div>Создан: {{ docHistory.CreationDate }}</div>
-                        <div>Кем: {{ docHistory.UserName }}</div>
-                        <div>Причина замены: "{{ docHistory.Comment }}"</div>
-    
+                            <div v-for="docHistory in documentHistoryArray"
+                                class="list-group-item">
+                                <a :href="'http://192.168.71.142/Document/FileDownloadFromHistory/?Id=' + docHistory.Id + '&preview=true'"
+                                    target="_blank">{{
+                                            docHistory.Name
+                                    }}</a>
+                                <div>Создан: {{ docHistory.CreationDate }}</div>
+                                <div>Кем: {{ docHistory.UserName }}</div>
+                                <div>Причина замены: "{{ docHistory.Comment }}"</div>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-               </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
@@ -321,18 +322,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Заменить документ "{{changeFileName}}" выбраным файлом?</p>
+                        <p>Заменить документ "{{ changeFileName }}" выбраным файлом?</p>
                         <form v-on:submit.prevent="changeFile" enctype="multipart/form-data" method="post">
                             <input class="form-control mb-3" type="file" v-on:change="changeUploadFile"
                                 ref="changeFile">
-                                <label for="commentTextArea">Причина замены</label>
-                                <textarea  v-model="changeValue" class="form-control mb-3" id="commentTextArea" rows="3"></textarea>
+                            <label for="commentTextArea">Причина замены</label>
+                            <textarea v-model="changeValue" class="form-control mb-3" id="commentTextArea"
+                                rows="3"></textarea>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button 
-                            data-bs-dismiss="modal" class="btn btn-primary" v-bind:class="{disabled: fileUpload==false || changeValue.length<5}"
-                            v-on:click="changeFile(); changeValue=''">Загрузить</button>
+                        <button data-bs-dismiss="modal" class="btn btn-primary"
+                            v-bind:class="{ disabled: fileUpload == false || changeValue.length < 5 }"
+                            v-on:click="changeFile(); changeValue = ''">Загрузить</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -511,34 +513,40 @@
         .list-group-item {
             cursor: pointer;
         }
-        .file__buttons .btn{
+
+        .file__buttons .btn {
             margin-left: 2px;
         }
+
         .btns-group {
             padding-left: 10px;
         }
-        .docs-img-wrapper{  
+
+        .docs-img-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        .docs-img-wrapper img{
+
+        .docs-img-wrapper img {
             transition: all 0.4s ease-in-out;
             width: 250px;
             height: 250px;
         }
-        .hide{
+
+        .hide {
             opacity: 0;
             transition: all 0.4s ease-in-out;
             width: 0 !important;
             z-index: -100;
             height: 0 !important;
         }
-        .hide-wrapper{
-          
+
+        .hide-wrapper {
+
             z-index: -100;
         }
-       
+
         .accordion-body {
             padding: 10px !important
         }
@@ -565,13 +573,13 @@
             margin: auto;
         }
 
-            .cut-text {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                min-height: 30px;
-                width: 540px;
-                white-space: nowrap;
-            }
+        .cut-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            min-height: 30px;
+            width: 540px;
+            white-space: nowrap;
+        }
 
         .cut-text {
             min-height: 30px;
@@ -584,7 +592,8 @@
         .m-shadow {
             box-shadow: 3px 3px 3px rgb(241, 237, 237) !important;
         }
-        .archive__search-input{
+
+        .archive__search-input {
             box-shadow: 0 4px 0px 0px rgb(241, 237, 237) !important;
         }
 
@@ -597,7 +606,8 @@
             opacity: 1 !important;
             transition: opacity 1s ease;
         }
-        .list-group-item:hover .createdFile{
+
+        .list-group-item:hover .createdFile {
             z-index: -1;
         }
 
@@ -605,7 +615,8 @@
             transition: all 1s ease;
             opacity: 0;
         }
-    
+
+
         .active {
             transition: all 0.5s ease;
         }
